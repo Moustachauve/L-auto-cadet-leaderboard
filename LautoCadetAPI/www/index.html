@@ -16,21 +16,177 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <style>
+        body {
+            font-family: helvetica,serif;
+        }
+
+        /*  Thermometer  */
+
+        #content {
+            width: 300px;
+            margin: 30px auto;
+            padding: 0;
+        }
+
+        #thermometer {
+            width: 70px;
+            height: 300px;
+            position: relative;
+        }
+
+            #thermometer .track {
+                height: 280px;
+                top: 10px;
+                width: 50px;
+                position: relative;
+                margin: 0 auto;
+                background: #bfbfbf;
+                background-position: 0 -1px;
+                background-size: 100% 5%;
+                border-radius: 3px;
+            }
+
+            #thermometer .progress {
+                height: 0%;
+                width: 100%;
+                background: #b1bb1e;
+                border-radius: 3px;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+            }
+
+            #thermometer .goal {
+                position: absolute;
+                top: 0;
+                width: 150px;
+            }
+
+            #thermometer .amount {
+                display: inline-block;
+                padding: 0 5px 0 60px;
+                font-family: Trebuchet MS;
+                font-weight: bold;
+                color: #333;
+                width: 150px;
+            }
+
+            #thermometer .progress .amount {
+                padding: 0 60px 0 5px;
+                position: absolute;
+                border-top: 1px solid #333;
+                color: #b1bb1e;
+                right: 0;
+            }
+
+        /* Bottem Button */
+
+        .btm-btn {
+            background: #b1bb1e;
+            border-radius: 100%;
+            color: #fff;
+            display: inline-block;
+            font-weight: bold;
+            margin: -19px -10px;
+            padding: 35px 18px;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <h1>Hello, world!</h1>
 
+
+    <div id="content">
+        <div id="thermometer">
+            <div class="track">
+                <div class="goal">
+                    <div class="amount">90000</div>
+                </div>
+                <div class="progress">
+                    <div class="amount">47835</div>
+                </div>
+            </div>
+        </div>
+        <a class="btm-btn" target="_blank" href="http://peopleparanormal.com">Donate</a>
+    </div>
+
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-
+    <script src="js/servercom.js"></script>
     <script>
-        $(function () {
-            $(document).keypress("f", function (event) {
-                //alert(event.keyCode);
-                if (event.ctrlKey) {
-                    OSMJIF.sendMessage("ToggleFullscreen");
-                }
-            })
+        function formatCurrency(n, c, d, t) {
+            "use strict";
+
+            var s, i, j;
+
+            c = isNaN(c = Math.abs(c)) ? 2 : c;
+            d = d === undefined ? "." : d;
+            t = t === undefined ? "," : t;
+
+            s = n < 0 ? "-" : "";
+            i = parseInt(n = Math.abs(+n || 0).toFixed(c), 10) + "";
+            j = (j = i.length) > 3 ? j % 3 : 0;
+
+            return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+        }
+
+        /**
+         * Thermometer Progress meter.
+         * This function will update the progress element in the "thermometer"
+         * to the updated percentage.
+         * If no parameters are passed in it will read them from the DOM
+         *
+         * @param {Number} goalAmount The Goal amount, this represents the 100% mark
+         * @param {Number} progressAmount The progress amount is the current amount
+         * @param {Boolean} animate Whether to animate the height or not
+         *
+         */
+        function thermometer(goalAmount, progressAmount, animate) {
+            "use strict";
+
+            var $thermo = $("#thermometer"),
+                $progress = $(".progress", $thermo),
+                $goal = $(".goal", $thermo),
+                percentageAmount;
+
+            goalAmount = goalAmount || parseFloat($goal.text()),
+            progressAmount = progressAmount || parseFloat($progress.text()),
+            percentageAmount = Math.min(Math.round(progressAmount / goalAmount * 1000) / 10, 100); //make sure we have 1 decimal point
+
+            //let's format the numbers and put them back in the DOM
+            $goal.find(".amount").text("$" + formatCurrency(goalAmount));
+            $progress.find(".amount").text("$" + formatCurrency(progressAmount));
+
+
+            //let's set the progress indicator
+            $progress.find(".amount").hide();
+            if (animate !== false) {
+                $progress.animate({
+                    "height": percentageAmount + "%"
+                }, 1200, function () {
+                    $(this).find(".amount").fadeIn(500);
+                });
+            }
+            else {
+                $progress.css({
+                    "height": percentageAmount + "%"
+                });
+                $progress.find(".amount").fadeIn(500);
+            }
+        }
+
+        $(document).ready(function () {
+
+            //call without the parameters to have it read from the DOM
+            thermometer();
+            // or with parameters if you want to update it using JavaScript.
+            // you can update it live, and choose whether to show the animation
+            // (which you might not if the updates are relatively small)
+            //thermometer( 1000000, 425610, false );
+
         });
     </script>
 </body>

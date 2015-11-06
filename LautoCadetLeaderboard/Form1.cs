@@ -9,12 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using LotoCadetLeaderboard.JSCommands;
 
 namespace LotoCadetLeaderboard
 {
 	public partial class Form1 : Form
 	{
 		private bool isFullscreen = false;
+		private FormWindowState previousState;
 
 		public Form1()
 		{
@@ -31,43 +34,47 @@ namespace LotoCadetLeaderboard
 			this.Text = e.Title;
 		}
 
-		public void EnterFullScreenMode()
+		private void EnterFullScreenMode()
 		{
+			previousState = WindowState;
 			WindowState = FormWindowState.Normal;
 			FormBorderStyle = FormBorderStyle.None;
 			WindowState = FormWindowState.Maximized;
 			isFullscreen = true;
 		}
 
-		public void LeaveFullScreenMode()
+		private void LeaveFullScreenMode()
 		{
 			FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
-			WindowState = FormWindowState.Normal;
+			WindowState = previousState;
 			isFullscreen = false;
 		}
 
-		private void Form1_MouseClick(object sender, MouseEventArgs e)
+		private void ShowSource(string source)
 		{
-			MessageBox.Show("TEST CLISSE");
+			new SourceCodeViewer(source).ShowDialog();
 		}
 
-		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		private void OnJavascriptMessage(object sender, JavascriptMessageEventArgs e)
 		{
-			MessageBox.Show("TEST CLISSE");
-			return true;
-		}
-
-		private void Awesomium_Windows_Forms_WebControl_JavascriptMessage(object sender, JavascriptMessageEventArgs e)
-		{
-			switch (e.Message)
+			Command command = JsonConvert.DeserializeObject<Command>(e.Message);
+			switch (command.Type)
 			{
-				case "ToggleFullscreen":
+				case "ShowSourceCode":
+					ShowSource((string)command.Content);
+					break;
+			}
+		}
+
+		private void Awesomium_Windows_Forms_WebControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.F11:
 					if (isFullscreen)
 						LeaveFullScreenMode();
 					else
 						EnterFullScreenMode();
-
-					e.Result = null;
 					break;
 			}
 		}

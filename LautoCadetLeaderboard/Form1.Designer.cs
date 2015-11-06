@@ -38,8 +38,9 @@
 			this.webControl1.Location = new System.Drawing.Point(0, 0);
 			this.webControl1.Size = new System.Drawing.Size(780, 493);
 			this.webControl1.TabIndex = 0;
-			this.webControl1.JavascriptMessage += new Awesomium.Core.JavascriptMessageEventHandler(this.Awesomium_Windows_Forms_WebControl_JavascriptMessage);
+			this.webControl1.JavascriptMessage += new Awesomium.Core.JavascriptMessageEventHandler(this.OnJavascriptMessage);
 			this.webControl1.TitleChanged += new Awesomium.Core.TitleChangedEventHandler(this.Awesomium_Windows_Forms_WebControl_TitleChanged);
+			this.webControl1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Awesomium_Windows_Forms_WebControl_PreviewKeyDown);
 			// 
 			// Form1
 			// 
