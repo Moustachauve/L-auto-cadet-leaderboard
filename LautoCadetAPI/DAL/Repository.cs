@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LautoCadetAPI.Repository
+namespace LautoCadetAPI.DAL
 {
-	internal class EscadronRepository
+	internal class Repository
 	{
 		public const string DEFAULT_FILE_PATH = @"sauvegarde\escadron.cadet";
 		private EscadronConfiguration escadronConfiguration;
@@ -20,14 +20,14 @@ namespace LautoCadetAPI.Repository
 		/// <summary>
 		/// Create a repository using the default file
 		/// </summary>
-		public EscadronRepository() : this(DEFAULT_FILE_PATH)
+		public Repository() : this(DEFAULT_FILE_PATH)
 		{ }
 		
 
 		/// <summary>
 		/// Create a repository using a custom file path
 		/// </summary>
-		public EscadronRepository(string path)
+		public Repository(string path)
 		{
 			savePath = path;
 			string directory = Path.GetDirectoryName(path);
@@ -59,6 +59,18 @@ namespace LautoCadetAPI.Repository
 			{
 				writer.Write(JsonConvert.SerializeObject(escadronConfiguration, Formatting.Indented));
 			}
+		}
+
+		public List<Cadet> GetAllCadets()
+		{
+			List<Cadet> list = new List<Cadet>();
+
+			foreach(Section section in escadronConfiguration.Sections)
+			{
+				list.AddRange(section.Cadets);
+			}
+
+			return list;
 		}
 	}
 }

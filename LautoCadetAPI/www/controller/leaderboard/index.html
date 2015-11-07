@@ -1,0 +1,20 @@
+﻿<div ng-controller="leaderboardController">
+    <h1>Dix meilleurs vendeurs: (Tous pour le moment)</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Cadet</th>
+                <th>Nb. de billets vendu</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="cadet in topTenSeller">
+                <td>{{$index}}</td>
+                <td>{{cadet.Nom}}</td>
+                <td>{{cadet.NbBilletsVendu}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
