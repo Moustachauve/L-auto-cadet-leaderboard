@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin.FileSystems;
+﻿using LautoCadetAPI.Repository;
+using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.Hosting;
 using Microsoft.Owin.StaticFiles;
 using Owin;
@@ -16,14 +17,20 @@ namespace LautoCadetAPI
 	{
 		public const string API_URL = "http://localhost:8080";
 		private static IDisposable webApp;
+		private static EscadronRepository repository;
+
+        internal static EscadronRepository Repository { get { return repository; } }
 
 		public static void Start()
 		{
 			webApp = WebApp.Start<WebApi>(API_URL);
+
+			repository = new EscadronRepository();
         }
 
 		public static void Stop()
 		{
+			repository.Save();
 			webApp.Dispose();
 			webApp = null;
 		}

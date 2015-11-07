@@ -88,7 +88,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Model\Cadet.cs" />
+    <Compile Include="Model\EscadronConfiguration.cs" />
+    <Compile Include="Model\Section.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\EscadronRepository.cs" />
     <Compile Include="WebApi.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +110,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
