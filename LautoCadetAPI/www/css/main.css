@@ -17,8 +17,6 @@
 }
 
 .navbar-inverse .navbar-center {
-    float: none;
     text-align: center;
     color: #fff;
-    line-height: unset;
 }

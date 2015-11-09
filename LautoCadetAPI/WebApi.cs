@@ -41,6 +41,7 @@ namespace LautoCadetAPI
 				defaults: new { id = RouteParameter.Optional } 
 			);
 
+			appBuilder.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 			appBuilder.UseWebApi(config);
 
 			var physicalFileSystem = new PhysicalFileSystem(@"./www");

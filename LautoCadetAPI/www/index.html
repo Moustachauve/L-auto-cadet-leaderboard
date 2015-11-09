@@ -16,15 +16,25 @@
     <script src="js/angular.min.js"></script>
     <script src="controller/application/applicationcontroller.js"></script>
     <script src="controller/leaderboard/leaderboardcontroller.js"></script>
+    <script src="controller/configuration/configurationController.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header" ng-show="showBackButton">
-                <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-chevron-left"></span> Retour</a>
-            </div>
-            <div class="navbar-brand navbar-center">
-                {{currentPage.title}} - L'auto-cadet
+            <div class="row">
+                <ul class="nav navbar-nav col-xs-3">
+                    <li ng-show="currentPage.backPage">
+                        <a href="#" ng-click="navigate(currentPage.backPage)"><span class="glyphicon glyphicon-chevron-left"></span> Retour</a>
+                    </li>
+                </ul>
+                <div class="navbar-brand col-xs-6 navbar-center">
+                    {{currentPage.title}} - L'auto-cadet
+                </div>
+                <ul class="nav navbar-nav col-xs-3">
+                    <li class="pull-right">
+                        <a href="" ng-click="navigate('configuration')"><span class="glyphicon glyphicon-cog"></span></a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
