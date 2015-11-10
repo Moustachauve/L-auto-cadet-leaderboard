@@ -12,6 +12,7 @@ function applicationController($scope, $rootScope) {
     $scope.pages = [
         { name: "index", title: "Classement", url: "/controller/leaderboard/Index.html" },
         { name: "configuration", title: "Configuration", url: "/controller/configuration/index.html", backPage: "index" },
+        { name: "addcadet", title: "Ajouter un cadet", url: "/controller/configuration/addCadet.html", backPage: "configuration" },
     ];
 
     $scope.currentPage = $scope.pages[0];

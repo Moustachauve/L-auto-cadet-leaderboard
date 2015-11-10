@@ -52,19 +52,19 @@ namespace LautoCadetAPI.DAL
 			Cadet cadet1 = new Cadet();
 			cadet1.Nom = "Pôl";
 			cadet1.Prenom = "Jean";
-			cadet1.Rank = "Sergent";
+			cadet1.Grade = "Sergent";
 			cadet1.NbBilletsVendu = 5;
 
 			Cadet cadet2 = new Cadet();
 			cadet2.Nom = "Deschanp";
 			cadet2.Prenom = "Yvons";
-			cadet2.Rank = "Caporal";
+			cadet2.Grade = "Caporal";
 			cadet2.NbBilletsVendu = 3;
 
 			Cadet cadet3 = new Cadet();
 			cadet3.Nom = "Gagnier";
 			cadet3.Prenom = "Eva";
-			cadet3.Rank = "Cadet";
+			cadet3.Grade = "Cadet";
 			cadet3.NbBilletsVendu = 15;
 
 			section.Cadets.Add(cadet1);
@@ -76,5 +76,14 @@ namespace LautoCadetAPI.DAL
 
 			return section;
 		}
+
+		public Cadet AddCadet(Cadet cadet)
+		{
+			Section section = repo.EscadronConfiguration.Sections.FirstOrDefault();
+
+			section.Cadets.Add(cadet);
+
+			return cadet;
+        }
 	}
 }
