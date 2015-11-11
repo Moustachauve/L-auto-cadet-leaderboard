@@ -24,5 +24,10 @@ namespace LautoCadetAPI.Model
 		{
 			Sections = new List<Section>();
 		}
+
+		public int GetNextSectionID()
+		{
+			return currentSectionID++;
+		}
 	}
 }

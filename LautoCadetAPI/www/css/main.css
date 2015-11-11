@@ -2,14 +2,22 @@
     padding-top: 60px;
 }
 
-.spinner img {
+.spinner {
     position: fixed;
+    width: 100%;
+    top:0;
+    bottom: 0;
+    background-color: #000;
+    z-index: 10000;
+}
+
+.spinner img {
+    display:block;
     width: 100px;
     height: 100px;
     padding: 20px;
     background-color: #f3f3f3;
-    left: calc(50% - 50px);
-    z-index: 10000;
+    margin: 40% auto;
     border-radius: 5px;
 }
 .navbar-header {

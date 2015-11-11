@@ -1,0 +1,17 @@
+﻿<div class="row" ng-controller="configurationController">
+    <div class="col-xs-3" ng-include="'controller/configuration/navigation.html'">
+    </div>
+    <div class="col-xs-9">
+        <div class="page-header">
+            <h2>Ajouter une section</h2>
+
+            <div class="form-group">
+                <label for="txtPrenom">Nom de la section</label>
+                <input type="text" class="form-control" id="txtPrenom" ng-model="section.Prenom">
+            </div>
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-success" ng-click="addSection(section)">Ajouter</button>
+            </div>
+        </div>
+    </div>
+</div>

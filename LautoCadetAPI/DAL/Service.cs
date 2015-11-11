@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace LautoCadetAPI.DAL
 {
@@ -28,6 +29,7 @@ namespace LautoCadetAPI.DAL
 		#endregion
 
 		private Repository repo = new Repository();
+		private EscadronConfiguration escadron;
 
 		public void Save()
 		{
@@ -37,41 +39,23 @@ namespace LautoCadetAPI.DAL
 		public void Reload()
 		{
 			repo.Load();
+			escadron = repo.EscadronConfiguration;
 		}
 
 		public IEnumerable<Cadet> GetTopTen()
 		{
-			return repo.GetAllCadets().OrderByDescending(c => c.NbBilletsVendu);//.Take(10);
+			Reload();
+			return repo.GetAllCadets().OrderByDescending(c => c.NbBilletsVendu).Take(10);
 		}
 
 		public Section CreateSection(string name)
 		{
+			Reload();
 			Section section = new Section();
 			section.Nom = name;
+			section.SectionID = escadron.GetNextSectionID();
 
-			Cadet cadet1 = new Cadet();
-			cadet1.Nom = "Pôl";
-			cadet1.Prenom = "Jean";
-			cadet1.Grade = "Sergent";
-			cadet1.NbBilletsVendu = 5;
-
-			Cadet cadet2 = new Cadet();
-			cadet2.Nom = "Deschanp";
-			cadet2.Prenom = "Yvons";
-			cadet2.Grade = "Caporal";
-			cadet2.NbBilletsVendu = 3;
-
-			Cadet cadet3 = new Cadet();
-			cadet3.Nom = "Gagnier";
-			cadet3.Prenom = "Eva";
-			cadet3.Grade = "Cadet";
-			cadet3.NbBilletsVendu = 15;
-
-			section.Cadets.Add(cadet1);
-			section.Cadets.Add(cadet2);
-			section.Cadets.Add(cadet3);
-
-			repo.EscadronConfiguration.Sections.Add(section);
+			escadron.Sections.Add(section);
 			Save();
 
 			return section;
@@ -79,7 +63,8 @@ namespace LautoCadetAPI.DAL
 
 		public Cadet AddCadet(Cadet cadet)
 		{
-			Section section = repo.EscadronConfiguration.Sections.FirstOrDefault();
+			Reload();
+			Section section = escadron.Sections.FirstOrDefault();
 
 			section.Cadets.Add(cadet);
 

@@ -26,7 +26,6 @@ namespace LautoCadetAPI
 
 		public static void Stop()
 		{
-			Service.Instance.Save();
 			webApp.Dispose();
 			webApp = null;
 		}
@@ -58,7 +57,7 @@ namespace LautoCadetAPI
 			};
 
 			appBuilder.UseFileServer(options);
-		}
+        }
 
 	}
 }

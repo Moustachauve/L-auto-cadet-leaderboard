@@ -5,6 +5,23 @@
 function configurationController($scope, $rootScope) {
 
 
+    $scope.getAllCadet = function () {
+        $rootScope.startLoading();
+        $.ajax({
+            method: "GET",
+            url: "http://localhost:8080/api/Leaderboard/GetTopTenSeller",
+        })
+        .done(function (data) {
+            $rootScope.stopLoading();
+            $scope.topTenSeller = data;
+            $scope.$apply();
+        }).fail(function () {
+            $scope.serverError = true;
+            $rootScope.stopLoading();
+            $scope.$apply();
+        });
+    }
+
     $scope.addCadet = function (cadet) {
 
         $rootScope.startLoading();
@@ -24,15 +41,17 @@ function configurationController($scope, $rootScope) {
         });
     }
 
-    $scope.getAllCadet = function () {
+    $scope.addSection = function (section) {
+
         $rootScope.startLoading();
         $.ajax({
-            method: "GET",
-            url: "http://localhost:8080/api/Leaderboard/GetTopTenSeller",
+            method: "POST",
+            url: "http://localhost:8080/api/Section",
+            data: section
         })
         .done(function (data) {
             $rootScope.stopLoading();
-            $scope.topTenSeller = data;
+            alert("Bravo!");
             $scope.$apply();
         }).fail(function () {
             $scope.serverError = true;
@@ -40,5 +59,7 @@ function configurationController($scope, $rootScope) {
             $scope.$apply();
         });
     }
+
+
 
 }
