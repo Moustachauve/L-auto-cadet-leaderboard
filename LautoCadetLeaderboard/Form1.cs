@@ -1,16 +1,7 @@
-﻿using Awesomium.Core;
+﻿using CefSharp;
+using CefSharp.WinForms;
 using LautoCadetAPI;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using LotoCadetLeaderboard.JSCommands;
 
 namespace LotoCadetLeaderboard
 {
@@ -18,6 +9,7 @@ namespace LotoCadetLeaderboard
 	{
 		private bool isFullscreen = false;
 		private FormWindowState previousState;
+		private ChromiumWebBrowser browser;
 
 		public Form1()
 		{
@@ -25,13 +17,13 @@ namespace LotoCadetLeaderboard
 
 			// Start OWIN host 
 			WebApi.Start();
+			browser = new ChromiumWebBrowser(WebApi.API_URL);
+			browser.Dock = DockStyle.Fill;
+			browser.TitleChanged += browser_TitleChanged;
+			browser.KeyDown += browser_KeyDown;
+			Controls.Add(this.browser);
 
-			webControl1.Source = new Uri(WebApi.API_URL);
-		}
-
-		private void Awesomium_Windows_Forms_WebControl_TitleChanged(object sender, Awesomium.Core.TitleChangedEventArgs e)
-		{
-			this.Text = e.Title;
+			//webControl1.Source = new Uri(WebApi.API_URL);
 		}
 
 		private void EnterFullScreenMode()
@@ -45,7 +37,7 @@ namespace LotoCadetLeaderboard
 
 		private void LeaveFullScreenMode()
 		{
-			FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+			FormBorderStyle = FormBorderStyle.Sizable;
 			WindowState = previousState;
 			isFullscreen = false;
 		}
@@ -55,18 +47,7 @@ namespace LotoCadetLeaderboard
 			new SourceCodeViewer(source).ShowDialog();
 		}
 
-		private void OnJavascriptMessage(object sender, JavascriptMessageEventArgs e)
-		{
-			Command command = JsonConvert.DeserializeObject<Command>(e.Message);
-			switch (command.Type)
-			{
-				case "ShowSourceCode":
-					ShowSource((string)command.Content);
-					break;
-			}
-		}
-
-		private void Awesomium_Windows_Forms_WebControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+		private void browser_KeyDown(object sender, KeyEventArgs e)
 		{
 			switch (e.KeyCode)
 			{
@@ -76,6 +57,21 @@ namespace LotoCadetLeaderboard
 					else
 						EnterFullScreenMode();
 					break;
+				case Keys.F12:
+					browser.ShowDevTools();
+					break;
+			}
+		}
+
+		private void browser_TitleChanged(object sender, TitleChangedEventArgs e)
+		{
+			if (InvokeRequired)
+			{
+				Invoke(new MethodInvoker(() => { browser_TitleChanged(sender, e); }));
+			}
+			else
+			{
+				this.Text = e.Title;
 			}
 		}
 

@@ -26,8 +26,11 @@ namespace LautoCadetAPI
 
 		public static void Stop()
 		{
-			webApp.Dispose();
-			webApp = null;
+			if (webApp != null)
+			{
+				webApp.Dispose();
+				webApp = null;
+			}
 		}
 
 		public void Configuration(IAppBuilder appBuilder)

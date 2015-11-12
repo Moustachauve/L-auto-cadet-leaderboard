@@ -7,7 +7,7 @@
     width: 100%;
     top:0;
     bottom: 0;
-    background-color: #000;
+    background-color: rgba(40, 40, 40, 0.70);
     z-index: 10000;
 }
 
@@ -16,9 +16,11 @@
     width: 100px;
     height: 100px;
     padding: 20px;
-    background-color: #f3f3f3;
-    margin: 40% auto;
+    background-color: rgba(40, 40, 40, 0.70);
+    margin: auto;
+    margin-top: 20vh;
     border-radius: 5px;
+    z-index: 10001;
 }
 .navbar-header {
     float:left;
