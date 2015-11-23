@@ -180,8 +180,8 @@
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>echo Copie des fichiers de l'interface web
-echo R|xcopy /Y /E "$(ProjectDir)www" "$(ProjectDir)..\LautoCadetLeaderboard\bin\x86\Debug"
-echo R|xcopy /Y /E "$(ProjectDir)www" "$(ProjectDir)..\LautoCadetLeaderboard\bin\x86\Release"</PostBuildEvent>
+xcopy /Y /E "$(ProjectDir)www" "$(ProjectDir)..\LautoCadetLeaderboard\bin\x86\Debug\www\"
+xcopy /Y /E "$(ProjectDir)www" "$(ProjectDir)..\LautoCadetLeaderboard\bin\x86\Release\www\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
