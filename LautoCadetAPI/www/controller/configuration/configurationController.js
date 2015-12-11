@@ -16,7 +16,7 @@ function configurationController($scope, $rootScope) {
             $scope.cadets = data;
             $scope.$apply();
         }).fail(function () {
-            $scope.serverError = true;
+        	$rootScope.showError();
             $rootScope.stopLoading();
             $scope.$apply();
         });
@@ -34,7 +34,7 @@ function configurationController($scope, $rootScope) {
             $scope.$apply();
             $rootScope.navigate("configuration");
         }).fail(function () {
-            $scope.serverError = true;
+        	$rootScope.showError();
             $rootScope.stopLoading();
             $scope.$apply();
         });
@@ -51,7 +51,7 @@ function configurationController($scope, $rootScope) {
             $scope.sections = data;
             $scope.$apply();
         }).fail(function () {
-            $scope.serverError = true;
+        	$rootScope.showError();
             $rootScope.stopLoading();
             $scope.$apply();
         });
@@ -70,7 +70,7 @@ function configurationController($scope, $rootScope) {
             $scope.$apply();
             $rootScope.navigate("sectionList");
         }).fail(function () {
-            $scope.serverError = true;
+        	$rootScope.showError();
             $rootScope.stopLoading();
             $scope.$apply();
         });

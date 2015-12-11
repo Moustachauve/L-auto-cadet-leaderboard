@@ -17,7 +17,7 @@ function leaderboardController($scope, $rootScope) {
             $scope.topTenSeller = data;
             $scope.$apply();
         }).fail(function () {
-            $scope.serverError = true;
+        	$rootScope.showError();
             $rootScope.stopLoading();
             $scope.$apply();
         });

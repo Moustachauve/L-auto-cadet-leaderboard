@@ -30,3 +30,8 @@
     text-align: center;
     color: #fff;
 }
+
+.container-error {
+	margin-top:30px;
+	margin-bottom: -20px;
+}

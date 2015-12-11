@@ -136,9 +136,7 @@
     <Content Include="www\controller\application\applicationController.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="www\controller\configuration\addCadet.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="www\controller\configuration\cadetAdd.html" />
     <Content Include="www\controller\configuration\configurationController.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -148,6 +146,8 @@
     <Content Include="www\controller\configuration\navigation.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="www\controller\configuration\sectionAdd.html" />
+    <Content Include="www\controller\configuration\sectionList.html" />
     <Content Include="www\controller\leaderboard\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
