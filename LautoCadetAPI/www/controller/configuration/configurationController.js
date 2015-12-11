@@ -31,8 +31,8 @@ function configurationController($scope, $rootScope) {
         })
         .done(function (data) {
             $rootScope.stopLoading();
-            alert("Bravo!");
             $scope.$apply();
+            $rootScope.navigate("configuration");
         }).fail(function () {
             $scope.serverError = true;
             $rootScope.stopLoading();
@@ -49,7 +49,6 @@ function configurationController($scope, $rootScope) {
         .done(function (data) {
             $rootScope.stopLoading();
             $scope.sections = data;
-            console.log(data);
             $scope.$apply();
         }).fail(function () {
             $scope.serverError = true;
@@ -68,7 +67,6 @@ function configurationController($scope, $rootScope) {
         })
         .done(function (data) {
             $rootScope.stopLoading();
-            alert("Bravo!");
             $scope.$apply();
             $rootScope.navigate("sectionList");
         }).fail(function () {

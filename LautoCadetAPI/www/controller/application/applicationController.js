@@ -12,7 +12,7 @@ function applicationController($scope, $rootScope) {
     $scope.pages = [
         { name: "index", title: "Classement", url: "/controller/leaderboard/Index.html" },
         { name: "configuration", title: "Configuration", url: "/controller/configuration/index.html", backPage: "index" },
-        { name: "addcadet", title: "Ajouter un cadet", url: "/controller/configuration/addCadet.html", backPage: "configuration" },
+        { name: "cadetadd", title: "Ajouter un cadet", url: "/controller/configuration/cadetAdd.html", backPage: "configuration" },
         { name: "sectionlist", title: "Liste des sections", url: "/controller/configuration/sectionList.html", backPage: "configuration" },
         { name: "sectionadd", title: "Ajouter une section", url: "/controller/configuration/sectionAdd.html", backPage: "sectionlist" },
     ];

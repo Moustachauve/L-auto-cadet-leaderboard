@@ -3,7 +3,12 @@
 	</div>
 	<div class="col-xs-9">
 		<div class="page-header">
-			<h2>Liste des sections</h2>
+			<h2>
+				Liste des sections
+				<div class="pull-right">
+					<a href="" ng-click="navigate('sectionAdd')" class="btn btn-success">Ajouter une section</a>
+				</div>
+			</h2>
 		</div>
 
 		<table class="table" ng-init="getAllSections()">

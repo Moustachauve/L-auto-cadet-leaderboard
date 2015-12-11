@@ -25,7 +25,7 @@ namespace LautoCadetAPI.Controllers
 				result.Add(new SectionListItem(section));
 			}
 
-			return Json<IEnumerable<SectionListItem>>(result);
+			return Json<IEnumerable<SectionListItem>>(result.OrderBy(s => s.Nom));
         }
 
         [HttpPost]

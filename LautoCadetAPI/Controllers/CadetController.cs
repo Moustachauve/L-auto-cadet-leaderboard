@@ -25,7 +25,7 @@ namespace LautoCadetAPI.Controllers
 				result.Add(new CadetListItem(cadet));
 			}
 
-			return Json<IEnumerable<CadetListItem>>(result);
+			return Json<IEnumerable<CadetListItem>>(result.OrderBy(c => c.DisplayName));
 		}
 
         [HttpPost]
