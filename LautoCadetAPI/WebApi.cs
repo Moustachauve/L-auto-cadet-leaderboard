@@ -22,7 +22,7 @@ namespace LautoCadetAPI
 		{
 			webApp = WebApp.Start<WebApi>(API_URL);
 
-        }
+		}
 
 		public static void Stop()
 		{
@@ -37,10 +37,17 @@ namespace LautoCadetAPI
 		{
 			// Configure Web API for self-host. 
 			HttpConfiguration config = new HttpConfiguration();
+
+			config.Routes.MapHttpRoute(
+				name: "Api with action",
+				routeTemplate: "api/{controller}/{action}/{id}",
+				defaults: new { id = RouteParameter.Optional }
+			);
+
 			config.Routes.MapHttpRoute(
 				name: "DefaultApi",
 				routeTemplate: "api/{controller}/{id}",
-				defaults: new { id = RouteParameter.Optional } 
+				defaults: new { id = RouteParameter.Optional }
 			);
 
 			appBuilder.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
@@ -60,7 +67,7 @@ namespace LautoCadetAPI
 			};
 
 			appBuilder.UseFileServer(options);
-        }
+		}
 
 	}
 }

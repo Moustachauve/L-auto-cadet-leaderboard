@@ -44,7 +44,7 @@ function configurationController($scope, $rootScope) {
 		if (confirm('Voulez-vous vraiment retirer le cadet "' + cadet.Prenom + ' ' + cadet.Nom + '"?')) {
 			$.ajax({
 				type: "DELETE",
-				url: "http://localhost:8080/api/Cadet/" + cadet.CadetID,
+				url: "http://localhost:8080/api/Cadet/Delete/" + cadet.CadetID,
 			})
 			.done(function (data) {
 				$rootScope.stopLoading();
