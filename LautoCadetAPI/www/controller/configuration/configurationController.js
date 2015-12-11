@@ -5,15 +5,15 @@
 function configurationController($scope, $rootScope) {
 
 
-    $scope.getAllCadet = function () {
+    $scope.getAllCadets = function () {
         $rootScope.startLoading();
         $.ajax({
             method: "GET",
-            url: "http://localhost:8080/api/Leaderboard/GetTopTenSeller",
+            url: "http://localhost:8080/api/Cadet/GetAll",
         })
         .done(function (data) {
             $rootScope.stopLoading();
-            $scope.topTenSeller = data;
+            $scope.cadets = data;
             $scope.$apply();
         }).fail(function () {
             $scope.serverError = true;
@@ -44,7 +44,7 @@ function configurationController($scope, $rootScope) {
         $rootScope.startLoading();
         $.ajax({
             method: "GET",
-            url: "http://localhost:8080/api/Section/GetAllSection",
+            url: "http://localhost:8080/api/Section/GetAll",
         })
         .done(function (data) {
             $rootScope.stopLoading();

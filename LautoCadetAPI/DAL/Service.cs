@@ -42,12 +42,6 @@ namespace LautoCadetAPI.DAL
 			escadron = repo.EscadronConfiguration;
 		}
 
-		public IEnumerable<Cadet> GetTopTen()
-		{
-			Reload();
-			return repo.GetAllCadets().OrderByDescending(c => c.NbBilletsVendu).Take(10);
-		}
-
 		public Section AddSection(string name)
 		{
 			Reload();
@@ -61,10 +55,21 @@ namespace LautoCadetAPI.DAL
 			return section;
 		}
 
-        public IEnumerable<Section> GetAllSections()
-        {
-            return repo.GetAllSections();
-        }
+		public IEnumerable<Section> GetAllSections()
+		{
+			return repo.GetAllSections();
+		}
+
+		public IEnumerable<Cadet> GetAllCadets()
+		{
+			return repo.GetAllCadets();
+		}
+
+		public IEnumerable<Cadet> GetTopTen()
+		{
+			Reload();
+			return repo.GetAllCadets().OrderByDescending(c => c.NbBilletsVendu).Take(10);
+		}
 
 		public Cadet AddCadet(Cadet cadet)
 		{

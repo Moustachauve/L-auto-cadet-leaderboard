@@ -6,12 +6,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using LautoCadetAPI.DTO;
 
 namespace LautoCadetAPI.Controllers
 {
     public class CadetController : ApiController
     {
         Service service = Service.Instance;
+
+		public IHttpActionResult GetAll()
+		{
+			var cadets = service.GetAllCadets();
+
+			var result = new List<CadetListItem>();
+
+			foreach (Cadet cadet in cadets)
+			{
+				result.Add(new CadetListItem(cadet));
+			}
+
+			return Json<IEnumerable<CadetListItem>>(result);
+		}
 
         [HttpPost]
         public IHttpActionResult Add(Cadet cadet)
