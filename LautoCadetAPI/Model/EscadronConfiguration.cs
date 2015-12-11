@@ -8,8 +8,6 @@ namespace LautoCadetAPI.Model
 {
 	public class EscadronConfiguration
 	{
-		private int currentSectionID;
-		private int currentCadetID;
 
 		public string Nom { get; set; }
 
@@ -17,8 +15,8 @@ namespace LautoCadetAPI.Model
 
 		public int NbBilletsCirculation { get; set; }
 
-		public int CurrentSectionID { get { return currentSectionID; } }
-		public int CurrentCadetID { get { return currentCadetID; } }
+		public int CurrentSectionID { get; set; }
+		public int CurrentCadetID { get; set; }
 
 		public EscadronConfiguration()
 		{
@@ -27,11 +25,11 @@ namespace LautoCadetAPI.Model
 
         public int GetNextSectionID()
         {
-            return ++currentSectionID;
+			return ++CurrentSectionID;
         }
         public int GetNextCadetID()
         {
-            return ++currentCadetID;
+			return ++CurrentCadetID;
         }
     }
 }
