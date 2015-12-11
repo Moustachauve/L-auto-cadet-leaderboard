@@ -23,5 +23,5 @@ function leaderboardController($scope, $rootScope) {
         });
     }
 
-    $scope.getTopTenSeller();
+    //$scope.getTopTenSeller();
 }

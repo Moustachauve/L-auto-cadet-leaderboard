@@ -25,9 +25,13 @@ namespace LautoCadetAPI.Model
 			Sections = new List<Section>();
 		}
 
-		public int GetNextSectionID()
-		{
-			return currentSectionID++;
-		}
-	}
+        public int GetNextSectionID()
+        {
+            return currentSectionID++;
+        }
+        public int GetNextCadetID()
+        {
+            return currentCadetID++;
+        }
+    }
 }

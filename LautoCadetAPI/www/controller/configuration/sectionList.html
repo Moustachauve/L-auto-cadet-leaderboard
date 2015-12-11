@@ -1,0 +1,24 @@
+﻿<div class="row" ng-controller="configurationController">
+	<div class="col-xs-3" ng-include="'controller/configuration/navigation.html'">
+	</div>
+	<div class="col-xs-9">
+		<div class="page-header">
+			<h2>Liste des sections</h2>
+		</div>
+
+		<table class="table" ng-init="getAllSections()">
+			<thead>
+				<tr>
+					<th>Nom</th>
+					<th width="150px" class="text-center">Nombre de cadets</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="section in sections">
+					<td>{{section.Nom}}</td>
+					<td class="text-center">{{section.NbCadets}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

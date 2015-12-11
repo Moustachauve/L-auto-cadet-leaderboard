@@ -1,6 +1,6 @@
 ﻿angular
     .module('LautoCadet')
-    .controller('configurationController', ['$scope', '$rootScope', leaderboardController]);
+    .controller('configurationController', ['$scope', '$rootScope', configurationController]);
 
 function configurationController($scope, $rootScope) {
 
@@ -22,17 +22,34 @@ function configurationController($scope, $rootScope) {
         });
     }
 
-    $scope.addCadet = function (cadet) {
-
+    $scope.addCadet = function () {
         $rootScope.startLoading();
         $.ajax({
             method: "POST",
             url: "http://localhost:8080/api/Cadet/Add",
-            data: cadet
+            data: $scope.cadet
         })
         .done(function (data) {
             $rootScope.stopLoading();
             alert("Bravo!");
+            $scope.$apply();
+        }).fail(function () {
+            $scope.serverError = true;
+            $rootScope.stopLoading();
+            $scope.$apply();
+        });
+    }
+
+    $scope.getAllSections = function () {
+        $rootScope.startLoading();
+        $.ajax({
+            method: "GET",
+            url: "http://localhost:8080/api/Section/GetAllSection",
+        })
+        .done(function (data) {
+            $rootScope.stopLoading();
+            $scope.sections = data;
+            console.log(data);
             $scope.$apply();
         }).fail(function () {
             $scope.serverError = true;
@@ -47,19 +64,17 @@ function configurationController($scope, $rootScope) {
         $.ajax({
             method: "POST",
             url: "http://localhost:8080/api/Section",
-            data: section
+            data: $scope.section
         })
         .done(function (data) {
             $rootScope.stopLoading();
             alert("Bravo!");
             $scope.$apply();
+            $rootScope.navigate("sectionList");
         }).fail(function () {
             $scope.serverError = true;
             $rootScope.stopLoading();
             $scope.$apply();
         });
     }
-
-
-
 }

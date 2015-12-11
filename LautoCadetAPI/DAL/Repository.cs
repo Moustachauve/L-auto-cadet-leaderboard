@@ -72,5 +72,15 @@ namespace LautoCadetAPI.DAL
 
 			return list;
 		}
+
+        public List<Section> GetAllSections()
+        {
+            List<Section> list = new List<Section>();
+
+            list.AddRange(escadronConfiguration.Sections);
+
+            return list;
+        }
+
 	}
 }

@@ -9,19 +9,19 @@ using System.Web.Http;
 
 namespace LautoCadetAPI.Controllers
 {
-	public class CadetController : ApiController
-	{
-		Service service = Service.Instance;
+    public class CadetController : ApiController
+    {
+        Service service = Service.Instance;
 
-		[HttpPost]
-		public IHttpActionResult Add(Cadet cadet)
-		{
-			if(!ModelState.IsValid)
-			{
-				return BadRequest(ModelState);
-			}
+        [HttpPost]
+        public IHttpActionResult Add(Cadet cadet)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-			return Json<Cadet>(service.AddCadet(cadet));
-		}
-	}
+            return Json<Cadet>(service.AddCadet(cadet));
+        }
+    }
 }

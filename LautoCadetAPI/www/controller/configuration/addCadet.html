@@ -1,29 +1,31 @@
-﻿<div class="row" ng-controller="configurationController">
+﻿<div class="row">
     <div class="col-xs-3" ng-include="'controller/configuration/navigation.html'">
     </div>
-    <div class="col-xs-9">
+    <div class="col-xs-9" ng-controller="configurationController">
         <div class="page-header">
-            <h2>Ajouter un cadet</h2>
+            <form ng-submit="addCadet()">
+                <h2>Ajouter un cadet</h2>
 
-            <div class="form-group">
-                <label for="txtPrenom">Prénom</label>
-                <input type="text" class="form-control" id="txtPrenom" ng-model="cadet.Prenom">
-            </div>
-            <div class="form-group">
-                <label for="txtNom">Nom</label>
-                <input type="text" class="form-control" id="txtNom" ng-model="cadet.Nom">
-            </div>
-            <div class="form-group">
-                <label for="txtNom">Grade</label>
-                <input type="text" class="form-control" id="txtGrade" ng-model="cadet.Grade">
-            </div>
-            <div class="form-group">
-                <label for="txtNbBilletsVendu">Nb. de billets vendu</label>
-                <input type="number" class="form-control" id="txtNbBilletsVendu" ng-model="cadet.NbBilletsVendu" min="0">
-            </div>
-            <div class="form-group text-right">
-                <button type="submit" class="btn btn-success" ng-click="addCadet(cadet)">Créer</button>
-            </div>
+                <div class="form-group">
+                    <label for="txtPrenom">Prénom</label>
+                    <input type="text" class="form-control" id="txtPrenom" ng-model="cadet.Prenom">
+                </div>
+                <div class="form-group">
+                    <label for="txtNom">Nom</label>
+                    <input type="text" class="form-control" id="txtNom" ng-model="cadet.Nom">
+                </div>
+                <div class="form-group">
+                    <label for="txtNom">Grade</label>
+                    <input type="text" class="form-control" id="txtGrade" ng-model="cadet.Grade">
+                </div>
+                <div class="form-group">
+                    <label for="txtNbBilletsVendu">Nb. de billets vendu</label>
+                    <input type="number" class="form-control" id="txtNbBilletsVendu" ng-model="cadet.NbBilletsVendu" min="0">
+                </div>
+                <div class="form-group text-right">
+                    <input type="submit" class="btn btn-success" />
+                </div>
+            </form>
         </div>
     </div>
 </div>

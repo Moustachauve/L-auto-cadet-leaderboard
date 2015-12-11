@@ -3,15 +3,17 @@
     </div>
     <div class="col-xs-9">
         <div class="page-header">
-            <h2>Ajouter une section</h2>
 
+            <h2>Ajouter une section</h2>
+        </div>
+        <form ng-submit="addSection()">
             <div class="form-group">
                 <label for="txtPrenom">Nom de la section</label>
-                <input type="text" class="form-control" id="txtPrenom" ng-model="section.Prenom">
+                <input type="text" class="form-control" id="txtPrenom" ng-model="section.Nom">
             </div>
             <div class="form-group text-right">
-                <button type="submit" class="btn btn-success" ng-click="addSection(section)">Ajouter</button>
+                <button type="submit" class="btn btn-success">Ajouter</button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
