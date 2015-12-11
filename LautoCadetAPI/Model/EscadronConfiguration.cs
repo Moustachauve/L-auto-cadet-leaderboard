@@ -27,11 +27,11 @@ namespace LautoCadetAPI.Model
 
         public int GetNextSectionID()
         {
-            return currentSectionID++;
+            return ++currentSectionID;
         }
         public int GetNextCadetID()
         {
-            return currentCadetID++;
+            return ++currentCadetID;
         }
     }
 }

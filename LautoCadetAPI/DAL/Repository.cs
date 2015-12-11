@@ -15,14 +15,15 @@ namespace LautoCadetAPI.DAL
 		private EscadronConfiguration escadronConfiguration;
 		private string savePath;
 
-        public EscadronConfiguration EscadronConfiguration { get { return escadronConfiguration; } }
+		public EscadronConfiguration EscadronConfiguration { get { return escadronConfiguration; } }
 
 		/// <summary>
 		/// Create a repository using the default file
 		/// </summary>
-		public Repository() : this(DEFAULT_FILE_PATH)
+		public Repository()
+			: this(DEFAULT_FILE_PATH)
 		{ }
-		
+
 
 		/// <summary>
 		/// Create a repository using a custom file path
@@ -31,7 +32,7 @@ namespace LautoCadetAPI.DAL
 		{
 			savePath = path;
 			string directory = Path.GetDirectoryName(path);
-            if (!Directory.Exists(directory))
+			if (!Directory.Exists(directory))
 				Directory.CreateDirectory(directory);
 
 			Load();
@@ -39,7 +40,7 @@ namespace LautoCadetAPI.DAL
 
 		public void Load()
 		{
-			if(File.Exists(savePath))
+			if (File.Exists(savePath))
 			{
 				using (StreamReader reader = new StreamReader(savePath))
 				{
@@ -50,7 +51,7 @@ namespace LautoCadetAPI.DAL
 			{
 				escadronConfiguration = new EscadronConfiguration();
 				Save();
-            }
+			}
 		}
 
 		public void Save()
@@ -65,7 +66,7 @@ namespace LautoCadetAPI.DAL
 		{
 			List<Cadet> list = new List<Cadet>();
 
-			foreach(Section section in escadronConfiguration.Sections)
+			foreach (Section section in escadronConfiguration.Sections)
 			{
 				list.AddRange(section.Cadets);
 			}
@@ -73,14 +74,32 @@ namespace LautoCadetAPI.DAL
 			return list;
 		}
 
-        public List<Section> GetAllSections()
-        {
-            List<Section> list = new List<Section>();
+		public List<Section> GetAllSections()
+		{
+			List<Section> list = new List<Section>();
 
-            list.AddRange(escadronConfiguration.Sections);
+			list.AddRange(escadronConfiguration.Sections);
 
-            return list;
-        }
+			return list;
+		}
+
+		public bool DeleteCadet(int cadetID)
+		{
+			foreach (Section section in escadronConfiguration.Sections)
+			{
+				foreach (Cadet cadet in section.Cadets)
+				{
+					if (cadet.CadetID == cadetID)
+					{
+						section.Cadets.Remove(cadet);
+						Save();
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
 
 	}
 }

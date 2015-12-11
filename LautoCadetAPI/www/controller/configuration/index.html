@@ -16,6 +16,7 @@
 					<th>Grade</th>
 					<th>Nom</th>
 					<th>Nb. billets vendu</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -23,6 +24,10 @@
 					<td>{{cadet.Grade}}</td>
 					<td>{{cadet.DisplayName}}</td>
 					<td class="text-center">{{cadet.NbBilletsVendu}}</td>
+					<td class="text-right">
+						<button class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-pencil"></span></button>
+						<button class="btn btn-sm btn-danger" ng-click="cadetDelete(cadet)"><span class="glyphicon glyphicon-trash"></span></button>
+					</td>
 				</tr>
 			</tbody>
 		</table>

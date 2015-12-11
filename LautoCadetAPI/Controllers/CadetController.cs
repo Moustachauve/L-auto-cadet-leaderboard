@@ -38,5 +38,14 @@ namespace LautoCadetAPI.Controllers
 
             return Json<Cadet>(service.AddCadet(cadet));
         }
+
+		[HttpDelete]
+		public IHttpActionResult Delete(int id)
+		{
+			if(service.DeleteCadet(id))
+				return Json<String>("Done");
+
+			return BadRequest("Cadet not found");
+		}
     }
 }

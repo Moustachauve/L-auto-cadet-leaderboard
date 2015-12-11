@@ -42,6 +42,11 @@ namespace LautoCadetAPI.DAL
 			escadron = repo.EscadronConfiguration;
 		}
 
+		public IEnumerable<Section> GetAllSections()
+		{
+			return repo.GetAllSections();
+		}
+
 		public Section AddSection(string name)
 		{
 			Reload();
@@ -53,11 +58,6 @@ namespace LautoCadetAPI.DAL
 			Save();
 
 			return section;
-		}
-
-		public IEnumerable<Section> GetAllSections()
-		{
-			return repo.GetAllSections();
 		}
 
 		public IEnumerable<Cadet> GetAllCadets()
@@ -82,5 +82,10 @@ namespace LautoCadetAPI.DAL
             Save();
 			return cadet;
         }
+
+		public bool DeleteCadet(int cadetID)
+		{
+			return repo.DeleteCadet(cadetID);
+		}
 	}
 }
