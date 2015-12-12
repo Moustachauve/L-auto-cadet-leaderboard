@@ -11,7 +11,7 @@ function applicationController($scope, $rootScope) {
 	$rootScope.showBackButton = false;
 
 	$scope.pages = [
-        { name: "index", title: "Classement", url: "/controller/leaderboard/Index.html", isMainPage: true },
+        { name: "index", title: "Classement", url: "/controller/leaderboard/Index.html", isHomePage: true },
         { name: "configuration", title: "Configuration", url: "/controller/configuration/index.html" },
         { name: "cadetadd", title: "Ajouter un cadet", url: "/controller/configuration/cadetAdd.html" },
         { name: "sectionlist", title: "Liste des sections", url: "/controller/configuration/sectionList.html" },

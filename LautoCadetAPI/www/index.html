@@ -23,7 +23,7 @@
 		<div class="container">
 			<div class="row">
 				<ul class="nav navbar-nav col-xs-3">
-					<li ng-hide="currentPage.isMainPage">
+					<li ng-hide="currentPage.isHomePage">
 						<a href="" ng-click="navigateBack()"><span class="glyphicon glyphicon-chevron-left"></span> Retour</a>
 					</li>
 				</ul>
@@ -32,7 +32,8 @@
 				</div>
 				<ul class="nav navbar-nav col-xs-3">
 					<li class="pull-right">
-						<a href="" ng-click="navigate('configuration')"><span class="glyphicon glyphicon-cog"></span></a>
+                        <a href="" ng-click="navigate('configuration')" ng-show="currentPage.isHomePage"><span class="glyphicon glyphicon-cog"></span></a>
+                        <a href="" ng-click="navigate('index')" ng-hide="currentPage.isHomePage"><span class="glyphicon glyphicon-home"></span></a>
 					</li>
 				</ul>
 			</div>
