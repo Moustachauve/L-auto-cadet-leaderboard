@@ -13,8 +13,13 @@
 
     // == Config ==
 
-    // = Cadets =
     .when('/configuration/', {
+        redirectTo: '/configuration/cadet/list'
+    })
+
+    // = Cadets =
+
+    .when('/configuration/cadet/list', {
         title: "Liste des cadets",
         templateUrl: '/controller/configuration/cadetList.html',
         controller: 'configurationController'
@@ -97,49 +102,5 @@ function applicationController($scope, $rootScope, $route) {
         $rootScope.hideError();
         $route.reload();
     }
-
-    //$scope.pages = [
-    //    { name: "index", title: "Classement", url: "/controller/leaderboard/Index.html", isHomePage: true },
-    //    { name: "configuration", title: "Configuration", url: "/controller/configuration/index.html" },
-    //    { name: "cadetadd", title: "Ajouter un cadet", url: "/controller/configuration/cadetAdd.html" },
-    //    { name: "sectionlist", title: "Liste des sections", url: "/controller/configuration/sectionList.html" },
-    //    { name: "sectionadd", title: "Ajouter une section", url: "/controller/configuration/sectionAdd.html" },
-    //];
-
-    //$scope.currentPage = $scope.pages[0];
-
-    //$rootScope.navigate = function (pageName) {
-    //	var page;
-    //	pageName = pageName.toLowerCase();
-
-    //	if (!pageName) {
-    //		page = $scope.pages[0];
-    //	}
-    //	else {
-    //		for (var i = 0; i < $scope.pages.length; i++) {
-    //			if ($scope.pages[i].name == pageName) {
-    //				page = $scope.pages[i];
-    //				break;
-    //			}
-    //		}
-    //	}
-    //	if (page === undefined) {
-    //		console.warn('Page "' + pageName + '" not found.');
-    //		return;
-    //	}
-
-    //	if ($scope.currentPage.name != page.name) {
-    //		$scope.currentPage = page;
-    //		location.hash = "/" + page.name;
-    //		$rootScope.hideError();
-    //	}
-    //};
-
-    //$scope.$watch(function () {
-    //    return location.hash
-    //}, function (value) {
-    //    $rootScope.navigate(location.hash.substr(2, location.hash.length));
-    //});
-
 }
 
