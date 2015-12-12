@@ -1,4 +1,5 @@
 ﻿using LautoCadetAPI.DAL;
+using LautoCadetAPI.DTO;
 using LautoCadetAPI.Model;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,11 @@ namespace LautoCadetAPI.Controllers
 	{
 		Service service = Service.Instance;
 
-		public IEnumerable<Cadet> GetTopTenSeller()
+		public IHttpActionResult GetTopTenSeller()
 		{
-            return service.GetTopTen();
+            var list = new CadetList(service.GetTopTenSeller());
+
+			return Json<CadetList>(list);
 		}
 	}
 }

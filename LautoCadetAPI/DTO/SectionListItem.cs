@@ -7,19 +7,26 @@ using LautoCadetAPI.Model;
 
 namespace LautoCadetAPI.DTO
 {
-    public class SectionListItem
-    {
-        public int SectionID { get; set; }
+	public class SectionListItem
+	{
+		public int SectionID { get; set; }
 
-        public string Nom { get; set; }
+		public string Nom { get; set; }
 
 		public int NbCadets { get; set; }
+
+		public int NbBilletsVendu { get; set; }
 
 		public SectionListItem(Section section)
 		{
 			SectionID = section.SectionID;
 			Nom = section.Nom;
 			NbCadets = section.Cadets.Count;
+
+			foreach (Cadet cadet in section.Cadets)
+			{
+				NbBilletsVendu += cadet.NbBilletsVendu;
+            }
 		}
-    }
+	}
 }

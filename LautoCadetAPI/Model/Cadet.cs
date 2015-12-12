@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace LautoCadetAPI.Model
 {
+	[JsonObject(IsReference = true)]
 	public class Cadet
 	{
 		public int CadetID { get; set; }
@@ -25,5 +27,7 @@ namespace LautoCadetAPI.Model
         [Required]
         [Range(0, Int32.MaxValue)]
 		public int NbBilletsVendu { get; set; }
+
+		public Section Section { get; set; }
 	}
 }

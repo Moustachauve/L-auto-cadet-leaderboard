@@ -66,6 +66,9 @@ namespace LautoCadetAPI
 				"index.html"
 			};
 
+			config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize;
+			config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+
 			appBuilder.UseFileServer(options);
 		}
 

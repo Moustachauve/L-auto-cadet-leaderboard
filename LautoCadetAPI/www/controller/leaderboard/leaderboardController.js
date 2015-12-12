@@ -15,6 +15,7 @@ function leaderboardController($scope, $rootScope) {
         .done(function (data) {
             $rootScope.stopLoading();
             $scope.topTenSeller = data;
+            console.log(data);
             $scope.$apply();
         }).fail(function () {
         	$rootScope.showError();
@@ -22,6 +23,4 @@ function leaderboardController($scope, $rootScope) {
             $scope.$apply();
         });
     }
-
-    //$scope.getTopTenSeller();
 }

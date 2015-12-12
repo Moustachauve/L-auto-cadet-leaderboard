@@ -15,13 +15,15 @@
 			<thead>
 				<tr>
 					<th>Nom</th>
-					<th width="150px" class="text-center">Nombre de cadets</th>
+                    <th width="150px" class="text-center">Nombre de cadets</th>
+                    <th width="150px" class="text-center">Nb. billets vendu</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="section in sections">
 					<td>{{section.Nom}}</td>
-					<td class="text-center">{{section.NbCadets}}</td>
+                    <td class="text-center">{{section.NbCadets}}</td>
+                    <td class="text-center">{{section.NbBilletsVendu}}</td>
 				</tr>
 			</tbody>
 		</table>

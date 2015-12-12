@@ -1,4 +1,5 @@
-﻿using LautoCadetAPI.Model;
+﻿using LautoCadetAPI.DTO;
+using LautoCadetAPI.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,18 +66,30 @@ namespace LautoCadetAPI.DAL
 			return repo.GetAllCadets();
 		}
 
-		public IEnumerable<Cadet> GetTopTen()
+		public IEnumerable<Cadet> GetCadetsBySection(int sectionID)
+		{
+			return repo.GetAllSections().First(s => s.SectionID == sectionID).Cadets;
+		}
+
+		public IEnumerable<Cadet> GetTopTenSeller()
 		{
 			Reload();
 			return repo.GetAllCadets().OrderByDescending(c => c.NbBilletsVendu).Take(10);
 		}
 
-		public Cadet AddCadet(Cadet cadet)
+		public Cadet AddCadet(CadetListItem cadetModel)
 		{
 			Reload();
-			Section section = escadron.Sections.FirstOrDefault();
+			Section section = escadron.Sections.First(s => s.SectionID == cadetModel.SectionID);
 
-            cadet.CadetID = escadron.GetNextCadetID();
+			Cadet cadet = new Cadet();
+			cadet.Grade = cadetModel.Grade;
+			cadet.NbBilletsVendu = cadetModel.NbBilletsVendu;
+			cadet.Nom = cadetModel.Nom;
+			cadet.Prenom = cadetModel.Prenom;
+			cadet.Section = section;
+
+			cadet.CadetID = escadron.GetNextCadetID();
 
 			section.Cadets.Add(cadet);
             Save();

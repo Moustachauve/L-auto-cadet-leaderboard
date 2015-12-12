@@ -101,6 +101,7 @@
     <Compile Include="Controllers\LeaderboardController.cs" />
     <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="DAL\Service.cs" />
+    <Compile Include="DTO\CadetList.cs" />
     <Compile Include="DTO\CadetListItem.cs" />
     <Compile Include="DTO\SectionListItem.cs" />
     <Compile Include="Model\Cadet.cs" />

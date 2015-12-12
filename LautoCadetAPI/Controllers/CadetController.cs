@@ -18,25 +18,20 @@ namespace LautoCadetAPI.Controllers
 		{
 			var cadets = service.GetAllCadets();
 
-			var result = new List<CadetListItem>();
-
-			foreach (Cadet cadet in cadets)
-			{
-				result.Add(new CadetListItem(cadet));
-			}
+			var result = new CadetList(cadets);
 
 			return Json<IEnumerable<CadetListItem>>(result.OrderBy(c => c.DisplayName));
 		}
 
         [HttpPost]
-        public IHttpActionResult Add(Cadet cadet)
+        public IHttpActionResult Add(CadetListItem cadetModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            return Json<Cadet>(service.AddCadet(cadet));
+			return Json<Cadet>(service.AddCadet(cadetModel));
         }
 
 		[HttpDelete]

@@ -58,7 +58,7 @@ namespace LautoCadetAPI.DAL
 		{
 			using (StreamWriter writer = new StreamWriter(savePath))
 			{
-				writer.Write(JsonConvert.SerializeObject(escadronConfiguration, Formatting.Indented));
+                writer.Write(JsonConvert.SerializeObject(escadronConfiguration, Formatting.Indented));
 			}
 		}
 

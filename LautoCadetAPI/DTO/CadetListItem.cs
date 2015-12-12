@@ -19,6 +19,10 @@ namespace LautoCadetAPI.DTO
 
 		public int NbBilletsVendu { get; set; }
 
+		public int SectionID { get; set; }
+
+		public string NomSection { get; set; }
+
 		public string DisplayName
 		{
 			get
@@ -27,6 +31,9 @@ namespace LautoCadetAPI.DTO
 			}
 		}
 
+		public CadetListItem()
+		{}
+
 		public CadetListItem(Cadet cadet)
 		{
 			CadetID = cadet.CadetID;
@@ -34,6 +41,8 @@ namespace LautoCadetAPI.DTO
 			Nom = cadet.Nom;
 			Grade = cadet.Grade;
 			NbBilletsVendu = cadet.NbBilletsVendu;
+			SectionID = cadet.Section.SectionID;
+			NomSection = cadet.Section.Nom;
 		}
 	}
 }
