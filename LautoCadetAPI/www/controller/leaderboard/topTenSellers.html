@@ -1,0 +1,20 @@
+﻿<h1>Dix meilleurs vendeurs:</h1>
+
+<table class="table table-striped" ng-init="getTopTenSeller()">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Grade</th>
+            <th>Nom</th>
+            <th>Nb. de billets vendu</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="cadet in topTenSeller">
+            <td>{{$index + 1}}</td>
+            <td>{{cadet.Grade}}</td>
+            <td>{{cadet.DisplayName}}</td>
+            <td>{{cadet.NbBilletsVendu}}</td>
+        </tr>
+    </tbody>
+</table>

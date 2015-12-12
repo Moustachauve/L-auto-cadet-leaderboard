@@ -23,20 +23,20 @@ function configurationController($scope, $rootScope) {
 	}
 
 	$scope.addCadet = function () {
-		$rootScope.startLoading();
-		$.ajax({
-			method: "POST",
-			url: "http://localhost:8080/api/Cadet/Add",
-			data: $scope.cadet
-		})
+	    $rootScope.startLoading();
+	    $.ajax({
+	        method: "POST",
+	        url: "http://localhost:8080/api/Cadet/Add",
+	        data: $scope.cadet
+	    })
         .done(function (data) {
-        	$rootScope.stopLoading();
-        	$scope.$apply();
-        	$rootScope.navigate("configuration");
+            $rootScope.stopLoading();
+            $scope.$apply();
+            $rootScope.navigate("configuration");
         }).fail(function () {
-        	$rootScope.showError();
-        	$rootScope.stopLoading();
-        	$scope.$apply();
+            $rootScope.showError();
+            $rootScope.stopLoading();
+            $scope.$apply();
         });
 	}
 

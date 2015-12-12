@@ -50,6 +50,13 @@ namespace LautoCadetAPI
 				defaults: new { id = RouteParameter.Optional }
 			);
 
+			config.Routes.MapHttpRoute(
+				name: "Fallback",
+				routeTemplate: "{name}/{*other}",
+				defaults: new { controller = "Home", action = "Index" },
+                constraints: new { name = "^(?!(api|controller|css|fonts|img|js)$).*$" }
+			);
+
 			appBuilder.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 			appBuilder.UseWebApi(config);
 

@@ -61,6 +61,11 @@ namespace LautoCadetAPI.DAL
 			return section;
 		}
 
+		public Cadet GetCadetByID(int id)
+		{
+			return GetAllCadets().First(c => c.CadetID == id);
+        }
+
 		public IEnumerable<Cadet> GetAllCadets()
 		{
 			return repo.GetAllCadets();

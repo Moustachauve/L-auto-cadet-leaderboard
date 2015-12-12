@@ -4,8 +4,9 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/">
 
-	<title>{{currentPage.title}} - L'auto-cadet</title>
+	<title>{{pageTitle}} - L'auto-cadet</title>
 
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/main.css" rel="stylesheet" />
@@ -14,26 +15,28 @@
 	<script src="js/servercom.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/angular.min.js"></script>
+    <script src="js/angular-route.min.js"></script>
 	<script src="controller/application/applicationcontroller.js"></script>
 	<script src="controller/leaderboard/leaderboardcontroller.js"></script>
 	<script src="controller/configuration/configurationController.js"></script>
+    <script src="controller/error/errorController.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="row">
 				<ul class="nav navbar-nav col-xs-3">
-					<li ng-hide="currentPage.isHomePage">
+					<li ng-hide="isHomePage">
 						<a href="" ng-click="navigateBack()"><span class="glyphicon glyphicon-chevron-left"></span> Retour</a>
 					</li>
 				</ul>
 				<div class="navbar-brand col-xs-6 navbar-center">
-					{{currentPage.title}} - L'auto-cadet
+					{{pageTitle}} - L'auto-cadet
 				</div>
 				<ul class="nav navbar-nav col-xs-3">
 					<li class="pull-right">
-                        <a href="" ng-click="navigate('configuration')" ng-show="currentPage.isHomePage"><span class="glyphicon glyphicon-cog"></span></a>
-                        <a href="" ng-click="navigate('index')" ng-hide="currentPage.isHomePage"><span class="glyphicon glyphicon-home"></span></a>
+                        <a href="configuration/" ng-show="isHomePage"><span class="glyphicon glyphicon-cog"></span></a>
+                        <a href="/" ng-hide="isHomePage"><span class="glyphicon glyphicon-home"></span></a>
 					</li>
 				</ul>
 			</div>
@@ -54,8 +57,7 @@
 		<img src="img/spinner.gif" alt="Chargement..." />
 	</div>
 
+    <div class="container" ng-view></div>
 
-	<div class="container" ng-include="currentPage.url">
-	</div>
 </body>
 </html>

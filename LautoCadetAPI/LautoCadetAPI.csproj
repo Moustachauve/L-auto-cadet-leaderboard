@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\CadetController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaderboardController.cs" />
     <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="DAL\Service.cs" />
@@ -138,10 +139,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="www\controller\configuration\cadetAdd.html" />
+    <Content Include="www\controller\configuration\cadetEdit.html" />
+    <Content Include="www\controller\configuration\cadetList.html" />
     <Content Include="www\controller\configuration\configurationController.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\controller\configuration\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="www\controller\configuration\navigation.html">
@@ -149,12 +149,12 @@
     </Content>
     <Content Include="www\controller\configuration\sectionAdd.html" />
     <Content Include="www\controller\configuration\sectionList.html" />
-    <Content Include="www\controller\leaderboard\index.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="www\controller\error\404.html" />
+    <Content Include="www\controller\error\errorController.js" />
     <Content Include="www\controller\leaderboard\leaderboardController.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="www\controller\leaderboard\topTenSellers.html" />
     <Content Include="www\css\bootstrap.min.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -167,6 +167,7 @@
     <Content Include="www\img\spinner.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="www\js\angular-route.min.js" />
     <Content Include="www\js\angular.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
