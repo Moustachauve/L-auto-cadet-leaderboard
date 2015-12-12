@@ -26,6 +26,12 @@
         controller: 'configurationController'
     })
 
+    .when('/configuration/cadet/edit/:id', {
+        title: "Modifier un cadet",
+        templateUrl: '/controller/configuration/cadetEdit.html',
+        controller: 'configurationController'
+    })
+
     // = Sections =
 
     .when('/configuration/section/list', {

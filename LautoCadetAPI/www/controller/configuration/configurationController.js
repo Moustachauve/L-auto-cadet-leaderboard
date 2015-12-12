@@ -1,9 +1,8 @@
 ﻿angular
     .module('LautoCadet')
-    .controller('configurationController', ['$scope', '$rootScope', configurationController]);
+    .controller('configurationController', ['$scope', '$rootScope', '$location', '$routeParams', configurationController]);
 
-function configurationController($scope, $rootScope) {
-
+function configurationController($scope, $rootScope, $location, $routeParams) {
 
 	$scope.getAllCadets = function () {
 		$rootScope.startLoading();
@@ -22,6 +21,25 @@ function configurationController($scope, $rootScope) {
         });
 	}
 
+	$scope.cadetGetDetails = function () {
+	    $rootScope.startLoading();
+	    $scope.cadetDetails = null;
+
+	    $.ajax({
+	        method: "GET",
+	        url: "http://localhost:8080/api/Cadet/Get/" + $routeParams.id,
+	    })
+        .done(function (data) {
+            $rootScope.stopLoading();
+            $scope.cadetDetails = data;
+            $scope.$apply();
+        }).fail(function () {
+            $rootScope.showError();
+            $rootScope.stopLoading();
+            $scope.$apply();
+        });
+	}
+
 	$scope.addCadet = function () {
 	    $rootScope.startLoading();
 	    $.ajax({
@@ -31,8 +49,26 @@ function configurationController($scope, $rootScope) {
 	    })
         .done(function (data) {
             $rootScope.stopLoading();
+            $location.path('configuration/');
             $scope.$apply();
-            $rootScope.navigate("configuration");
+        }).fail(function () {
+            $rootScope.showError();
+            $rootScope.stopLoading();
+            $scope.$apply();
+        });
+	}
+
+	$scope.cadetEdit = function () {
+	    $rootScope.startLoading();
+	    $.ajax({
+	        method: "PUT",
+	        url: "http://localhost:8080/api/Cadet/Edit",
+	        data: $scope.cadetDetails
+	    })
+        .done(function (data) {
+            $rootScope.stopLoading();
+            $location.path('configuration/');
+            $scope.$apply();
         }).fail(function () {
             $rootScope.showError();
             $rootScope.stopLoading();

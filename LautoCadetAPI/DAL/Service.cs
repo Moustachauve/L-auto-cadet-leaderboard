@@ -97,9 +97,28 @@ namespace LautoCadetAPI.DAL
 			cadet.CadetID = escadron.GetNextCadetID();
 
 			section.Cadets.Add(cadet);
-            Save();
+			Save();
 			return cadet;
-        }
+		}
+
+		public Cadet EditCadet(CadetListItem cadetModel)
+		{
+			Reload();
+			Cadet cadet = GetCadetByID(cadetModel.CadetID);
+			Section section = escadron.Sections.First(s => s.SectionID == cadetModel.SectionID);
+
+			cadet.Grade = cadetModel.Grade;
+			cadet.NbBilletsVendu = cadetModel.NbBilletsVendu;
+			cadet.Nom = cadetModel.Nom;
+			cadet.Prenom = cadetModel.Prenom;
+
+			cadet.Section.Cadets.Remove(cadet);
+
+			cadet.Section = section;
+			section.Cadets.Add(cadet);
+			Save();
+			return cadet;
+		}
 
 		public bool DeleteCadet(int cadetID)
 		{

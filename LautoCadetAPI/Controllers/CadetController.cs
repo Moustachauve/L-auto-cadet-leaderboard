@@ -46,6 +46,17 @@ namespace LautoCadetAPI.Controllers
 			return Json<Cadet>(service.AddCadet(cadetModel));
 		}
 
+		[HttpPut]
+		public IHttpActionResult Edit(CadetListItem cadetModel)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			return Json<Cadet>(service.EditCadet(cadetModel));
+		}
+
 		[HttpDelete]
 		public IHttpActionResult Delete(int id)
 		{
