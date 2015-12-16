@@ -73,7 +73,37 @@ function applicationController($scope, $rootScope, $route) {
 
     $scope.showLoading = false;
     $scope.errorMessage = null;
+    $scope.isFullScreen = false;
     $rootScope.showBackButton = false;
+
+    $scope.enterFullScreen = function () {
+        $scope.isFullScreen = true;
+        if (typeof clientUtils != "undefined") {
+            clientUtils.enterFullScreen();
+        }
+        else {
+            console.log("Going Fullscreen");
+        }
+    }
+
+    $scope.leaveFullScreen = function () {
+        $scope.isFullScreen = false;
+        if (typeof clientUtils != "undefined") {
+            clientUtils.leaveFullScreen();
+        }
+        else {
+            console.log("Leaving Fullscreen");
+        }
+    }
+
+    $scope.showDevTools = function () {
+        if (typeof clientUtils != "undefined") {
+            clientUtils.showDevTools();
+        }
+        else {
+            console.log("Opening DevTools");
+        }
+    }
 
     $rootScope.startLoading = function () {
         $scope.showLoading = true;

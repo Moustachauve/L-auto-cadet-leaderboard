@@ -34,9 +34,13 @@
 					{{pageTitle}} - L'auto-cadet
 				</div>
 				<ul class="nav navbar-nav col-xs-3">
+                    <li class="pull-right">
+                        <a href="" ng-click="enterFullScreen()" ng-hide="isFullScreen"><span class="glyphicon glyphicon-resize-full"></span></a>
+                        <a href="" ng-click="leaveFullScreen()" ng-show="isFullScreen"><span class="glyphicon glyphicon-resize-small"></span></a>
+                    </li>
 					<li class="pull-right">
                         <a href="configuration/" ng-show="isHomePage"><span class="glyphicon glyphicon-cog"></span></a>
-                        <a href="/" ng-hide="isHomePage"><span class="glyphicon glyphicon-home"></span></a>
+                        <a href="/" ng-hide="isHomePage"><span class="glyphicon glyphicon-home"></span></a>                        
 					</li>
 				</ul>
 			</div>
@@ -59,5 +63,13 @@
 
     <div class="container" ng-view></div>
 
+    <footer class="footer">
+        <div class="container">
+            <a class="text-transparent pull-right" href="" ng-click="showDevTools()">
+                <span class="glyphicon glyphicon-console"></span>
+            </a>
+            <p class="text-muted">© Christophe Gagnier</p>
+        </div>
+    </footer>
 </body>
 </html>

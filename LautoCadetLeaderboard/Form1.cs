@@ -21,25 +21,50 @@ namespace LotoCadetLeaderboard
 			browser.Dock = DockStyle.Fill;
 			browser.TitleChanged += browser_TitleChanged;
 			browser.KeyDown += browser_KeyDown;
+			browser.RegisterJsObject("clientUtils", new JsClientUtils(this));
 			Controls.Add(this.browser);
-
-			//webControl1.Source = new Uri(WebApi.API_URL);
 		}
 
-		private void EnterFullScreenMode()
+		public void EnterFullScreenMode()
 		{
-			previousState = WindowState;
-			WindowState = FormWindowState.Normal;
-			FormBorderStyle = FormBorderStyle.None;
-			WindowState = FormWindowState.Maximized;
-			isFullscreen = true;
+			if (InvokeRequired)
+			{
+				Invoke(new MethodInvoker(() => { EnterFullScreenMode(); }));
+			}
+			else
+			{
+				previousState = WindowState;
+				WindowState = FormWindowState.Normal;
+				FormBorderStyle = FormBorderStyle.None;
+				WindowState = FormWindowState.Maximized;
+				isFullscreen = true;
+			}
 		}
 
-		private void LeaveFullScreenMode()
+		public void LeaveFullScreenMode()
 		{
-			FormBorderStyle = FormBorderStyle.Sizable;
-			WindowState = previousState;
-			isFullscreen = false;
+			if (InvokeRequired)
+			{
+				Invoke(new MethodInvoker(() => { LeaveFullScreenMode(); }));
+			}
+			else
+			{
+				FormBorderStyle = FormBorderStyle.Sizable;
+				WindowState = previousState;
+				isFullscreen = false;
+			}
+		}
+
+		public void ShowDevTools()
+		{
+			if (InvokeRequired)
+			{
+				Invoke(new MethodInvoker(() => { ShowDevTools(); }));
+			}
+			else
+			{
+				browser.ShowDevTools();
+			}
 		}
 
 		private void ShowSource(string source)
