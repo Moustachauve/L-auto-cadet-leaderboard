@@ -17,6 +17,9 @@ namespace LautoCadetAPI.DTO
 
 		public int NbBilletsVendu { get; set; }
 
+		public SectionListItem()
+		{}
+
 		public SectionListItem(Section section)
 		{
 			SectionID = section.SectionID;

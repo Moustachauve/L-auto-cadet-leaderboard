@@ -11,7 +11,11 @@ namespace LautoCadetAPI.DAL
 {
 	public class Service
 	{
-		#region Singleton
+
+		#region Singleton & Initialization
+
+		private Repository repo = new Repository();
+		private EscadronConfiguration escadron;
 
 		private static Service instance;
 		public static Service Instance
@@ -29,19 +33,7 @@ namespace LautoCadetAPI.DAL
 
 		#endregion
 
-		private Repository repo = new Repository();
-		private EscadronConfiguration escadron;
-
-		public void Save()
-		{
-			repo.Save();
-		}
-
-		public void Reload()
-		{
-			repo.Load();
-			escadron = repo.EscadronConfiguration;
-		}
+		#region Section
 
 		public IEnumerable<Section> GetAllSections()
 		{
@@ -61,10 +53,35 @@ namespace LautoCadetAPI.DAL
 			return section;
 		}
 
+		public Section GetSectionByID(int id)
+		{
+			return GetAllSections().First(s => s.SectionID == id);
+		}
+
+		public Section SectionEdit(SectionListItem sectionModel)
+		{
+			Reload();
+			Section section = GetSectionByID(sectionModel.SectionID);
+
+			section.Nom = sectionModel.Nom;
+
+			Save();
+			return section;
+		}
+
+		public bool SectionDelete(int sectionID)
+		{
+			return repo.SectionDelete(sectionID);
+		}
+
+		#endregion
+
+		#region Cadet
+
 		public Cadet GetCadetByID(int id)
 		{
 			return GetAllCadets().First(c => c.CadetID == id);
-        }
+		}
 
 		public IEnumerable<Cadet> GetAllCadets()
 		{
@@ -73,7 +90,7 @@ namespace LautoCadetAPI.DAL
 
 		public IEnumerable<Cadet> GetCadetsBySection(int sectionID)
 		{
-			return repo.GetAllSections().First(s => s.SectionID == sectionID).Cadets;
+			return GetSectionByID(sectionID).Cadets;
 		}
 
 		public IEnumerable<Cadet> GetTopTenSeller()
@@ -85,7 +102,7 @@ namespace LautoCadetAPI.DAL
 		public Cadet AddCadet(CadetListItem cadetModel)
 		{
 			Reload();
-			Section section = escadron.Sections.First(s => s.SectionID == cadetModel.SectionID);
+			Section section = GetSectionByID(cadetModel.SectionID);
 
 			Cadet cadet = new Cadet();
 			cadet.Grade = cadetModel.Grade;
@@ -105,7 +122,7 @@ namespace LautoCadetAPI.DAL
 		{
 			Reload();
 			Cadet cadet = GetCadetByID(cadetModel.CadetID);
-			Section section = escadron.Sections.First(s => s.SectionID == cadetModel.SectionID);
+			Section section = GetSectionByID(cadetModel.SectionID);
 
 			cadet.Grade = cadetModel.Grade;
 			cadet.NbBilletsVendu = cadetModel.NbBilletsVendu;
@@ -124,5 +141,23 @@ namespace LautoCadetAPI.DAL
 		{
 			return repo.DeleteCadet(cadetID);
 		}
+
+		#endregion
+
+		#region IO
+
+		public void Save()
+		{
+			repo.Save();
+		}
+
+		public void Reload()
+		{
+			repo.Load();
+			escadron = repo.EscadronConfiguration;
+		}
+
+		#endregion
+
 	}
 }

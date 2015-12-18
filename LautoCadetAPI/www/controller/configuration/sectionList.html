@@ -1,31 +1,38 @@
 ﻿<div class="row" ng-controller="configurationController">
-	<div class="col-xs-3" ng-include="'controller/configuration/navigation.html'">
-	</div>
-	<div class="col-xs-9">
-		<div class="page-header">
-			<h2>
-				Liste des sections
-				<div class="pull-right">
-					<a href="" ng-click="navigate('sectionAdd')" class="btn btn-success">Ajouter une section</a>
-				</div>
-			</h2>
-		</div>
+    <div class="col-xs-3" ng-include="'controller/configuration/navigation.html'">
+    </div>
+    <div class="col-xs-9">
+        <div class="page-header">
+            <h2>
+                Liste des sections
+                <div class="pull-right">
+                    <a href="configuration/section/add" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span> Ajouter
+                    </a>
+                </div>
+            </h2>
+        </div>
 
-		<table class="table" ng-init="getAllSections()">
-			<thead>
-				<tr>
-					<th>Nom</th>
+        <table class="table" ng-init="getAllSections()">
+            <thead>
+                <tr>
+                    <th>Nom</th>
                     <th width="150px" class="text-center">Nombre de cadets</th>
                     <th width="150px" class="text-center">Nb. billets vendu</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="section in sections">
-					<td>{{section.Nom}}</td>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="section in sections">
+                    <td>{{section.Nom}}</td>
                     <td class="text-center">{{section.NbCadets}}</td>
                     <td class="text-center">{{section.NbBilletsVendu}}</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+                    <td class="text-right">
+                        <a href="configuration/section/edit/{{section.SectionID}}" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a href="" class="btn btn-sm btn-danger" ng-click="sectionDelete(section)"><span class="glyphicon glyphicon-trash"></span></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

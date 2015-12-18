@@ -101,5 +101,19 @@ namespace LautoCadetAPI.DAL
 			return false;
 		}
 
+		public bool SectionDelete(int sectionID)
+		{
+			foreach (Section section in escadronConfiguration.Sections)
+			{
+				if (section.SectionID == sectionID)
+				{
+					escadronConfiguration.Sections.Remove(section);
+					Save();
+					return true;
+				}
+			}
+
+			return false;
+		}
 	}
 }

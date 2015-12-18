@@ -1,18 +1,17 @@
-﻿<div class="row">
+﻿<div class="row" ng-init="sectionGetDetails()">
     <div class="col-xs-3" ng-include="'controller/configuration/navigation.html'">
     </div>
     <div class="col-xs-9">
         <div class="page-header">
-
-            <h2>Ajouter une section</h2>
+            <h2>Modifier une section</h2>
         </div>
-        <form ng-submit="addSection()">
+        <form ng-submit="sectionEdit()">
             <div class="form-group">
                 <label for="txtPrenom">Nom de la section</label>
-                <input type="text" class="form-control" id="txtPrenom" ng-model="section.Nom">
+                <input type="text" class="form-control" id="txtPrenom" ng-model="sectionDetails.Nom">
             </div>
             <div class="form-group text-right">
-                <button type="submit" class="btn btn-success">Ajouter</button>
+                <button type="submit" class="btn btn-success">Sauvegarder</button>
             </div>
         </form>
     </div>

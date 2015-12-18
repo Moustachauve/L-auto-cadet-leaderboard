@@ -1,4 +1,4 @@
-﻿<div class="row" ng-controller="configurationController">
+﻿<div class="row">
     <div class="col-xs-3" ng-include="'controller/configuration/navigation.html'">
     </div>
     <div class="col-xs-9">
@@ -6,7 +6,9 @@
             <h2>
 				Liste des cadets
 				<div class="pull-right">
-					<a href="" ng-click="navigate('cadetAdd')" class="btn btn-success">Ajouter un cadet</a>
+					<a href="configuration/cadet/add" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span> Ajouter
+                    </a>
 				</div>
 			</h2>
         </div>

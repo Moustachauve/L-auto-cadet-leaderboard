@@ -51,6 +51,12 @@
         controller: 'configurationController'
     })
 
+    .when('/configuration/section/edit/:id', {
+        title: "Modifier une section",
+        templateUrl: "/controller/configuration/sectionEdit.html",
+        controller: 'configurationController'
+    })
+
     .otherwise({
         title: "Page introuvable",
         templateUrl: 'controller/error/404.html',

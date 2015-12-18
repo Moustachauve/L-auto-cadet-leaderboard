@@ -14,7 +14,19 @@ namespace LautoCadetAPI.Controllers
     {
         Service service = Service.Instance;
 
-        public IHttpActionResult GetAll()
+		public IHttpActionResult Get(int id)
+		{
+			var section = service.GetSectionByID(id);
+
+			if (section == null)
+			{
+				return BadRequest("Section not found");
+			}
+
+			return Json<SectionListItem>(new SectionListItem(section));
+		}
+
+		public IHttpActionResult GetAll()
         {
 			var sections = service.GetAllSections();
 
@@ -40,5 +52,25 @@ namespace LautoCadetAPI.Controllers
 
 			return Json<SectionListItem>(result);
         }
-    }
+
+		[HttpPut]
+		public IHttpActionResult Edit(SectionListItem sectionModel)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			return Json<SectionListItem>(new SectionListItem(service.SectionEdit(sectionModel)));
+		}
+
+		[HttpDelete]
+		public IHttpActionResult Delete(int id)
+		{
+			if (service.SectionDelete(id))
+				return Json<String>("Done");
+
+			return BadRequest("Section not found");
+		}
+	}
 }

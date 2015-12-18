@@ -110,6 +110,25 @@ function configurationController($scope, $rootScope, $location, $routeParams) {
         });
 	}
 
+	$scope.sectionGetDetails = function () {
+	    $rootScope.startLoading();
+	    $scope.sectionDetails = null;
+
+	    $.ajax({
+	        method: "GET",
+	        url: "http://localhost:8080/api/Section/Get/" + $routeParams.id,
+	    })
+        .done(function (data) {
+            $rootScope.stopLoading();
+            $scope.sectionDetails = data;
+            $scope.$apply();
+        }).fail(function () {
+            $rootScope.showError();
+            $rootScope.stopLoading();
+            $scope.$apply();
+        });
+	}
+
 	$scope.addSection = function (section) {
 
 		$rootScope.startLoading();
@@ -121,11 +140,47 @@ function configurationController($scope, $rootScope, $location, $routeParams) {
         .done(function (data) {
         	$rootScope.stopLoading();
         	$scope.$apply();
-        	$rootScope.navigate("sectionList");
+        	$location.path('configuration/section/list');
         }).fail(function () {
         	$rootScope.showError();
         	$rootScope.stopLoading();
         	$scope.$apply();
         });
 	}
+
+	$scope.sectionEdit = function () {
+	    $rootScope.startLoading();
+	    $.ajax({
+	        method: "PUT",
+	        url: "http://localhost:8080/api/Section/Edit",
+	        data: $scope.sectionDetails
+	    })
+        .done(function (data) {
+            $rootScope.stopLoading();
+            $location.path('configuration/section/list');
+            $scope.$apply();
+        }).fail(function () {
+            $rootScope.showError();
+            $rootScope.stopLoading();
+            $scope.$apply();
+        });
+	}
+
+	$scope.sectionDelete = function (section) {
+	    if (confirm('Voulez-vous vraiment retirer la section "' + section.Nom + '"? \nTous les cadets qui font partie de cette section seront du même coup retirer!')) {
+	        $.ajax({
+	            type: "DELETE",
+	            url: "http://localhost:8080/api/Section/Delete/" + section.SectionID,
+	        })
+			.done(function (data) {
+			    $rootScope.stopLoading();
+			    $scope.getAllSections();
+			}).fail(function () {
+			    $rootScope.showError();
+			    $rootScope.stopLoading();
+			    $scope.$apply();
+			});
+	    }
+	}
+
 }
