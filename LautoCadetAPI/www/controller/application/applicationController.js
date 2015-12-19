@@ -14,7 +14,15 @@
     // == Config ==
 
     .when('/configuration/', {
-        redirectTo: '/configuration/cadet/list'
+        title: "Configuration",
+        templateUrl: '/controller/configuration/general.html',
+        controller: 'configurationController'
+    })
+
+    .when('/configuration/file/new', {
+        title: "Créer un classement",
+        templateUrl: '/controller/configuration/fileNew.html',
+        controller: 'configurationController'
     })
 
     // = Cadets =

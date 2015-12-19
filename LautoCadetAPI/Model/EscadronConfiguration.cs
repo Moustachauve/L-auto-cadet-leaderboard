@@ -22,6 +22,7 @@ namespace LautoCadetAPI.Model
 
 		public EscadronConfiguration()
 		{
+			Nom = "Nom par défaut";
 			Sections = new List<Section>();
 		}
 

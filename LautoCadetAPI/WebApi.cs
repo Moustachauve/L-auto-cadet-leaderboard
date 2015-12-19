@@ -15,7 +15,10 @@ namespace LautoCadetAPI
 {
 	public class WebApi
 	{
+		public const string DEFAULT_FILE_PATH = @"sauvegarde\escadron.cadet";
+		public const string DEFAULT_RECENT_FILES_PATH = @"sauvegarde\fichiersRecents.cfg";
 		public const string API_URL = "http://localhost:8080";
+
 		private static IDisposable webApp;
 
 		public static void Start()

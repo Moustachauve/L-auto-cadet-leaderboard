@@ -11,7 +11,10 @@ namespace LautoCadetAPI.DAL
 {
 	internal class Repository
 	{
-		public const string DEFAULT_FILE_PATH = @"sauvegarde\escadron.cadet";
+
+		#region Variables & Constructor
+
+		private FichiersRecentsConfiguration fichiersRecentsConfiguration;
 		private EscadronConfiguration escadronConfiguration;
 		private string savePath;
 
@@ -21,7 +24,7 @@ namespace LautoCadetAPI.DAL
 		/// Create a repository using the default file
 		/// </summary>
 		public Repository()
-			: this(DEFAULT_FILE_PATH)
+			: this(WebApi.DEFAULT_FILE_PATH)
 		{ }
 
 
@@ -30,17 +33,18 @@ namespace LautoCadetAPI.DAL
 		/// </summary>
 		public Repository(string path)
 		{
-			savePath = path;
-			string directory = Path.GetDirectoryName(path);
-			if (!Directory.Exists(directory))
-				Directory.CreateDirectory(directory);
-
-			Load();
+			SetSaveFile(path);
 		}
 
-		public void Load()
+		#endregion
+
+		#region IO
+
+		public void Load(bool overrideFile = false)
 		{
-			if (File.Exists(savePath))
+			bool needToSave = false;
+
+			if (!overrideFile && File.Exists(savePath))
 			{
 				using (StreamReader reader = new StreamReader(savePath))
 				{
@@ -50,17 +54,61 @@ namespace LautoCadetAPI.DAL
 			else
 			{
 				escadronConfiguration = new EscadronConfiguration();
-				Save();
+				needToSave = true;
 			}
+
+			if (File.Exists(WebApi.DEFAULT_RECENT_FILES_PATH))
+			{
+				using (StreamReader reader = new StreamReader(WebApi.DEFAULT_RECENT_FILES_PATH))
+				{
+					fichiersRecentsConfiguration = JsonConvert.DeserializeObject<FichiersRecentsConfiguration>(reader.ReadToEnd());
+				}
+			}
+			else
+			{
+				fichiersRecentsConfiguration = new FichiersRecentsConfiguration();
+				needToSave = true;
+			}
+
+			if (needToSave)
+				Save();
 		}
 
 		public void Save()
 		{
+			string saveDirectory = Path.GetDirectoryName(savePath);
+			if (!Directory.Exists(saveDirectory))
+				Directory.CreateDirectory(saveDirectory);
+
 			using (StreamWriter writer = new StreamWriter(savePath))
 			{
-                writer.Write(JsonConvert.SerializeObject(escadronConfiguration, Formatting.Indented));
+				writer.Write(JsonConvert.SerializeObject(escadronConfiguration, Formatting.Indented));
+			}
+
+			saveDirectory = Path.GetDirectoryName(WebApi.DEFAULT_RECENT_FILES_PATH);
+			if (!Directory.Exists(saveDirectory))
+				Directory.CreateDirectory(saveDirectory);
+
+			using (StreamWriter writer = new StreamWriter(WebApi.DEFAULT_RECENT_FILES_PATH))
+			{
+				writer.Write(JsonConvert.SerializeObject(fichiersRecentsConfiguration, Formatting.Indented));
 			}
 		}
+
+		public void SetSaveFile(string path, bool overrideFile = false)
+		{
+			savePath = path;
+			Load(overrideFile);
+		}
+
+		public List<FichierRecent> GetRecentFiles()
+		{
+			return fichiersRecentsConfiguration.GetRecentFiles();
+		}
+
+		#endregion
+
+		#region Cadet
 
 		public List<Cadet> GetAllCadets()
 		{
@@ -70,15 +118,6 @@ namespace LautoCadetAPI.DAL
 			{
 				list.AddRange(section.Cadets);
 			}
-
-			return list;
-		}
-
-		public List<Section> GetAllSections()
-		{
-			List<Section> list = new List<Section>();
-
-			list.AddRange(escadronConfiguration.Sections);
 
 			return list;
 		}
@@ -101,6 +140,19 @@ namespace LautoCadetAPI.DAL
 			return false;
 		}
 
+		#endregion
+
+		#region Section
+
+		public List<Section> GetAllSections()
+		{
+			List<Section> list = new List<Section>();
+
+			list.AddRange(escadronConfiguration.Sections);
+
+			return list;
+		}
+
 		public bool SectionDelete(int sectionID)
 		{
 			foreach (Section section in escadronConfiguration.Sections)
@@ -115,5 +167,7 @@ namespace LautoCadetAPI.DAL
 
 			return false;
 		}
+
+		#endregion
 	}
 }

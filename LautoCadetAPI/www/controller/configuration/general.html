@@ -1,0 +1,26 @@
+﻿<div class="row">
+    <div class="col-xs-3" ng-include="'controller/configuration/navigation.html'">
+    </div>
+    <div class="col-xs-9" ng-init="getSaveDetails()">
+        <div class="page-header">
+            <h2>Général</h2>
+        </div>
+
+        <div class="form-group">
+            <label for="txtPrenom">Nom de la sauvegarde</label>
+            <input type="text" class="form-control" id="txtPrenom" ng-model="saveDetails.Nom">
+        </div>
+
+        <button class="btn btn-primary">Enregistrer</button>
+        <button class="btn btn-primary">Enregistrer sous...</button>
+        <a class="btn btn-success" href="configuration/file/new">Nouveau...</a>
+
+        <h4>Ouvrir...</h4>
+        <div class="list-group">
+            <a href="" class="list-group-item">Choisir un fichier...<br />test</a>
+
+            <a href="" class="list-group-item list-group-item-info" ng-click="openFile()">Choisir un fichier...</a>
+        </div>
+    </div>
+
+</div>

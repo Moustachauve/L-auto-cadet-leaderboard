@@ -80,11 +80,13 @@ namespace LautoCadetAPI.DAL
 
 		public Cadet GetCadetByID(int id)
 		{
+			Reload();
 			return GetAllCadets().First(c => c.CadetID == id);
 		}
 
 		public IEnumerable<Cadet> GetAllCadets()
 		{
+			Reload();
 			return repo.GetAllCadets();
 		}
 
@@ -146,6 +148,33 @@ namespace LautoCadetAPI.DAL
 
 		#region IO
 
+		public string GetSaveName()
+		{
+			Reload();
+			return escadron.Nom;
+		}
+
+		public void SetSaveName(string nom)
+		{
+			Reload();
+
+			if (string.IsNullOrWhiteSpace(escadron.Nom))
+				return;
+
+			escadron.Nom = nom;
+			Save();
+		}
+
+		public void Open(string path)
+		{
+			repo.SetSaveFile(path);
+		}
+
+		public void Create(string path)
+		{
+			repo.SetSaveFile(path, true);
+		}
+
 		public void Save()
 		{
 			repo.Save();
@@ -155,6 +184,11 @@ namespace LautoCadetAPI.DAL
 		{
 			repo.Load();
 			escadron = repo.EscadronConfiguration;
+		}
+		
+		public List<FichierRecent> RecentFilesGetAll()
+		{
+			return repo.GetRecentFiles();
 		}
 
 		#endregion

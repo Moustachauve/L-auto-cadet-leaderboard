@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace LotoCadetLeaderboard
 {
@@ -28,6 +29,16 @@ namespace LotoCadetLeaderboard
 		public void showDevTools()
 		{
 			form.ShowDevTools();
+		}
+
+		public string selectNewFile()
+		{
+			return form.SelectNewFile();
+		}
+
+		public string openFile()
+		{
+			return form.OpenFile();
 		}
 	}
 }
