@@ -170,9 +170,13 @@ namespace LautoCadetAPI.DAL
 			repo.SetSaveFile(path);
 		}
 
-		public void Create(string path)
+		public void Create(string path, string saveName = null)
 		{
 			repo.SetSaveFile(path, true);
+			if(!string.IsNullOrWhiteSpace(saveName))
+			{
+				SetSaveName(saveName);
+			}
 		}
 
 		public void Save()

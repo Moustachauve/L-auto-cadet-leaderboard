@@ -22,8 +22,18 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
     }
 
     $scope.fileNew = function () {
+        $scope.$broadcast('show-errors-check-validity');
+
+        if (!$scope.fileNewForm.$valid)
+            return;
+
+        if ($rootScope.isBrowser("Opening save location selector..."))
+            return;
 
         var chemin = clientUtils.selectNewFile();
+
+        if (!chemin)
+            return;
 
         var data = {
             NomSauvegarde: $scope.file.NomSauvegarde,
@@ -48,7 +58,13 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
     }
 
     $scope.openFile = function () {
+        if ($rootScope.isBrowser("Opening open file selector..."))
+            return;
+
         var chemin = clientUtils.openFile();
+
+        if (!chemin)
+            return;
 
         $rootScope.startLoading();
         $.ajax({

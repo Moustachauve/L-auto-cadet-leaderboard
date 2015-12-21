@@ -5,11 +5,12 @@
         <div class="page-header">
             <h2>Nouveau classement</h2>
         </div>
-        <form ng-submit="fileNew()">
+        <form name="fileNewForm" ng-submit="fileNew()" novalidate>
 
-            <div class="form-group">
-                <label for="txtNom">Nom de la sauvegarde</label>
-                <input type="text" class="form-control" id="txtNom" ng-model="file.NomSauvegarde">
+            <div class="form-group" show-errors>
+                <label for="txtNom" class="control-label">Nom de la sauvegarde</label>
+                <input type="text" class="form-control" name="txtNom" id="txtNom" ng-model="file.NomSauvegarde" required>
+                <p class="help-block" ng-show="fileNewForm.txtNom.$error.required">Le nom de la sauvegarde est requis</p>
             </div>
 
             <div class="form-group text-right">

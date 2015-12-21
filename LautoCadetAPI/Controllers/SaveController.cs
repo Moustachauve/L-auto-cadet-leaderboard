@@ -28,7 +28,11 @@ namespace LautoCadetAPI.Controllers
 		[HttpPost]
 		public IHttpActionResult Create(FichierRecent fileInfo)
 		{
-			service.Create(fileInfo.CheminFichier);
+			if(!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+			service.Create(fileInfo.CheminFichier, fileInfo.NomSauvegarde);
 
 			return Ok();
 		}

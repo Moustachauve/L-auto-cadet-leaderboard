@@ -1,4 +1,4 @@
-﻿angular.module('LautoCadet', ['ngRoute'])
+﻿angular.module('LautoCadet', ['ngRoute', 'ui.bootstrap.showErrors'])
 
 
 .config(function ($routeProvider, $locationProvider) {
@@ -92,31 +92,26 @@ function applicationController($scope, $rootScope, $route) {
 
     $scope.enterFullScreen = function () {
         $scope.isFullScreen = true;
-        if (typeof clientUtils != "undefined") {
-            clientUtils.enterFullScreen();
-        }
-        else {
-            console.log("Going Fullscreen");
-        }
+        if($rootScope.isBrowser("Going Fullscreen"))
+            return;
+
+        clientUtils.enterFullScreen();
     }
 
     $scope.leaveFullScreen = function () {
         $scope.isFullScreen = false;
-        if (typeof clientUtils != "undefined") {
-            clientUtils.leaveFullScreen();
-        }
-        else {
-            console.log("Leaving Fullscreen");
-        }
+
+        if ($rootScope.isBrowser("Leaving Fullscreen"))
+            return;
+
+        clientUtils.leaveFullScreen();
     }
 
     $scope.showDevTools = function () {
-        if (typeof clientUtils != "undefined") {
-            clientUtils.showDevTools();
-        }
-        else {
-            console.log("Opening DevTools");
-        }
+        if ($rootScope.isBrowser("Opening DevTools"))
+            return;
+
+        clientUtils.showDevTools();
     }
 
     $rootScope.startLoading = function () {
@@ -145,6 +140,15 @@ function applicationController($scope, $rootScope, $route) {
     $rootScope.refreshPage = function () {
         $rootScope.hideError();
         $route.reload();
+    }
+
+    $rootScope.isBrowser = function (message) {
+        if (typeof clientUtils == "undefined") {
+            console.log(message);
+            return true;
+        }
+
+        return false;
     }
 }
 
