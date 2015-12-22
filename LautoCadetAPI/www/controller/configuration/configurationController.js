@@ -4,6 +4,10 @@
 
 function configurationController($scope, $rootScope, $location, $route, $routeParams) {
 
+    // ===================================================================================
+    // Save
+    // ===================================================================================
+
     $scope.getSaveDetails = function () {
         $rootScope.startLoading();
         $.ajax({
@@ -83,8 +87,30 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
             $rootScope.stopLoading();
             $scope.$apply();
         });
+    }
+
+    $scope.saveSaveDetails = function () {
+        $rootScope.startLoading();
+        $.ajax({
+            method: "POST",
+            url: "http://localhost:8080/api/Save/Save",
+            data: "="+$scope.saveDetails.Nom
+        })
+        .done(function (data) {
+            $rootScope.stopLoading();
+            $route.reload();
+            $scope.$apply();
+        }).fail(function () {
+            $rootScope.showError();
+            $rootScope.stopLoading();
+            $scope.$apply();
+        });
 
     }
+
+    // ===================================================================================
+    // Cadets
+    // ===================================================================================
 
     $scope.getAllCadets = function () {
         $rootScope.startLoading();
@@ -174,6 +200,10 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
 			});
         }
     }
+
+    // ===================================================================================
+    // Sections
+    // ===================================================================================
 
     $scope.getAllSections = function () {
         $rootScope.startLoading();

@@ -44,5 +44,15 @@ namespace LautoCadetAPI.Controllers
 
 			return Ok();
 		}
+
+		[HttpPost]
+		public IHttpActionResult Save([FromBody]string nomSauvegarde)
+		{
+			if (string.IsNullOrWhiteSpace(nomSauvegarde))
+				return BadRequest("Le nom ne peut pas être vide");
+
+			service.SetSaveName(nomSauvegarde);
+			return Ok();
+		}
 	}
 }
