@@ -6,21 +6,32 @@
             <h2>Général</h2>
         </div>
 
-        <div class="form-group">
-            <label for="txtPrenom">Nom de la sauvegarde</label>
-            <input type="text" class="form-control" id="txtPrenom" ng-model="saveDetails.Nom">
-        </div>
+        <form name="fileDetailsForm" novalidate>
+            <div class="form-group">
+                <label for="txtPrenom">Nom de la sauvegarde</label>
+                <input type="text" class="form-control" id="txtPrenom" ng-model="saveDetails.Nom">
+            </div>
 
-        <button class="btn btn-primary">Enregistrer</button>
-        <button class="btn btn-primary">Enregistrer sous...</button>
-        <a class="btn btn-success" href="configuration/file/new">Nouveau...</a>
+            <div class="clearfix">
+                <div class="pull-left">
+                    <button class="btn btn-primary">Enregistrer</button>
+                    <button class="btn btn-primary">Enregistrer sous</button>
+                </div>
+                <div class="pull-right">
+                    <button class="btn btn-success" ng-click="openSelectFile()">Ouvrir</button>
+                    <a class="btn btn-success" href="configuration/file/new">Nouveau</a>
+                </div>
+            </div>
+            <hr />
 
-        <h4>Ouvrir...</h4>
-        <div class="list-group">
-            <a href="" class="list-group-item">Choisir un fichier...<br />test</a>
-
-            <a href="" class="list-group-item list-group-item-info" ng-click="openFile()">Choisir un fichier...</a>
-        </div>
+            <h4>Fichiers récents...</h4>
+            <div class="list-group">
+                <button ng-repeat="fichierRecent in saveDetails.FichiersRecents" class="list-group-item" ng-click="openFile(fichierRecent.CheminFichier)">
+                    <strong>{{fichierRecent.NomSauvegarde}}</strong>
+                    <div class="file-path">{{fichierRecent.CheminFichier}}</div>
+                </button>
+            </div>
+        </form>
     </div>
 
 </div>

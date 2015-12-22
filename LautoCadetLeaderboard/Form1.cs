@@ -118,6 +118,7 @@ namespace LotoCadetLeaderboard
 			else
 			{
 				OpenFileDialog openDialog = CreateOpenDialog();
+				openDialog.Title = "Ouvrir";
 
 				DialogResult result = openDialog.ShowDialog();
 
@@ -128,16 +129,18 @@ namespace LotoCadetLeaderboard
 			}
 		}
 
-		public string SelectNewFile()
+		public string SelectNewFile(string fileName)
 		{
 			if (InvokeRequired)
 			{
-				string path = (string)Invoke(new StringInvoker(delegate { return SelectNewFile(); }));
+				string path = (string)Invoke(new StringInvoker(delegate { return SelectNewFile(fileName); }));
 				return path;
 			}
 			else
 			{
 				SaveFileDialog saveDialog = CreateSaveDialog();
+				saveDialog.FileName = fileName;
+				saveDialog.Title = "Nouveau";
 
 				DialogResult result = saveDialog.ShowDialog();
 
@@ -156,7 +159,6 @@ namespace LotoCadetLeaderboard
 			saveDialog.RestoreDirectory = false;
 			saveDialog.SupportMultiDottedExtensions = true;
 			saveDialog.Filter = "Classement L'auto-cadet | *.cadet";
-			saveDialog.DefaultExt = "cadet";
 
 			saveDialog.OverwritePrompt = true;
 
@@ -171,7 +173,6 @@ namespace LotoCadetLeaderboard
 			openDialog.RestoreDirectory = false;
 			openDialog.SupportMultiDottedExtensions = true;
 			openDialog.Filter = "Classement L'auto-cadet | *.cadet";
-			openDialog.DefaultExt = "cadet";
 
 			openDialog.CheckFileExists = true;
 			openDialog.CheckPathExists = true;

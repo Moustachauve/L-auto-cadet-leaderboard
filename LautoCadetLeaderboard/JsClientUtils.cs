@@ -31,9 +31,9 @@ namespace LotoCadetLeaderboard
 			form.ShowDevTools();
 		}
 
-		public string selectNewFile()
+		public string selectNewFile(string fileName)
 		{
-			return form.SelectNewFile();
+			return form.SelectNewFile(fileName);
 		}
 
 		public string openFile()

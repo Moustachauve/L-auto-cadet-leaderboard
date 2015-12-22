@@ -42,7 +42,7 @@ namespace LautoCadetAPI.DAL
 
 		public void Load(bool overrideFile = false)
 		{
-			bool needToSave = false;
+			LoadFichiersRecents();
 
 			if (!overrideFile && File.Exists(savePath))
 			{
@@ -54,9 +54,18 @@ namespace LautoCadetAPI.DAL
 			else
 			{
 				escadronConfiguration = new EscadronConfiguration();
-				needToSave = true;
 			}
 
+			FichierRecent fichierRecent = new FichierRecent();
+			fichierRecent.CheminFichier = savePath;
+			fichierRecent.NomSauvegarde = escadronConfiguration.Nom;
+
+			fichiersRecentsConfiguration.Add(fichierRecent);
+			SaveFichiersRecents();
+		}
+
+		private void LoadFichiersRecents()
+		{
 			if (File.Exists(WebApi.DEFAULT_RECENT_FILES_PATH))
 			{
 				using (StreamReader reader = new StreamReader(WebApi.DEFAULT_RECENT_FILES_PATH))
@@ -67,11 +76,7 @@ namespace LautoCadetAPI.DAL
 			else
 			{
 				fichiersRecentsConfiguration = new FichiersRecentsConfiguration();
-				needToSave = true;
 			}
-
-			if (needToSave)
-				Save();
 		}
 
 		public void Save()
@@ -84,8 +89,11 @@ namespace LautoCadetAPI.DAL
 			{
 				writer.Write(JsonConvert.SerializeObject(escadronConfiguration, Formatting.Indented));
 			}
+		}
 
-			saveDirectory = Path.GetDirectoryName(WebApi.DEFAULT_RECENT_FILES_PATH);
+		private void SaveFichiersRecents()
+		{
+			string saveDirectory = Path.GetDirectoryName(WebApi.DEFAULT_RECENT_FILES_PATH);
 			if (!Directory.Exists(saveDirectory))
 				Directory.CreateDirectory(saveDirectory);
 
@@ -97,7 +105,7 @@ namespace LautoCadetAPI.DAL
 
 		public void SetSaveFile(string path, bool overrideFile = false)
 		{
-			savePath = path;
+			savePath = Path.GetFullPath(path);
 			Load(overrideFile);
 		}
 

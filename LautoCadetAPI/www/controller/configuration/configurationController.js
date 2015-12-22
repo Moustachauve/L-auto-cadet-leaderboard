@@ -30,7 +30,7 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
         if ($rootScope.isBrowser("Opening save location selector..."))
             return;
 
-        var chemin = clientUtils.selectNewFile();
+        var chemin = clientUtils.selectNewFile($scope.file.NomSauvegarde);
 
         if (!chemin)
             return;
@@ -57,12 +57,14 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
         });
     }
 
-    $scope.openFile = function () {
+    $scope.openSelectFile = function () {
         if ($rootScope.isBrowser("Opening open file selector..."))
             return;
 
-        var chemin = clientUtils.openFile();
+        $scope.openFile(clientUtils.openFile());
+    }
 
+    $scope.openFile = function (chemin) {
         if (!chemin)
             return;
 

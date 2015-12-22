@@ -65,3 +65,11 @@
 .form-group.has-error .help-block {
     display: block;
 }
+
+.file-path {
+    color: #959595;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
