@@ -1,4 +1,4 @@
-﻿angular.module('LautoCadet', ['ngRoute', 'ui.bootstrap.showErrors'])
+﻿angular.module('LautoCadet', ['ngRoute', 'ngAnimate', 'ui.bootstrap.showErrors'])
 
 
 .config(function ($routeProvider, $locationProvider) {

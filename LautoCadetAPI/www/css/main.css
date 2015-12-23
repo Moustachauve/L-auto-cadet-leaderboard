@@ -73,3 +73,27 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+#container-notification {
+    position: fixed;
+    bottom: 60px;
+    width: 100%;
+}
+
+#container-notification > div {
+    width: 600px;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+
+/* ------ */
+.alert-dismissible.ng-enter,
+.alert-dismissible.ng-leave {
+  -webkit-transition:0.4s linear all;
+  transition:0.4s linear all;
+}
+
+.alert-dismissible.ng-leave.ng-leave-active {
+  opacity:0;
+}

@@ -1,0 +1,6 @@
+﻿<div id="container-notification">
+    <div class="alert alert-dismissible alert-{{notif.type}}" ng-repeat="notif in cgNotifications">
+        <button type="button" class="close" ng-click="removeNotification(notif)">&times;</button>
+        <div>{{notif.errorMsg}}</div>
+    </div>
+</div>

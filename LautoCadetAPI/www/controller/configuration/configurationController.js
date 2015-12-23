@@ -1,8 +1,11 @@
 ﻿angular
     .module('LautoCadet')
-    .controller('configurationController', ['$scope', '$rootScope', '$location', '$route', '$routeParams', configurationController]);
+    .controller('configurationController', ['$scope', '$rootScope', '$location', '$route', '$routeParams', 'notification', configurationController]);
 
-function configurationController($scope, $rootScope, $location, $route, $routeParams) {
+function configurationController($scope, $rootScope, $location, $route, $routeParams, notification) {
+
+    notification.showError("TEST");
+    notification.showSuccess("TEst 2.");
 
     // ===================================================================================
     // Save
