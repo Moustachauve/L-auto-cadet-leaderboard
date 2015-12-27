@@ -76,18 +76,12 @@
 
 #container-notification {
     position: fixed;
-    bottom: 60px;
+    bottom: 75px;
     width: 100%;
+    padding-left: 45px;
+    padding-right: 45px;
 }
 
-#container-notification > div {
-    width: 600px;
-    margin: auto;
-    margin-bottom: 20px;
-}
-
-
-/* ------ */
 .alert-dismissible.ng-enter,
 .alert-dismissible.ng-leave {
   -webkit-transition:0.4s linear all;

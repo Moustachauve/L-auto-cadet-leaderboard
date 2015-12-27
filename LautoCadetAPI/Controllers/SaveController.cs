@@ -34,15 +34,16 @@ namespace LautoCadetAPI.Controllers
 			}
 			service.Create(fileInfo.CheminFichier, fileInfo.NomSauvegarde);
 
-			return Ok();
+			return Json(fileInfo);
 		}
 
 		[HttpPost]
 		public IHttpActionResult Open(FichierRecent fileInfo)
 		{
 			service.Open(fileInfo.CheminFichier);
+			fileInfo.NomSauvegarde = service.GetSaveName();
 
-			return Ok();
+			return Json(fileInfo);
 		}
 
 		[HttpPost]

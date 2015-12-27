@@ -81,9 +81,9 @@
     });
 }])
 
-.controller('applicationController', ['$scope', '$rootScope', '$route', applicationController]);
+.controller('applicationController', ['$scope', '$rootScope', '$route', '$window', applicationController]);
 
-function applicationController($scope, $rootScope, $route) {
+function applicationController($scope, $rootScope, $route, $window) {
 
     $scope.showLoading = false;
     $scope.errorMessage = null;
@@ -123,7 +123,7 @@ function applicationController($scope, $rootScope, $route) {
     }
 
     $rootScope.navigateBack = function () {
-        window.history.back();
+        $window.history.back();
     }
 
     $rootScope.showError = function (text) {

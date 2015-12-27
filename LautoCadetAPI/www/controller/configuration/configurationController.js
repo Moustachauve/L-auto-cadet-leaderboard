@@ -4,9 +4,6 @@
 
 function configurationController($scope, $rootScope, $location, $route, $routeParams, notification) {
 
-    notification.showError("TEST");
-    notification.showSuccess("TEst 2.");
-
     // ===================================================================================
     // Save
     // ===================================================================================
@@ -56,6 +53,8 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
         .done(function (data) {
             $rootScope.stopLoading();
             $location.path('configuration/');
+            notification.showSuccess('Le classement nommé "' + data.NomSauvegarde + '" a bien été créer');
+            console.log(data);
             $scope.$apply();
         }).fail(function () {
             $rootScope.showError();
@@ -84,6 +83,7 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
         .done(function (data) {
             $rootScope.stopLoading();
             $route.reload();
+            notification.showSuccess('Le classement nommé "' + data.NomSauvegarde + '" a bien été ouvert');
             $scope.$apply();
         }).fail(function () {
             $rootScope.showError();
@@ -102,6 +102,7 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
         .done(function (data) {
             $rootScope.stopLoading();
             $route.reload();
+            notification.showSuccess('Le classement a bien été sauvegarder');
             $scope.$apply();
         }).fail(function () {
             $rootScope.showError();
@@ -160,7 +161,8 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
         })
         .done(function (data) {
             $rootScope.stopLoading();
-            $location.path('configuration/');
+            $location.path('configuration/cadet/list');
+            notification.showSuccess('Le cadet "' + data.DisplayName + '" a bien été ajouté');
             $scope.$apply();
         }).fail(function () {
             $rootScope.showError();
@@ -178,7 +180,8 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
         })
         .done(function (data) {
             $rootScope.stopLoading();
-            $location.path('configuration/');
+            $location.path('configuration/cadet/list');
+            notification.showSuccess('Le cadet "' + data.DisplayName + '" a bien été modifié');
             $scope.$apply();
         }).fail(function () {
             $rootScope.showError();
@@ -188,7 +191,7 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
     }
 
     $scope.cadetDelete = function (cadet) {
-        if (confirm('Voulez-vous vraiment retirer le cadet "' + cadet.Prenom + ' ' + cadet.Nom + '"?')) {
+        if (confirm('Voulez-vous vraiment retirer le cadet "' + cadet.DisplayName + '"?')) {
             $.ajax({
                 type: "DELETE",
                 url: "http://localhost:8080/api/Cadet/Delete/" + cadet.CadetID,
@@ -196,6 +199,8 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
 			.done(function (data) {
 			    $rootScope.stopLoading();
 			    $scope.getAllCadets();
+			    notification.showSuccess('Le cadet "' + cadet.DisplayName + '" a bien été retiré');
+			    $scope.$apply();
 			}).fail(function () {
 			    $rootScope.showError();
 			    $rootScope.stopLoading();
@@ -255,6 +260,7 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
         .done(function (data) {
             $rootScope.stopLoading();
             $location.path('configuration/section/list');
+            notification.showSuccess('La section "' + data.Nom + '" a bien été ajouté');
             $scope.$apply();
         }).fail(function () {
             $rootScope.showError();
@@ -273,6 +279,7 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
         .done(function (data) {
             $rootScope.stopLoading();
             $location.path('configuration/section/list');
+            notification.showSuccess('La section "' + data.Nom + '" a bien été modifiée');
             $scope.$apply();
         }).fail(function () {
             $rootScope.showError();
@@ -282,13 +289,14 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
     }
 
     $scope.sectionDelete = function (section) {
-        if (confirm('Voulez-vous vraiment retirer la section "' + section.Nom + '"? \nTous les cadets qui font partie de cette section seront du même coup retirer!')) {
+        if (confirm('Voulez-vous vraiment retirer la section "' + section.Nom + '"? \nTous les cadets qui font partie de cette section seront du même coup retiré!')) {
             $.ajax({
                 type: "DELETE",
                 url: "http://localhost:8080/api/Section/Delete/" + section.SectionID,
             })
 			.done(function (data) {
 			    $rootScope.stopLoading();
+			    notification.showSuccess('La section "' + data.Nom + '" a bien été retirée');
 			    $scope.getAllSections();
 			}).fail(function () {
 			    $rootScope.showError();

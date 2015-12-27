@@ -5,10 +5,12 @@
         <div class="page-header">
             <h2>Modifier une section</h2>
         </div>
-        <form ng-submit="sectionEdit()">
+
+        <form ng-submit="sectionEdit()" name="sectionEditForm" novalidate>
             <div class="form-group">
-                <label for="txtPrenom">Nom de la section</label>
-                <input type="text" class="form-control" id="txtPrenom" ng-model="sectionDetails.Nom">
+                <label for="txtNom">Nom de la section</label>
+                <input type="text" class="form-control" id="txtNom" name="txtNom" ng-model="sectionDetails.Nom">
+                <p class="help-block" ng-show="sectionEditForm.txtNom.$error.required">Le nom de la section est requis</p>
             </div>
             <div class="form-group text-right">
                 <button type="submit" class="btn btn-success">Sauvegarder</button>

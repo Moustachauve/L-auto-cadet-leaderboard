@@ -23,7 +23,7 @@ namespace LautoCadetAPI.Controllers
 				return BadRequest("Cadet not found");
 			}
 
-			return Json<CadetListItem>(new CadetListItem(cadet));
+			return Json(new CadetListItem(cadet));
 		}
 
 		public IHttpActionResult GetAll()
@@ -32,7 +32,7 @@ namespace LautoCadetAPI.Controllers
 
 			var result = new CadetList(cadets);
 
-			return Json<IEnumerable<CadetListItem>>(result.OrderBy(c => c.DisplayName));
+			return Json(result.OrderBy(c => c.DisplayName));
 		}
 
 		[HttpPost]
@@ -43,7 +43,9 @@ namespace LautoCadetAPI.Controllers
 				return BadRequest(ModelState);
 			}
 
-			return Json<Cadet>(service.AddCadet(cadetModel));
+			CadetListItem cadet = new CadetListItem(service.AddCadet(cadetModel));
+
+			return Json(cadet);
 		}
 
 		[HttpPut]
@@ -54,14 +56,16 @@ namespace LautoCadetAPI.Controllers
 				return BadRequest(ModelState);
 			}
 
-			return Json<Cadet>(service.EditCadet(cadetModel));
+			CadetListItem cadet = new CadetListItem(service.EditCadet(cadetModel));
+
+			return Json(cadet);
 		}
 
 		[HttpDelete]
 		public IHttpActionResult Delete(int id)
 		{
 			if (service.DeleteCadet(id))
-				return Json<String>("Done");
+				return Json("Done");
 
 			return BadRequest("Cadet not found");
 		}

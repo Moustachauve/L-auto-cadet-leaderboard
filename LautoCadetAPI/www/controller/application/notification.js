@@ -42,7 +42,6 @@ function notification($rootScope, $timeout) {
             errorMsg: errorMsg,
         }
         notif.timeout = $timeout(function () {
-            console.log("JE M'ENLEVE !!!!");
             $this.remove(notif);
         }, 5000);
 

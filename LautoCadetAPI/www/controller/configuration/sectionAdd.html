@@ -6,12 +6,16 @@
 
             <h2>Ajouter une section</h2>
         </div>
-        <form ng-submit="addSection()">
-            <div class="form-group">
-                <label for="txtPrenom">Nom de la section</label>
-                <input type="text" class="form-control" id="txtPrenom" ng-model="section.Nom">
+        <form ng-submit="addSection()" name="sectionAddForm" novalidate>
+
+            <div class="form-group" show-errors>
+                <label for="txtNom">Nom de la section</label>
+                <input type="text" class="form-control" id="txtNom" name="txtNom" ng-model="section.Nom" required>
+                <p class="help-block" ng-show="sectionAddForm.txtNom.$error.required">Le nom de la section est requis</p>
             </div>
+
             <div class="form-group text-right">
+                <button type="reset" class="btn btn-default" ng-click="navigateBack()">Annuler</button>
                 <button type="submit" class="btn btn-success">Ajouter</button>
             </div>
         </form>
