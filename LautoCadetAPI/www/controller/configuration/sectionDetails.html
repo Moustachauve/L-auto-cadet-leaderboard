@@ -1,0 +1,54 @@
+﻿<div class="row" ng-init="sectionGetDetails()">
+    <div class="col-xs-3" ng-include="'controller/configuration/navigation.html'">
+    </div>
+    <div class="col-xs-9">
+        <div class="page-header">
+            <h2>
+                {{sectionDetails.Nom}}
+                <div class="pull-right">
+                    <a href="configuration/section/edit/{{sectionDetails.SectionID}}" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-pencil"></span> Modifier
+                    </a>
+                </div>
+            </h2>
+        </div>
+
+        <div>
+                <strong>Nombre total de billets distribué:</strong> {{sectionDetails.NbBilletsDistribue}}
+            </div>
+        <div>
+            <strong>Nombre total de billets vendu:</strong> {{sectionDetails.NbBilletsVendu}}
+        </div>
+        <br />
+
+        <h3>
+            Liste des cadets
+            <div class="pull-right">
+                <a href="configuration/cadet/add" class="btn btn-success btn-sm">
+                    <span class="glyphicon glyphicon-plus"></span> Ajouter un cadet
+                </a>
+            </div>
+        </h3>
+        <hr />
+        <table class="table" ng-init="getAllCadets()">
+            <thead>
+                <tr>
+                    <th>Cadet</th>
+                    <th class="text-center">Nb. billets vendu</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="cadet in sectionDetails.Cadets">
+                    <td>{{cadet.DisplayName}}</td>
+                    <td class="text-center">{{cadet.NbBilletsVendu}} / {{cadet.NbBilletsDistribue}}</td>
+                    <td class="text-right">
+                        <a href="configuration/cadet/edit/{{cadet.CadetID}}" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a href="" class="btn btn-sm btn-danger" ng-click="cadetDelete(cadet)"><span class="glyphicon glyphicon-trash"></span></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

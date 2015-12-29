@@ -1,4 +1,4 @@
-﻿<div class="row" ng-init="sectionGetDetails()">
+﻿<div class="row">
     <div class="col-xs-3" ng-include="'controller/configuration/navigation.html'">
     </div>
     <div class="col-xs-9">
@@ -6,7 +6,7 @@
             <h2>Modifier une section</h2>
         </div>
 
-        <form ng-submit="sectionEdit()" name="sectionEditForm" novalidate>
+        <form ng-submit="sectionEdit()" ng-init="sectionEditInit()" name="sectionEditForm" novalidate>
             <div class="form-group">
                 <label for="txtNom">Nom de la section</label>
                 <input type="text" class="form-control" id="txtNom" name="txtNom" ng-model="sectionDetails.Nom">

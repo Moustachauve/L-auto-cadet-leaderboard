@@ -24,8 +24,12 @@ namespace LautoCadetAPI.Model
         [StringLength(32, MinimumLength=0)]
 		public string Grade { get; set; }
 
-        [Required]
-        [Range(0, Int32.MaxValue)]
+		[Required]
+		[Range(0, Int32.MaxValue)]
+		public int NbBilletsDistribue { get; set; }
+
+		[Required]
+		[Range(0, Int32.MaxValue)]
 		public int NbBilletsVendu { get; set; }
 
 		public Section Section { get; set; }

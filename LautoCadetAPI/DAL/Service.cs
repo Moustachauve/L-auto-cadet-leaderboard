@@ -108,6 +108,7 @@ namespace LautoCadetAPI.DAL
 
 			Cadet cadet = new Cadet();
 			cadet.Grade = cadetModel.Grade;
+			cadet.NbBilletsDistribue = cadetModel.NbBilletsDistribue;
 			cadet.NbBilletsVendu = cadetModel.NbBilletsVendu;
 			cadet.Nom = cadetModel.Nom;
 			cadet.Prenom = cadetModel.Prenom;
@@ -127,6 +128,7 @@ namespace LautoCadetAPI.DAL
 			Section section = GetSectionByID(cadetModel.SectionID);
 
 			cadet.Grade = cadetModel.Grade;
+			cadet.NbBilletsDistribue = cadetModel.NbBilletsDistribue;
 			cadet.NbBilletsVendu = cadetModel.NbBilletsVendu;
 			cadet.Nom = cadetModel.Nom;
 			cadet.Prenom = cadetModel.Prenom;

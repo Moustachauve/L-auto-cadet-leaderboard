@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("LautoCadetAPI")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("© Christophe Gagnier")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -20,7 +20,7 @@ namespace LautoCadetAPI.Controllers
 
 			if (cadet == null)
 			{
-				return BadRequest("Cadet not found");
+				return BadRequest("Aucun cadet avec cet ID");
 			}
 
 			return Json(new CadetListItem(cadet));
@@ -67,7 +67,7 @@ namespace LautoCadetAPI.Controllers
 			if (service.DeleteCadet(id))
 				return Json("Done");
 
-			return BadRequest("Cadet not found");
+			return BadRequest("Aucun cadet avec cet ID");
 		}
 	}
 }

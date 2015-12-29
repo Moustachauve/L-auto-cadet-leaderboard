@@ -7,7 +7,7 @@
      .when('/', {
          title: "Classement",
          isHomePage: true,
-         templateUrl: '/controller/leaderboard/topTenSellers.html',
+         templateUrl: '/controller/leaderboard/mainPage.html',
          controller: 'leaderboardController',
      })
 
@@ -50,6 +50,12 @@
     .when('/configuration/section/list', {
         title: "Liste des sections",
         templateUrl: "/controller/configuration/sectionList.html",
+        controller: 'configurationController'
+    })
+
+    .when('/configuration/section/details/:id', {
+        title: "Détails d'une section",
+        templateUrl: "/controller/configuration/sectionDetails.html",
         controller: 'configurationController'
     })
 
@@ -152,3 +158,9 @@ function applicationController($scope, $rootScope, $route, $window) {
     }
 }
 
+// Prevents context menu except in inputs
+document.addEventListener('contextmenu', function (event) {
+    if (event.target.nodeName !== 'INPUT' && event.target.type !== 'text' && event.target.nodeName !== 'TEXTAREA') {
+        event.preventDefault();
+    }
+});

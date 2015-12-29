@@ -52,7 +52,7 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
         })
         .done(function (data) {
             $rootScope.stopLoading();
-            $location.path('configuration/');
+            $rootScope.navigateBack();
             notification.showSuccess('Le classement nommé "' + data.NomSauvegarde + '" a bien été créer');
             console.log(data);
             $scope.$apply();
@@ -153,6 +153,10 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
     }
 
     $scope.addCadet = function () {
+        $scope.$broadcast('show-errors-check-validity');
+        if (!$scope.cadetAddForm.$valid)
+            return;
+
         $rootScope.startLoading();
         $.ajax({
             method: "POST",
@@ -161,8 +165,8 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
         })
         .done(function (data) {
             $rootScope.stopLoading();
-            $location.path('configuration/cadet/list');
-            notification.showSuccess('Le cadet "' + data.DisplayName + '" a bien été ajouté');
+            $rootScope.navigateBack();
+            notification.showSuccess('Le cadet "' + data.FullName + '" a bien été ajouté');
             $scope.$apply();
         }).fail(function () {
             $rootScope.showError();
@@ -172,6 +176,10 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
     }
 
     $scope.cadetEdit = function () {
+        $scope.$broadcast('show-errors-check-validity');
+        if (!$scope.cadetEditForm.$valid)
+            return;
+
         $rootScope.startLoading();
         $.ajax({
             method: "PUT",
@@ -180,8 +188,8 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
         })
         .done(function (data) {
             $rootScope.stopLoading();
-            $location.path('configuration/cadet/list');
-            notification.showSuccess('Le cadet "' + data.DisplayName + '" a bien été modifié');
+            $rootScope.navigateBack();
+            notification.showSuccess('Le cadet "' + data.FullName + '" a bien été modifié');
             $scope.$apply();
         }).fail(function () {
             $rootScope.showError();
@@ -191,7 +199,7 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
     }
 
     $scope.cadetDelete = function (cadet) {
-        if (confirm('Voulez-vous vraiment retirer le cadet "' + cadet.DisplayName + '"?')) {
+        if (confirm('Voulez-vous vraiment retirer le cadet "' + cadet.FullName + '"?')) {
             $.ajax({
                 type: "DELETE",
                 url: "http://localhost:8080/api/Cadet/Delete/" + cadet.CadetID,
@@ -199,7 +207,7 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
 			.done(function (data) {
 			    $rootScope.stopLoading();
 			    $scope.getAllCadets();
-			    notification.showSuccess('Le cadet "' + cadet.DisplayName + '" a bien été retiré');
+			    notification.showSuccess('Le cadet "' + cadet.FullName + '" a bien été retiré');
 			    $scope.$apply();
 			}).fail(function () {
 			    $rootScope.showError();
@@ -250,6 +258,9 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
     }
 
     $scope.addSection = function (section) {
+        $scope.$broadcast('show-errors-check-validity');
+        if (!$scope.sectionAddForm.$valid)
+            return;
 
         $rootScope.startLoading();
         $.ajax({
@@ -259,7 +270,7 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
         })
         .done(function (data) {
             $rootScope.stopLoading();
-            $location.path('configuration/section/list');
+            $rootScope.navigateBack();
             notification.showSuccess('La section "' + data.Nom + '" a bien été ajouté');
             $scope.$apply();
         }).fail(function () {
@@ -269,7 +280,30 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
         });
     }
 
+    $scope.sectionEditInit = function () {
+        $rootScope.startLoading();
+        $scope.sectionDetails = null;
+
+        $.ajax({
+            method: "GET",
+            url: "http://localhost:8080/api/Section/Edit/" + $routeParams.id,
+        })
+        .done(function (data) {
+            $rootScope.stopLoading();
+            $scope.sectionDetails = data;
+            $scope.$apply();
+        }).fail(function () {
+            $rootScope.showError();
+            $rootScope.stopLoading();
+            $scope.$apply();
+        });
+    }
+
     $scope.sectionEdit = function () {
+        $scope.$broadcast('show-errors-check-validity');
+        if (!$scope.sectionEditForm.$valid)
+            return;
+
         $rootScope.startLoading();
         $.ajax({
             method: "PUT",
@@ -278,7 +312,7 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
         })
         .done(function (data) {
             $rootScope.stopLoading();
-            $location.path('configuration/section/list');
+            $rootScope.navigateBack();
             notification.showSuccess('La section "' + data.Nom + '" a bien été modifiée');
             $scope.$apply();
         }).fail(function () {

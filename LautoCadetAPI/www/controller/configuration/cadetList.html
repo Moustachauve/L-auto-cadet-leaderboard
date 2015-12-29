@@ -15,8 +15,7 @@
 		<table class="table" ng-init="getAllCadets()">
 			<thead>
 				<tr>
-					<th>Grade</th>
-					<th>Nom</th>
+					<th>Cadet</th>
                     <th>Section</th>
                     <th class="text-center">Nb. billets vendu</th>
 					<th></th>
@@ -24,10 +23,9 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="cadet in cadets">
-					<td>{{cadet.Grade}}</td>
 					<td>{{cadet.DisplayName}}</td>
-                    <td>{{cadet.NomSection}}</td>
-                    <td class="text-center">{{cadet.NbBilletsVendu}}</td>
+                    <td><a href="configuration/section/details/{{cadet.SectionID}}">{{cadet.NomSection}}</a></td>
+                    <td class="text-center">{{cadet.NbBilletsVendu}} / {{cadet.NbBilletsDistribue}}</td>
 					<td class="text-right">
 						<a href="configuration/cadet/edit/{{cadet.CadetID}}" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
 						<a href="" class="btn btn-sm btn-danger" ng-click="cadetDelete(cadet)"><span class="glyphicon glyphicon-trash"></span></a>

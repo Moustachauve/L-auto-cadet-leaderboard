@@ -1,0 +1,14 @@
+﻿<h1>Allo:</h1>
+
+<table class="table" ng-init="getTopTenSeller()">
+    <thead>
+        <tr>
+            <th>#</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="cadet in topTenSeller">
+            <td>{{$index + 1}}</td>
+        </tr>
+    </tbody>
+</table>

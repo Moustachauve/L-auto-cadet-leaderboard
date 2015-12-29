@@ -1,5 +1,6 @@
 ﻿body {
     padding-top: 60px;
+    overflow-x: hidden;
 }
 
 .spinner {
@@ -55,7 +56,17 @@
 }
 
 .text-transparent {
-    opacity: 0.3;
+    opacity: 0.2;
+}
+
+@media (min-width: 768px) {
+    .dl-horizontal dt {
+        width: 230px;
+    }
+
+    .dl-horizontal dd {
+        margin-left: 245px;
+    }
 }
 
 .form-group .help-block {
@@ -84,10 +95,42 @@
 
 .alert-dismissible.ng-enter,
 .alert-dismissible.ng-leave {
-  -webkit-transition:0.4s linear all;
-  transition:0.4s linear all;
+    -webkit-transition: 0.4s linear all;
+    transition: 0.4s linear all;
 }
 
-.alert-dismissible.ng-leave.ng-leave-active {
-  opacity:0;
+    .alert-dismissible.ng-leave.ng-leave-active {
+        opacity: 0;
+    }
+
+
+.container {
+    position: relative;
+}
+
+.page-leaderboard.ng-enter {
+    animation: moveFromRightFade .7s ease both;
+    position: absolute;
+    width: calc(100% - 30px);
+}
+
+.page-leaderboard.ng-leave {
+    animation: moveToLeftFade .7s ease both;
+}
+
+@keyframes moveFromRightFade {
+    from {
+        opacity: 0.0;
+        transform: translateX(100%);
+    }
+}
+
+@keyframes moveToLeftFade {
+    from {
+    }
+
+    to {
+        opacity: 0.0;
+        transform: translateX(-100%);
+    }
 }

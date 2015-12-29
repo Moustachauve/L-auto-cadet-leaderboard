@@ -17,6 +17,8 @@ namespace LautoCadetAPI.DTO
 
 		public string Grade { get; set; }
 
+		public int NbBilletsDistribue { get; set; }
+
 		public int NbBilletsVendu { get; set; }
 
 		public int SectionID { get; set; }
@@ -27,7 +29,15 @@ namespace LautoCadetAPI.DTO
 		{
 			get
 			{
-				return Nom + ", " + Prenom.Substring(0, 1) + ".";
+				return Grade + " " + Nom + ", " + Prenom.Substring(0, 1) + ".";
+			}
+		}
+
+		public string FullName
+		{
+			get
+			{
+				return Prenom + " " + Nom;
 			}
 		}
 
@@ -40,6 +50,7 @@ namespace LautoCadetAPI.DTO
 			Prenom = cadet.Prenom;
 			Nom = cadet.Nom;
 			Grade = cadet.Grade;
+			NbBilletsDistribue = cadet.NbBilletsDistribue;
 			NbBilletsVendu = cadet.NbBilletsVendu;
 			SectionID = cadet.Section.SectionID;
 			NomSection = cadet.Section.Nom;

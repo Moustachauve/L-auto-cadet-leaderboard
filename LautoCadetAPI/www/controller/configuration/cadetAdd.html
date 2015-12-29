@@ -18,7 +18,7 @@
                 </div>
                 <div class="form-group" show-errors ng-init="getAllSections()">
                     <label for="cboSection" class="control-label">Section</label>
-                    <select class="form-control" ng-model="cadet.SectionID" ng-options="section.SectionID as section.Nom for section in sections" id="cboSection" name="cboSection"></select>
+                    <select class="form-control" ng-model="cadet.SectionID" ng-options="section.SectionID as section.Nom for section in sections" id="cboSection" name="cboSection" required></select>
                     <p class="help-block" ng-show="cadetAddForm.cboSection.$error.required">Le cadet doit être dans une section</p>
                 </div>
                 <div class="form-group" show-errors>
@@ -27,12 +27,21 @@
                     <p class="help-block" ng-show="cadetAddForm.txtGrade.$error.required">Le cadet doit avoir un grade</p>
                 </div>
                 <div class="form-group" show-errors>
+                    <label for="txtNbBilletsDistribue" class="control-label">Nombre de billets distribué</label>
+                    <input type="number" class="form-control" name="txtNbBilletsDistribue" id="txtNbBilletsDistribue" ng-model="cadet.NbBilletsDistribue" min="0" max="2147483647" required>
+                    <p class="help-block" ng-show="cadetAddForm.txtNbBilletsDistribue.$error.required">Le nombre de billets distribué doit être spécifié</p>
+                    <p class="help-block" ng-show="cadetAddForm.txtNbBilletsDistribue.$error.min">Le nombre de billets distribué ne peut pas être négatif</p>
+                    <p class="help-block" ng-show="cadetAddForm.txtNbBilletsDistribue.$error.max">Le nombre de billets distribué doit être plus petit que 2 147 483 647</p>
+                    <p class="help-block" ng-show="cadetAddForm.txtNbBilletsDistribue.$error.number">Le nombre de billets distribué doit être un nombre</p>
+                </div>
+                <div class="form-group" show-errors>
                     <label for="txtNbBilletsVendu" class="control-label">Nombre de billets vendu</label>
-                    <input type="number" class="form-control" name="txtNbBilletsVendu" id="txtNbBilletsVendu" ng-model="cadet.NbBilletsVendu" min="0" max="2147483647" required>
+                    <input type="number" class="form-control" name="txtNbBilletsVendu" id="txtNbBilletsVendu" ng-model="cadet.NbBilletsVendu" min="0" max="2147483647" lower-than="{{cadet.NbBilletsDistribue}}" required>
                     <p class="help-block" ng-show="cadetAddForm.txtNbBilletsVendu.$error.required">Le nombre de billets vendu doit être spécifié</p>
                     <p class="help-block" ng-show="cadetAddForm.txtNbBilletsVendu.$error.min">Le nombre de billets vendu ne peut pas être négatif</p>
                     <p class="help-block" ng-show="cadetAddForm.txtNbBilletsVendu.$error.max">Le nombre de billets vendu doit être plus petit que 2 147 483 647</p>
                     <p class="help-block" ng-show="cadetAddForm.txtNbBilletsVendu.$error.number">Le nombre de billets vendu doit être un nombre</p>
+                    <p class="help-block" ng-show="cadetAddForm.txtNbBilletsVendu.$error.lowerThan">Le nombre de billets vendu ne peut pas être supérieur au nombre de billets distribué</p>
                 </div>
                 <div class="form-group text-right">
                     <button type="reset" class="btn btn-default" ng-click="navigateBack()">Annuler</button>

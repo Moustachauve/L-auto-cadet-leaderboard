@@ -1,13 +1,19 @@
 ﻿angular
     .module('LautoCadet')
-    .controller('leaderboardController', ['$scope', '$rootScope', leaderboardController]);
+    .controller('leaderboardController', ['$scope', '$rootScope', '$location', '$interval', leaderboardController]);
 
-function leaderboardController($scope, $rootScope) {
+function leaderboardController($scope, $rootScope, $location, $interval) {
+
+    var nbSecondBetweenPages = 16;
 
     $scope.topTenSeller = [];
+    $scope.pages = [
+        '/controller/leaderboard/topTenSellers.html',
+    ];
+    $scope.currentPageId = 0;
+    $scope.currentPage = $scope.pages[$scope.currentPageId];
 
     $scope.getTopTenSeller = function () {
-        $rootScope.startLoading();
         $.ajax({
             method: "GET",
             url: "http://localhost:8080/api/Leaderboard/GetTopTenSeller",
@@ -23,4 +29,17 @@ function leaderboardController($scope, $rootScope) {
             $scope.$apply();
         });
     }
+
+    $scope.changePage = function () {
+        $interval(function () {
+            $scope.currentPageId++;
+            if ($scope.currentPageId == $scope.pages.length)
+                $scope.currentPageId = 0;
+
+            $scope.currentPage = $scope.pages[$scope.currentPageId];
+
+        }, nbSecondBetweenPages * 1000);
+    }
+
+    $scope.changePage();
 }

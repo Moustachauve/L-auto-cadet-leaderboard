@@ -24,7 +24,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="section in sections">
-                    <td>{{section.Nom}}</td>
+                    <td><a href="configuration/section/details/{{section.SectionID}}">{{section.Nom}}</a></td>
                     <td class="text-center">{{section.NbCadets}}</td>
                     <td class="text-center">{{section.NbBilletsVendu}}</td>
                     <td class="text-right">

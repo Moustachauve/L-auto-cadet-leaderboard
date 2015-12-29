@@ -106,6 +106,7 @@
     <Compile Include="DTO\CadetList.cs" />
     <Compile Include="DTO\CadetListItem.cs" />
     <Compile Include="DTO\SaveDetails.cs" />
+    <Compile Include="DTO\SectionDetails.cs" />
     <Compile Include="DTO\SectionListItem.cs" />
     <Compile Include="Model\Cadet.cs" />
     <Compile Include="Model\EscadronConfiguration.cs" />

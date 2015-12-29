@@ -23,7 +23,7 @@ namespace LautoCadetAPI.Controllers
 				return BadRequest("Section not found");
 			}
 
-			return Json<SectionListItem>(new SectionListItem(section));
+			return Json(new SectionDetails(section));
 		}
 
 		public IHttpActionResult GetAll()
@@ -37,7 +37,7 @@ namespace LautoCadetAPI.Controllers
 				result.Add(new SectionListItem(section));
 			}
 
-			return Json<IEnumerable<SectionListItem>>(result.OrderBy(s => s.Nom));
+			return Json(result.OrderBy(s => s.Nom));
         }
 
         [HttpPost]
@@ -50,8 +50,21 @@ namespace LautoCadetAPI.Controllers
 
 			SectionListItem result = new SectionListItem(service.AddSection(section.Nom));
 
-			return Json<SectionListItem>(result);
+			return Json(result);
         }
+
+		[HttpGet]
+		public IHttpActionResult Edit(int id)
+		{
+			var section = service.GetSectionByID(id);
+
+			if (section == null)
+			{
+				return BadRequest("Section not found");
+			}
+
+			return Json(new SectionListItem(section));
+		}
 
 		[HttpPut]
 		public IHttpActionResult Edit(SectionListItem sectionModel)
@@ -61,14 +74,14 @@ namespace LautoCadetAPI.Controllers
 				return BadRequest(ModelState);
 			}
 
-			return Json<SectionListItem>(new SectionListItem(service.SectionEdit(sectionModel)));
+			return Json(new SectionListItem(service.SectionEdit(sectionModel)));
 		}
 
 		[HttpDelete]
 		public IHttpActionResult Delete(int id)
 		{
 			if (service.SectionDelete(id))
-				return Json<String>("Done");
+				return Json("Done");
 
 			return BadRequest("Section not found");
 		}

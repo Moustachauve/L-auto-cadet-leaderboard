@@ -1,13 +1,13 @@
-﻿using System;
+﻿using LautoCadetAPI.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LautoCadetAPI.Model;
 
 namespace LautoCadetAPI.DTO
 {
-	public class SectionListItem
+	public class SectionDetails
 	{
 		public int SectionID { get; set; }
 
@@ -19,14 +19,17 @@ namespace LautoCadetAPI.DTO
 
 		public int NbBilletsVendu { get; set; }
 
-		public SectionListItem()
-		{}
+		public CadetList Cadets { get; set; }
 
-		public SectionListItem(Section section)
+		public SectionDetails()
+		{ }
+
+		public SectionDetails(Section section)
 		{
 			SectionID = section.SectionID;
 			Nom = section.Nom;
 			NbCadets = section.Cadets.Count;
+			Cadets = new CadetList(section.Cadets);
 
 			foreach (Cadet cadet in section.Cadets)
 			{
@@ -34,5 +37,6 @@ namespace LautoCadetAPI.DTO
 				NbBilletsDistribue += cadet.NbBilletsDistribue;
 			}
 		}
+
 	}
 }

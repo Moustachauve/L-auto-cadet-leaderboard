@@ -13,30 +13,44 @@
                 <input type="text" class="form-control" id="txtPrenom" name="txtPrenom" ng-model="cadetDetails.Prenom" required>
                 <p class="help-block" ng-show="cadetEditForm.txtPrenom.$error.required">Le prénom est requis</p>
             </div>
+
             <div class="form-group" show-errors>
                 <label for="txtNom">Nom</label>
                 <input type="text" class="form-control" id="txtNom" name="txtNom" ng-model="cadetDetails.Nom" required>
                 <p class="help-block" ng-show="cadetEditForm.txtNom.$error.required">Le nom est requis</p>
             </div>
+
             <div class="form-group" ng-init="getAllSections()" show-errors>
                 <label for="cboSection">Section</label>
-                <select class="form-control" ng-model="cadetDetails.SectionID" ng-options="section.SectionID as section.Nom for section in sections" id="cboSection" name="cboSection" required>
-                </select>
+                <select class="form-control" ng-model="cadetDetails.SectionID" ng-options="section.SectionID as section.Nom for section in sections" id="cboSection" name="cboSection" required></select>
                 <p class="help-block" ng-show="cadetEditForm.cboSection.$error.required">Le cadet doit être dans une section</p>
             </div>
+
             <div class="form-group" show-errors>
                 <label for="txtGrade">Grade</label>
                 <input type="text" class="form-control" id="txtGrade" name="txtGrade" ng-model="cadetDetails.Grade" required>
                 <p class="help-block" ng-show="cadetEditForm.txtGrade.$error.required">Le cadet doit avoir un grade</p>
             </div>
+
+            <div class="form-group" show-errors>
+                <label for="txtNbBilletsDistribue" class="control-label">Nombre de billets distribué</label>
+                <input type="number" class="form-control" name="txtNbBilletsDistribue" id="txtNbBilletsDistribue" ng-model="cadetDetails.NbBilletsDistribue" min="0" max="2147483647" required>
+                <p class="help-block" ng-show="cadetEditForm.txtNbBilletsDistribue.$error.required">Le nombre de billets distribué doit être spécifié</p>
+                <p class="help-block" ng-show="cadetEditForm.txtNbBilletsDistribue.$error.min">Le nombre de billets distribué ne peut pas être négatif</p>
+                <p class="help-block" ng-show="cadetEditForm.txtNbBilletsDistribue.$error.max">Le nombre de billets distribué doit être plus petit que 2 147 483 647</p>
+                <p class="help-block" ng-show="cadetEditForm.txtNbBilletsDistribue.$error.number">Le nombre de billets distribué doit être un nombre</p>
+            </div>
+
             <div class="form-group" show-errors>
                 <label for="txtNbBilletsVendu">Nombre de billets vendu</label>
-                <input type="number" class="form-control" id="txtNbBilletsVendu" name="txtNbBilletsVendu" ng-model="cadetDetails.NbBilletsVendu" min="0" max="2147483647" required>
+                <input type="number" class="form-control" id="txtNbBilletsVendu" name="txtNbBilletsVendu" ng-model="cadetDetails.NbBilletsVendu" min="0" max="2147483647" lower-than="{{cadetDetails.NbBilletsDistribue}}" required>
                 <p class="help-block" ng-show="cadetEditForm.txtNbBilletsVendu.$error.required">Le nombre de billets vendu doit être spécifié</p>
                 <p class="help-block" ng-show="cadetEditForm.txtNbBilletsVendu.$error.min">Le nombre de billets vendu ne peut pas être négatif</p>
                 <p class="help-block" ng-show="cadetEditForm.txtNbBilletsVendu.$error.max">Le nombre de billets vendu doit être plus petit que 2 147 483 647</p>
                 <p class="help-block" ng-show="cadetEditForm.txtNbBilletsVendu.$error.number">Le nombre de billets vendu doit être un nombre</p>
+                <p class="help-block" ng-show="cadetEditForm.txtNbBilletsVendu.$error.lowerThan">Le nombre de billets vendu ne peut pas être supérieur au nombre de billets distribué</p>
             </div>
+
             <div class="form-group text-right">
                 <button type="reset" class="btn btn-default" ng-click="navigateBack()">Annuler</button>
                 <button type="submit" class="btn btn-success">Sauvegarder</button>
