@@ -19,7 +19,7 @@ namespace LautoCadetAPI.DTO
 
 		public int NbBilletsVendu { get; set; }
 
-		public CadetList Cadets { get; set; }
+		public IEnumerable<CadetListItem> Cadets { get; set; }
 
 		public SectionDetails()
 		{ }
@@ -29,7 +29,8 @@ namespace LautoCadetAPI.DTO
 			SectionID = section.SectionID;
 			Nom = section.Nom;
 			NbCadets = section.Cadets.Count;
-			Cadets = new CadetList(section.Cadets);
+			Cadets = new CadetList(section.Cadets)
+				.OrderBy(c => c.Nom).ThenBy(c => c.Prenom).ThenBy(c => c.Grade);
 
 			foreach (Cadet cadet in section.Cadets)
 			{

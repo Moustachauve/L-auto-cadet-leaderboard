@@ -19,8 +19,6 @@ namespace LautoCadetAPI.DTO
 			{
 				Add(new CadetListItem(cadet));
 			}
-
-			this.OrderBy(c => c.Nom).ThenBy(c => c.Prenom).ThenBy(c => c.Grade);
 		}
 	}
 }

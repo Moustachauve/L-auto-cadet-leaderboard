@@ -30,9 +30,10 @@ namespace LautoCadetAPI.Controllers
 		{
 			var cadets = service.GetAllCadets();
 
-			var result = new CadetList(cadets);
+			var result = new CadetList(cadets)
+							.OrderBy(c => c.Nom).ThenBy(c => c.Prenom).ThenBy(c => c.Grade);
 
-			return Json(result.OrderBy(c => c.DisplayName));
+			return Json(result);
 		}
 
 		[HttpPost]

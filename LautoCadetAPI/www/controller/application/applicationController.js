@@ -29,47 +29,49 @@
 
     .when('/configuration/cadet/list', {
         title: "Liste des cadets",
-        templateUrl: '/controller/configuration/cadetList.html',
-        controller: 'configurationController'
+        templateUrl: '/controller/configuration/cadet/cadetList.html',
+        controller: 'cadetController'
     })
 
     .when('/configuration/cadet/add', {
         title: "Ajouter un cadet",
-        templateUrl: '/controller/configuration/cadetAdd.html',
-        controller: 'configurationController'
+        templateUrl: '/controller/configuration/cadet/cadetAdd.html',
+        controller: 'cadetController'
     })
 
     .when('/configuration/cadet/edit/:id', {
         title: "Modifier un cadet",
-        templateUrl: '/controller/configuration/cadetEdit.html',
-        controller: 'configurationController'
+        templateUrl: '/controller/configuration/cadet/cadetEdit.html',
+        controller: 'cadetController'
     })
 
     // = Sections =
 
     .when('/configuration/section/list', {
         title: "Liste des sections",
-        templateUrl: "/controller/configuration/sectionList.html",
-        controller: 'configurationController'
+        templateUrl: "/controller/configuration/section/sectionList.html",
+        controller: 'sectionController'
     })
 
     .when('/configuration/section/details/:id', {
         title: "Détails d'une section",
-        templateUrl: "/controller/configuration/sectionDetails.html",
-        controller: 'configurationController'
+        templateUrl: "/controller/configuration/section/sectionDetails.html",
+        controller: 'sectionController'
     })
 
     .when('/configuration/section/add', {
         title: "Ajouter une section",
-        templateUrl: "/controller/configuration/sectionAdd.html",
-        controller: 'configurationController'
+        templateUrl: "/controller/configuration/section/sectionAdd.html",
+        controller: 'sectionController'
     })
 
     .when('/configuration/section/edit/:id', {
         title: "Modifier une section",
-        templateUrl: "/controller/configuration/sectionEdit.html",
-        controller: 'configurationController'
+        templateUrl: "/controller/configuration/section/sectionEdit.html",
+        controller: 'sectionController'
     })
+
+    // = Errors =
 
     .otherwise({
         title: "Page introuvable",
