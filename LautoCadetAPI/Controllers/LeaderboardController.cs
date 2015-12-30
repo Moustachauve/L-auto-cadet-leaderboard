@@ -18,7 +18,12 @@ namespace LautoCadetAPI.Controllers
 		{
             var list = new CadetList(service.GetTopTenSeller());
 
-			return Json<CadetList>(list);
+			return Json(list);
+		}
+
+		public IHttpActionResult GetSectionLeaderboard()
+		{
+			return Json(service.GetSectionLeaderboard());
 		}
 	}
 }

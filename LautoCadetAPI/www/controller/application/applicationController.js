@@ -160,9 +160,11 @@ function applicationController($scope, $rootScope, $route, $window) {
     }
 }
 
-// Prevents context menu except in inputs
-document.addEventListener('contextmenu', function (event) {
-    if (event.target.nodeName !== 'INPUT' && event.target.type !== 'text' && event.target.nodeName !== 'TEXTAREA') {
-        event.preventDefault();
-    }
-});
+// Prevents context menu except in inputs, but will work in regular browser
+if (typeof clientUtils != "undefined") {
+    document.addEventListener('contextmenu', function (event) {
+        if (event.target.nodeName !== 'INPUT' && event.target.type !== 'text' && event.target.nodeName !== 'TEXTAREA') {
+            event.preventDefault();
+        }
+    });
+}

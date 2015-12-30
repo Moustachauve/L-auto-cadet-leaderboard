@@ -1,0 +1,25 @@
+﻿<div class="row" ng-init="getSectionLeaderboard()">
+    <div class="col-md-8">
+        <div class="page-header">
+            <h2>Classement par section</h2>
+        </div>
+
+        <div ng-repeat="section in sectionLeaderboard.Sections">
+            <h4>{{section.Nom}}</h4>
+
+            <progress max="{{section.NbBilletsDistribue}}" value="{{section.NbBilletsVendu}}" class="leaderboard-bar"></progress>
+            <span class="leaderboard-bar-label">{{section.NbBilletsVendu}} / {{section.NbBilletsDistribue}}</span>
+
+            <hr />
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="page-header">
+            <h2>Objectif de l'escadron</h2>
+        </div>
+
+        <cg-pie value="sectionLeaderboard.NbBilletsVendu" max="sectionLeaderboard.NbBilletsDistribue"></cg-pie>
+
+    </div>
+</div>

@@ -9,6 +9,7 @@ function leaderboardController($scope, $rootScope, $location, $interval) {
     $scope.topTenSeller = [];
     $scope.pages = [
         '/controller/leaderboard/topTenSellers.html',
+        '/controller/leaderboard/sectionLeaderboard.html',
     ];
     $scope.currentPageId = 0;
     $scope.currentPage = $scope.pages[$scope.currentPageId];
@@ -21,10 +22,25 @@ function leaderboardController($scope, $rootScope, $location, $interval) {
         .done(function (data) {
             $rootScope.stopLoading();
             $scope.topTenSeller = data;
-            console.log(data);
             $scope.$apply();
         }).fail(function () {
         	$rootScope.showError();
+            $rootScope.stopLoading();
+            $scope.$apply();
+        });
+    }
+
+    $scope.getSectionLeaderboard = function () {
+        $.ajax({
+            method: "GET",
+            url: "http://localhost:8080/api/Leaderboard/GetSectionLeaderboard",
+        })
+        .done(function (data) {
+            $rootScope.stopLoading();
+            $scope.sectionLeaderboard = data;
+            $scope.$apply();
+        }).fail(function () {
+            $rootScope.showError();
             $rootScope.stopLoading();
             $scope.$apply();
         });

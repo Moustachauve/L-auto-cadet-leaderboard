@@ -95,12 +95,6 @@ namespace LautoCadetAPI.DAL
 			return GetSectionByID(sectionID).Cadets;
 		}
 
-		public IEnumerable<Cadet> GetTopTenSeller()
-		{
-			Reload();
-			return repo.GetAllCadets().OrderByDescending(c => c.NbBilletsVendu).Take(10);
-		}
-
 		public Cadet AddCadet(CadetListItem cadetModel)
 		{
 			Reload();
@@ -144,6 +138,22 @@ namespace LautoCadetAPI.DAL
 		public bool DeleteCadet(int cadetID)
 		{
 			return repo.DeleteCadet(cadetID);
+		}
+
+		#endregion
+
+		#region Leaderboard
+
+		public IEnumerable<Cadet> GetTopTenSeller()
+		{
+			Reload();
+			return repo.GetAllCadets().OrderByDescending(c => c.NbBilletsVendu).Take(10);
+		}
+
+		public SectionLeaderboard GetSectionLeaderboard()
+		{
+			Reload();
+			return new SectionLeaderboard(escadron);
 		}
 
 		#endregion
