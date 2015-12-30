@@ -21,25 +21,6 @@ function cadetController($scope, $rootScope, $location, $route, $routeParams, no
         });
     }
 
-    $scope.cadetEditInit = function () {
-        $rootScope.startLoading();
-        $scope.cadet = null;
-
-        $.ajax({
-            method: "GET",
-            url: "http://localhost:8080/api/Cadet/Get/" + $routeParams.id,
-        })
-        .done(function (data) {
-            $rootScope.stopLoading();
-            $scope.cadet = data;
-            $scope.$apply();
-        }).fail(function () {
-            $rootScope.showError();
-            $rootScope.stopLoading();
-            $scope.$apply();
-        });
-    }
-
     $scope.addCadet = function () {
         $scope.$broadcast('show-errors-check-validity');
         if (!$scope.cadetAddForm.$valid)
@@ -56,6 +37,24 @@ function cadetController($scope, $rootScope, $location, $route, $routeParams, no
             $rootScope.navigateBack();
             notification.showSuccess('Le cadet "' + data.FullName + '" a bien été ajouté');
             $scope.$apply();
+        }).fail(function () {
+            $rootScope.showError();
+            $rootScope.stopLoading();
+            $scope.$apply();
+        });
+    }
+
+    $scope.cadetEditInit = function () {
+        $rootScope.startLoading();
+        $scope.cadet = null;
+
+        $.ajax({
+            method: "GET",
+            url: "http://localhost:8080/api/Cadet/Get/" + $routeParams.id,
+        })
+        .done(function (data) {
+            $scope.cadet = data;
+            $scope.cadetFormInit();
         }).fail(function () {
             $rootScope.showError();
             $rootScope.stopLoading();
@@ -105,15 +104,15 @@ function cadetController($scope, $rootScope, $location, $route, $routeParams, no
         }
     }
 
-    $scope.getAllSections = function () {
+    $scope.cadetFormInit = function () {
         $rootScope.startLoading();
         $.ajax({
             method: "GET",
-            url: "http://localhost:8080/api/Section/GetAll",
+            url: "http://localhost:8080/api/Cadet/GetFormInit",
         })
         .done(function (data) {
             $rootScope.stopLoading();
-            $scope.sections = data;
+            $scope.cadetFormData = data;
             $scope.$apply();
         }).fail(function () {
             $rootScope.showError();

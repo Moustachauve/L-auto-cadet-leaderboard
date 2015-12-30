@@ -35,7 +35,7 @@ namespace LautoCadetAPI.DAL
 
 		#region Section
 
-		public IEnumerable<Section> GetAllSections()
+		public List<Section> GetAllSections()
 		{
 			return repo.GetAllSections();
 		}
@@ -98,10 +98,11 @@ namespace LautoCadetAPI.DAL
 		public Cadet AddCadet(CadetListItem cadetModel)
 		{
 			Reload();
-			Section section = GetSectionByID(cadetModel.SectionID);
+			Section section = GetSectionByID(cadetModel.Section.SectionID);
+			Grade grade = GetGradeByID(cadetModel.Grade.GradeID);
 
 			Cadet cadet = new Cadet();
-			cadet.Grade = cadetModel.Grade;
+			cadet.Grade = grade;
 			cadet.NbBilletsDistribue = cadetModel.NbBilletsDistribue;
 			cadet.NbBilletsVendu = cadetModel.NbBilletsVendu;
 			cadet.Nom = cadetModel.Nom;
@@ -119,9 +120,10 @@ namespace LautoCadetAPI.DAL
 		{
 			Reload();
 			Cadet cadet = GetCadetByID(cadetModel.CadetID);
-			Section section = GetSectionByID(cadetModel.SectionID);
+			Section section = GetSectionByID(cadetModel.Section.SectionID);
+			Grade grade = GetGradeByID(cadetModel.Grade.GradeID);
 
-			cadet.Grade = cadetModel.Grade;
+			cadet.Grade = grade;
 			cadet.NbBilletsDistribue = cadetModel.NbBilletsDistribue;
 			cadet.NbBilletsVendu = cadetModel.NbBilletsVendu;
 			cadet.Nom = cadetModel.Nom;
@@ -138,6 +140,21 @@ namespace LautoCadetAPI.DAL
 		public bool DeleteCadet(int cadetID)
 		{
 			return repo.DeleteCadet(cadetID);
+		}
+
+		#endregion
+
+		#region Grade
+
+		public List<Grade> GradeGetAll()
+		{
+			Reload();
+			return repo.GetAllGrades();
+		}
+
+		public Grade GetGradeByID(int gradeId)
+		{
+			return repo.GetGradeByID(gradeId);
 		}
 
 		#endregion

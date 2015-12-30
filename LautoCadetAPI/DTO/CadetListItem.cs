@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LautoCadetAPI.Model;
+using System.ComponentModel.DataAnnotations;
 
 namespace LautoCadetAPI.DTO
 {
@@ -11,25 +12,29 @@ namespace LautoCadetAPI.DTO
 	{
 		public int CadetID { get; set; }
 
+		[Required]
 		public string Prenom { get; set; }
 
+		[Required]
 		public string Nom { get; set; }
 
-		public string Grade { get; set; }
+		[Required]
+		public GradeListItem Grade { get; set; }
 
+		[Required]
 		public int NbBilletsDistribue { get; set; }
 
+		[Required]
 		public int NbBilletsVendu { get; set; }
 
-		public int SectionID { get; set; }
-
-		public string NomSection { get; set; }
+		[Required]
+		public SectionListItem Section { get; set; }
 
 		public string DisplayName
 		{
 			get
 			{
-				return Grade + " " + Nom + ", " + Prenom.Substring(0, 1) + ".";
+				return Grade.Abreviation + " " + Nom + ", " + Prenom.Substring(0, 1) + ".";
 			}
 		}
 
@@ -49,11 +54,10 @@ namespace LautoCadetAPI.DTO
 			CadetID = cadet.CadetID;
 			Prenom = cadet.Prenom;
 			Nom = cadet.Nom;
-			Grade = cadet.Grade;
+			Grade = new GradeListItem(cadet.Grade);
 			NbBilletsDistribue = cadet.NbBilletsDistribue;
 			NbBilletsVendu = cadet.NbBilletsVendu;
-			SectionID = cadet.Section.SectionID;
-			NomSection = cadet.Section.Nom;
+			Section = new SectionListItem(cadet.Section);
 		}
 	}
 }

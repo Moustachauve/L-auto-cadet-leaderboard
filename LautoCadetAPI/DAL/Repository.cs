@@ -1,4 +1,5 @@
-﻿using LautoCadetAPI.Model;
+﻿using LautoCadetAPI.DTO;
+using LautoCadetAPI.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,7 @@ namespace LautoCadetAPI.DAL
 			else
 			{
 				escadronConfiguration = new EscadronConfiguration();
+				CreerGradesDefaut();
 			}
 
 			FichierRecent fichierRecent = new FichierRecent();
@@ -175,6 +177,47 @@ namespace LautoCadetAPI.DAL
 
 			return false;
 		}
+
+		#endregion
+
+		#region Grade
+
+		public List<Grade> GetAllGrades()
+		{
+			List<Grade> list = new List<Grade>();
+
+			list.AddRange(escadronConfiguration.Grades);
+
+			return list;
+		}
+
+		public Grade GetGradeByID(int gradeID)
+		{
+			return escadronConfiguration.Grades.First(g => g.GradeID == gradeID);
+		}
+
+		public void GradeAdd(GradeListItem gradeModel)
+		{
+			Grade grade = new Grade();
+			grade.GradeID = escadronConfiguration.GetNextGradeID();
+			grade.Nom = gradeModel.Nom;
+			grade.Abreviation = gradeModel.Abreviation;
+
+			escadronConfiguration.Grades.Add(grade);
+		}
+
+		private void CreerGradesDefaut()
+		{
+			GradeAdd(new GradeListItem() { Nom = "Cadet",					 Abreviation = "Cdt" });
+			GradeAdd(new GradeListItem() { Nom = "Cadet première classe",	 Abreviation = "LAC" });
+			GradeAdd(new GradeListItem() { Nom = "Caporal",					 Abreviation = "Cpl" });
+			GradeAdd(new GradeListItem() { Nom = "Caporal de section",		 Abreviation = "Cpl/s" });
+			GradeAdd(new GradeListItem() { Nom = "Sergent",					 Abreviation = "Sgt" });
+			GradeAdd(new GradeListItem() { Nom = "Sergent de section",		 Abreviation = "Sgt/s" });
+			GradeAdd(new GradeListItem() { Nom = "Adjudant deuxième classe", Abreviation = "Adj2" });
+			GradeAdd(new GradeListItem() { Nom = "Adjudant première classe", Abreviation = "Adj1" });
+		}
+
 
 		#endregion
 	}

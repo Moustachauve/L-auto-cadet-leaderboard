@@ -13,26 +13,34 @@ namespace LautoCadetAPI.Model
 	{
 		public string Nom { get; set; }
 
+		public List<Grade> Grades { get; set; }
+
 		public List<Section> Sections { get; set; }
 
 		public int NbBilletsCirculation { get; set; }
 
 		public int CurrentSectionID { get; set; }
 		public int CurrentCadetID { get; set; }
+		public int CurrentGradeID { get; set; }
 
 		public EscadronConfiguration()
 		{
 			Nom = "Nom par défaut";
 			Sections = new List<Section>();
+			Grades = new List<Grade>();
 		}
 
         public int GetNextSectionID()
         {
 			return ++CurrentSectionID;
         }
-        public int GetNextCadetID()
-        {
+		public int GetNextCadetID()
+		{
 			return ++CurrentCadetID;
-        }
-    }
+		}
+		public int GetNextGradeID()
+		{
+			return ++CurrentGradeID;
+		}
+	}
 }
