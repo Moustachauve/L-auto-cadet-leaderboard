@@ -24,7 +24,7 @@
 			<tbody>
 				<tr ng-repeat="cadet in cadets">
 					<td>{{cadet.DisplayName}}</td>
-                    <td><a href="configuration/section/details/{{cadet.SectionID}}">{{cadet.NomSection}}</a></td>
+                    <td><a href="configuration/section/details/{{cadet.Section.SectionID}}">{{cadet.Section.Nom}}</a></td>
                     <td class="text-center">{{cadet.NbBilletsVendu}} / {{cadet.NbBilletsDistribue}}</td>
 					<td class="text-right">
 						<a href="configuration/cadet/edit/{{cadet.CadetID}}" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>

@@ -2,17 +2,17 @@
     <h2>Dix meilleurs vendeurs</h2>
 </div>
 
-<table class="table table-striped" ng-init="getTopTenSeller()">
+<table class="table table-striped table-bigger" ng-init="getTopTenSeller()">
     <thead>
         <tr>
-            <th>#</th>
+            <th class="text-center" style="width:60px">#</th>
             <th>Nom</th>
-            <th class="text-center">Nb. de billets vendu</th>
+            <th class="text-center">Nombre de billets vendu</th>
         </tr>
     </thead>
     <tbody>
         <tr ng-repeat="cadet in topTenSeller">
-            <td>{{$index + 1}}</td>
+            <td class="text-center">{{$index + 1}}</td>
             <td>{{cadet.DisplayName}}</td>
             <td class="text-center">{{cadet.NbBilletsVendu}}</td>
         </tr>
