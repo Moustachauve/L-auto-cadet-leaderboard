@@ -1,0 +1,29 @@
+﻿<div class="row">
+    <div class="col-xs-3" ng-include="'controller/configuration/navigation.html'">
+    </div>
+    <div class="col-xs-9">
+        <div class="page-header">
+            <h2>Ajouter un grade</h2>
+        </div>
+
+        <form ng-submit="gradeAdd()" name="gradeAddForm" novalidate>
+
+            <div class="form-group" show-errors>
+                <label for="txtNom" class="control-label">Nom</label>
+                <input type="text" class="form-control" name="txtNom" id="txtNom" ng-model="grade.Nom" required>
+                <p class="help-block" ng-show="gradeAddForm.txtNom.$error.required">Le nom du grade est requis</p>
+            </div>
+
+            <div class="form-group" show-errors>
+                <label for="txtAbreviation" class="control-label">Abréviation</label>
+                <input type="text" class="form-control" name="txtAbreviation" id="txtAbreviation" ng-model="grade.Abreviation" required>
+                <p class="help-block" ng-show="gradeAddForm.txtAbreviation.$error.required">Le grade doit avoir une abréviation</p>
+            </div>
+
+            <div class="form-group text-right">
+                <button type="reset" class="btn btn-default" ng-click="navigateBack()">Annuler</button>
+                <button type="submit" class="btn btn-success">Ajouter</button>
+            </div>
+        </form>
+    </div>
+</div>

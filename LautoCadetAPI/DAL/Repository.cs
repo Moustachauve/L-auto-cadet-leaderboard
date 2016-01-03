@@ -196,7 +196,7 @@ namespace LautoCadetAPI.DAL
 			return escadronConfiguration.Grades.First(g => g.GradeID == gradeID);
 		}
 
-		public void GradeAdd(GradeListItem gradeModel)
+		public Grade GradeAdd(GradeListItem gradeModel)
 		{
 			Grade grade = new Grade();
 			grade.GradeID = escadronConfiguration.GetNextGradeID();
@@ -204,6 +204,30 @@ namespace LautoCadetAPI.DAL
 			grade.Abreviation = gradeModel.Abreviation;
 
 			escadronConfiguration.Grades.Add(grade);
+
+			return grade;
+		}
+
+		public bool GradeDelete(int gradeID)
+		{
+			foreach (Grade grade in escadronConfiguration.Grades)
+			{
+				if (grade.GradeID == gradeID)
+				{
+					escadronConfiguration.Grades.Remove(grade);
+
+					Grade firstGrade = escadronConfiguration.Grades.First();
+					foreach (Cadet cadet in grade.Cadets)
+					{
+						firstGrade.Cadets.Add(cadet);
+						cadet.Grade = firstGrade;
+					}
+
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		private void CreerGradesDefaut()
@@ -217,7 +241,6 @@ namespace LautoCadetAPI.DAL
 			GradeAdd(new GradeListItem() { Nom = "Adjudant deuxième classe", Abreviation = "Adj2" });
 			GradeAdd(new GradeListItem() { Nom = "Adjudant première classe", Abreviation = "Adj1" });
 		}
-
 
 		#endregion
 	}

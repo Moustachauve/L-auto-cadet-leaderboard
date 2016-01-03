@@ -1,0 +1,37 @@
+﻿<div class="row">
+    <div class="col-xs-3" ng-include="'controller/configuration/navigation.html'">
+    </div>
+    <div class="col-xs-9">
+        <div class="page-header">
+            <h2>
+                Liste des grades
+                <div class="pull-right">
+                    <a href="configuration/grade/add" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span> Ajouter
+                    </a>
+                </div>
+            </h2>
+        </div>
+        <table class="table" ng-init="getAllGrades()">
+            <thead>
+                <tr>
+                    <th style="width: 60px" class="text-center">Ordre</th>
+                    <th>Abréviation</th>
+                    <th>Grade</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="grade in grades">
+                    <td class="text-center"><img src="/img/draghandle.png" alt="Drag" /></td>
+                    <td>{{grade.Abreviation}}</td>
+                    <td>{{grade.Nom}}</td>
+                    <td class="text-right">
+                        <a href="configuration/grade/edit/{{grade.GradeID}}" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a href="" class="btn btn-sm btn-danger" ng-click="gradeDelete(grade)"><span class="glyphicon glyphicon-trash"></span></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

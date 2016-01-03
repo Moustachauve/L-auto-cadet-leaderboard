@@ -112,6 +112,7 @@ namespace LautoCadetAPI.DAL
 			cadet.CadetID = escadron.GetNextCadetID();
 
 			section.Cadets.Add(cadet);
+			grade.Cadets.Add(cadet);
 			Save();
 			return cadet;
 		}
@@ -123,16 +124,20 @@ namespace LautoCadetAPI.DAL
 			Section section = GetSectionByID(cadetModel.Section.SectionID);
 			Grade grade = GetGradeByID(cadetModel.Grade.GradeID);
 
-			cadet.Grade = grade;
 			cadet.NbBilletsDistribue = cadetModel.NbBilletsDistribue;
 			cadet.NbBilletsVendu = cadetModel.NbBilletsVendu;
 			cadet.Nom = cadetModel.Nom;
 			cadet.Prenom = cadetModel.Prenom;
 
 			cadet.Section.Cadets.Remove(cadet);
+			cadet.Grade.Cadets.Remove(cadet);
 
+			cadet.Grade = grade;
 			cadet.Section = section;
+
 			section.Cadets.Add(cadet);
+			grade.Cadets.Add(cadet);
+
 			Save();
 			return cadet;
 		}
@@ -155,6 +160,37 @@ namespace LautoCadetAPI.DAL
 		public Grade GetGradeByID(int gradeId)
 		{
 			return repo.GetGradeByID(gradeId);
+		}
+
+		public Grade GradeAdd(GradeListItem gradeModel)
+		{
+			Reload();
+
+			Grade grade = repo.GradeAdd(gradeModel);
+
+			Save();
+			return grade;
+		}
+
+		public Grade GradeEdit(GradeListItem gradeModel)
+		{
+			Reload();
+			Grade grade = GetGradeByID(gradeModel.GradeID);
+
+			grade.Nom = gradeModel.Nom;
+			grade.Abreviation = gradeModel.Abreviation;
+
+			Save();
+			return grade;
+		}
+
+		public bool GradeDelete(int gradeID)
+		{
+			bool success = repo.GradeDelete(gradeID);
+			if (success)
+				Save();
+
+			return success;
 		}
 
 		#endregion

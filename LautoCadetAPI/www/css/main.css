@@ -95,6 +95,10 @@
     opacity: 0.2;
 }
 
+.table, .alert, label, .control-label, .help-block, .checkbox, .radio {
+    font-size: 100%;
+}
+
 @media (min-width: 768px) {
     .dl-horizontal dt {
         width: 230px;
