@@ -4,7 +4,7 @@
 
 function leaderboardController($scope, $rootScope, $location, $interval) {
 
-    var nbSecondBetweenPages = 16;
+    var nbSecondBetweenPages = 6;
 
     $scope.topTenSeller = [];
     $scope.pages = [

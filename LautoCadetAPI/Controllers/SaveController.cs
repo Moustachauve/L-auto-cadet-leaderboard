@@ -12,15 +12,15 @@ namespace LautoCadetAPI.Controllers
 {
 	public class SaveController : ApiController
 	{
-		Service service = Service.Instance;
+		IService service = Service.Instance;
 
 		[HttpGet]
 		public IHttpActionResult Details()
 		{
 			SaveDetails details = new SaveDetails();
 
-			details.Nom = service.GetSaveName();
-			details.FichiersRecents = service.RecentFilesGetAll();
+			details.Nom = service.FileGetSaveName();
+			details.FichiersRecents = service.FileGetRecentlyOpened();
 
 			return Json(details);
 		}
@@ -32,7 +32,7 @@ namespace LautoCadetAPI.Controllers
 			{
 				return BadRequest(ModelState);
 			}
-			service.Create(fileInfo.CheminFichier, fileInfo.NomSauvegarde);
+			service.FileCreate(fileInfo.CheminFichier, fileInfo.NomSauvegarde);
 
 			return Json(fileInfo);
 		}
@@ -40,8 +40,8 @@ namespace LautoCadetAPI.Controllers
 		[HttpPost]
 		public IHttpActionResult Open(FichierRecent fileInfo)
 		{
-			service.Open(fileInfo.CheminFichier);
-			fileInfo.NomSauvegarde = service.GetSaveName();
+			service.FileOpen(fileInfo.CheminFichier);
+			fileInfo.NomSauvegarde = service.FileGetSaveName();
 
 			return Json(fileInfo);
 		}
@@ -52,7 +52,7 @@ namespace LautoCadetAPI.Controllers
 			if (string.IsNullOrWhiteSpace(nomSauvegarde))
 				return BadRequest("Le nom ne peut pas être vide");
 
-			service.SetSaveName(nomSauvegarde);
+			service.FileSetSaveName(nomSauvegarde);
 			return Ok();
 		}
 	}

@@ -1,21 +1,20 @@
-﻿using LautoCadetAPI.DTO;
-using LautoCadetAPI.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
+using LautoCadetAPI.DTO;
+using LautoCadetAPI.Model;
+using System.IO;
 
 namespace LautoCadetAPI.DAL
 {
-	public class Service
+	internal class Service : IService
 	{
-
-		#region Singleton & Initialization
-
-		private Repository repo = new Repository();
-		private EscadronConfiguration escadron;
+		private IRepository<EscadronConfiguration> escadronManager;
+		private IRepository<FichiersRecentsConfiguration> recentFilesManager;
+		private EscadronConfiguration data;
+		private FichiersRecentsConfiguration recentFiles;
 
 		private static Service instance;
 		public static Service Instance
@@ -24,243 +23,309 @@ namespace LautoCadetAPI.DAL
 			{
 				if (instance == null)
 					instance = new Service();
+
 				return instance;
 			}
 		}
 
 		private Service()
-		{ }
+		{
+			escadronManager = new Repository<EscadronConfiguration>(WebApi.DEFAULT_FILE_PATH);
+			recentFilesManager = new Repository<FichiersRecentsConfiguration>(WebApi.DEFAULT_RECENT_FILES_PATH);
+			data = escadronManager.GetData();
+			recentFiles = recentFilesManager.GetData();
+
+			AddToRecentFiles();
+		}
+
+		public void Save()
+		{
+			escadronManager.Save();
+		}
+
+		#region Cadet
+
+		public Cadet CadetGetByID(int id)
+		{
+			return data.Cadets.FirstOrDefault(c => c.CadetID == id);
+		}
+
+		public IEnumerable<Cadet> CadetGetAll()
+		{
+			List<Cadet> cadets = new List<Cadet>();
+			cadets.AddRange(data.Cadets);
+			return cadets;
+		}
+
+		public Cadet CadetAdd(CadetListItem cadetModel)
+		{
+			Cadet cadet = new Cadet();
+			Section section = null;
+			Grade grade = null;
+
+			if (cadetModel.Section != null)
+			{
+				section = SectionGetByID(cadetModel.Section.SectionID);
+				section.Cadets.Add(cadet);
+			}
+			if (cadetModel.Grade != null)
+			{
+				grade = GradeGetByID(cadetModel.Grade.GradeID);
+				grade.Cadets.Add(cadet);
+			}
+
+			cadet.Grade = grade;
+			cadet.NbBilletsDistribue = cadetModel.NbBilletsDistribue;
+			cadet.NbBilletsVendu = cadetModel.NbBilletsVendu;
+			cadet.Nom = cadetModel.Nom;
+			cadet.Prenom = cadetModel.Prenom;
+			cadet.Section = section;
+			cadet.CadetID = data.GetNextCadetID();
+
+			data.Cadets.Add(cadet);
+
+			return cadet;
+		}
+
+		public Cadet CadetEdit(CadetListItem cadetModel)
+		{
+			Cadet cadet = CadetGetByID(cadetModel.CadetID);
+			Section section = SectionGetByID(cadetModel.Section.SectionID);
+			Grade grade = GradeGetByID(cadetModel.Grade.GradeID);
+
+			cadet.NbBilletsDistribue = cadetModel.NbBilletsDistribue;
+			cadet.NbBilletsVendu = cadetModel.NbBilletsVendu;
+			cadet.Nom = cadetModel.Nom;
+			cadet.Prenom = cadetModel.Prenom;
+
+			if(cadet.Section != null)
+				cadet.Section.Cadets.Remove(cadet);
+			if(cadet.Grade != null)
+				cadet.Grade.Cadets.Remove(cadet);
+
+			cadet.Grade = grade;
+			cadet.Section = section;
+
+			if (section != null)
+				section.Cadets.Add(cadet);
+			if (grade != null)
+				grade.Cadets.Add(cadet);
+
+			return cadet;
+		}
+
+		public void CadetDelete(int id)
+		{
+			Cadet cadet = CadetGetByID(id);
+
+			if(cadet.Section != null)
+				cadet.Section.Cadets.Remove(cadet);
+
+			if(cadet.Grade != null)
+				cadet.Grade.Cadets.Remove(cadet);
+
+			data.Cadets.Remove(cadet);
+		}
 
 		#endregion
 
 		#region Section
 
-		public List<Section> GetAllSections()
+		public Section SectionGetByID(int id)
 		{
-			return repo.GetAllSections();
+			return data.Sections.FirstOrDefault(s => s.SectionID == id);
 		}
 
-		public Section AddSection(string name)
+		public List<Section> SectionGetAll()
 		{
-			Reload();
+			List<Section> sections = new List<Section>();
+			sections.AddRange(data.Sections);
+			return sections;
+		}
+
+		public Section SectionAdd(string name)
+		{
 			Section section = new Section();
 			section.Nom = name;
-			section.SectionID = escadron.GetNextSectionID();
+			section.SectionID = data.GetNextSectionID();
 
-			escadron.Sections.Add(section);
-			Save();
+			data.Sections.Add(section);
 
 			return section;
-		}
-
-		public Section GetSectionByID(int id)
-		{
-			return GetAllSections().First(s => s.SectionID == id);
 		}
 
 		public Section SectionEdit(SectionListItem sectionModel)
 		{
-			Reload();
-			Section section = GetSectionByID(sectionModel.SectionID);
-
+			Section section = SectionGetByID(sectionModel.SectionID);
 			section.Nom = sectionModel.Nom;
 
-			Save();
 			return section;
 		}
 
-		public bool SectionDelete(int sectionID)
+		public void SectionDelete(int id)
 		{
-			return repo.SectionDelete(sectionID);
-		}
+			Section section = SectionGetByID(id);
 
-		#endregion
+			foreach (Cadet cadet in section.Cadets)
+			{
+				cadet.Section = null;
+			}
 
-		#region Cadet
-
-		public Cadet GetCadetByID(int id)
-		{
-			Reload();
-			return GetAllCadets().First(c => c.CadetID == id);
-		}
-
-		public IEnumerable<Cadet> GetAllCadets()
-		{
-			Reload();
-			return repo.GetAllCadets();
-		}
-
-		public IEnumerable<Cadet> GetCadetsBySection(int sectionID)
-		{
-			return GetSectionByID(sectionID).Cadets;
-		}
-
-		public Cadet AddCadet(CadetListItem cadetModel)
-		{
-			Reload();
-			Section section = GetSectionByID(cadetModel.Section.SectionID);
-			Grade grade = GetGradeByID(cadetModel.Grade.GradeID);
-
-			Cadet cadet = new Cadet();
-			cadet.Grade = grade;
-			cadet.NbBilletsDistribue = cadetModel.NbBilletsDistribue;
-			cadet.NbBilletsVendu = cadetModel.NbBilletsVendu;
-			cadet.Nom = cadetModel.Nom;
-			cadet.Prenom = cadetModel.Prenom;
-			cadet.Section = section;
-
-			cadet.CadetID = escadron.GetNextCadetID();
-
-			section.Cadets.Add(cadet);
-			grade.Cadets.Add(cadet);
-			Save();
-			return cadet;
-		}
-
-		public Cadet EditCadet(CadetListItem cadetModel)
-		{
-			Reload();
-			Cadet cadet = GetCadetByID(cadetModel.CadetID);
-			Section section = GetSectionByID(cadetModel.Section.SectionID);
-			Grade grade = GetGradeByID(cadetModel.Grade.GradeID);
-
-			cadet.NbBilletsDistribue = cadetModel.NbBilletsDistribue;
-			cadet.NbBilletsVendu = cadetModel.NbBilletsVendu;
-			cadet.Nom = cadetModel.Nom;
-			cadet.Prenom = cadetModel.Prenom;
-
-			cadet.Section.Cadets.Remove(cadet);
-			cadet.Grade.Cadets.Remove(cadet);
-
-			cadet.Grade = grade;
-			cadet.Section = section;
-
-			section.Cadets.Add(cadet);
-			grade.Cadets.Add(cadet);
-
-			Save();
-			return cadet;
-		}
-
-		public bool DeleteCadet(int cadetID)
-		{
-			return repo.DeleteCadet(cadetID);
+			data.Sections.Remove(section);
 		}
 
 		#endregion
 
 		#region Grade
 
-		public List<Grade> GradeGetAll()
+		public Grade GradeGetByID(int id)
 		{
-			Reload();
-			return repo.GetAllGrades();
+			return data.Grades.FirstOrDefault(g => g.GradeID == id);
 		}
 
-		public Grade GetGradeByID(int gradeId)
+		public List<Grade> GradeGetAll()
 		{
-			return repo.GetGradeByID(gradeId);
+			List<Grade> grades = new List<Grade>();
+			grades.AddRange(data.Grades);
+			return grades;
 		}
 
 		public Grade GradeAdd(GradeListItem gradeModel)
 		{
-			Reload();
+			Grade grade = new Grade();
+			grade.Nom = gradeModel.Nom;
+			grade.Abreviation = gradeModel.Abreviation;
+			grade.GradeID = data.GetNextGradeID();
 
-			Grade grade = repo.GradeAdd(gradeModel);
+			data.Grades.Add(grade);
 
-			Save();
 			return grade;
 		}
 
 		public Grade GradeEdit(GradeListItem gradeModel)
 		{
-			Reload();
-			Grade grade = GetGradeByID(gradeModel.GradeID);
+			Grade grade = GradeGetByID(gradeModel.GradeID);
 
 			grade.Nom = gradeModel.Nom;
 			grade.Abreviation = gradeModel.Abreviation;
 
-			Save();
 			return grade;
 		}
 
-		public bool GradeDelete(int gradeID)
+		public void GradeDelete(int id)
 		{
-			bool success = repo.GradeDelete(gradeID);
-			if (success)
-				Save();
+			Grade grade = GradeGetByID(id);
 
-			return success;
+			foreach (Cadet cadet in grade.Cadets)
+			{
+				cadet.Grade = null;
+			}
+
+			data.Grades.Remove(grade);
 		}
 
 		#endregion
 
 		#region Leaderboard
 
-		public IEnumerable<Cadet> GetTopTenSeller()
+		public IEnumerable<Cadet> LeaderboardGetTopTenSeller()
 		{
-			Reload();
-			return repo.GetAllCadets().OrderByDescending(c => c.NbBilletsVendu).Take(10);
+			return CadetGetAll().Where(c => c.Section != null).OrderByDescending(c => c.NbBilletsVendu).Take(10);
 		}
 
-		public SectionLeaderboard GetSectionLeaderboard()
+		public SectionLeaderboard LeaderboardGetSection()
 		{
-			Reload();
-			return new SectionLeaderboard(escadron);
+			return new SectionLeaderboard(data);
 		}
 
 		#endregion
 
-		#region IO
+		#region File
 
-		public string GetSaveName()
+		public string FileGetSaveName()
 		{
-			Reload();
-			return escadron.Nom;
+			return data.Nom;
 		}
 
-		public void SetSaveName(string nom)
+		public void FileSetSaveName(string nom)
 		{
-			Reload();
-
-			if (string.IsNullOrWhiteSpace(escadron.Nom))
-				return;
-
-			escadron.Nom = nom;
+			data.Nom = nom;
 			Save();
+
+			AddToRecentFiles();
 		}
 
-		public void Open(string path)
+		public void FileOpen(string path)
 		{
-			repo.SetSaveFile(path);
+			if (!File.Exists(path))
+				throw new FileNotFoundException();
+
+			escadronManager.Dispose();
+			escadronManager = new Repository<EscadronConfiguration>(path);
+			data = escadronManager.GetData();
+
+			AddToRecentFiles();
 		}
 
-		public void Create(string path, string saveName = null)
+		public void FileCreate(string path, string saveName = null)
 		{
-			repo.SetSaveFile(path, true);
-			if(!string.IsNullOrWhiteSpace(saveName))
-			{
-				SetSaveName(saveName);
-			}
+			if (File.Exists(path))
+				File.Delete(path);
+
+			escadronManager.Dispose();
+			escadronManager = new Repository<EscadronConfiguration>(path, true);
+			data = escadronManager.GetData();
+
+			AddToRecentFiles();
 		}
 
-		public void Save()
+		public List<FichierRecent> FileGetRecentlyOpened()
 		{
-			repo.Save();
-		}
+			List<FichierRecent> recentFilesCol = new List<FichierRecent>();
+			recentFilesCol.AddRange(recentFiles.GetRecentFiles());
 
-		public void Reload()
-		{
-			repo.Load();
-			escadron = repo.EscadronConfiguration;
-		}
-		
-		public List<FichierRecent> RecentFilesGetAll()
-		{
-			return repo.GetRecentFiles();
+			return recentFilesCol;
 		}
 
 		#endregion
+
+		#region Recent Files
+
+		private void AddToRecentFiles()
+		{
+			FichierRecent recent = new FichierRecent();
+			recent.CheminFichier = escadronManager.Path;
+			recent.NomSauvegarde = data.Nom;
+
+			recentFiles.Add(recent);
+			recentFilesManager.Save();
+		}
+
+		#endregion
+
+		#region IDisposable
+
+		private bool disposed = false;
+		protected virtual void Dispose(bool disposing)
+		{
+			if (!this.disposed)
+			{
+				if (disposing)
+				{
+					escadronManager.Dispose();
+					recentFilesManager.Dispose();
+				}
+			}
+			this.disposed = true;
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+		#endregion
+
 
 	}
 }

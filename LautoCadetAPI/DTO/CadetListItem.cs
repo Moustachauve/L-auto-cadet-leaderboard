@@ -18,7 +18,8 @@ namespace LautoCadetAPI.DTO
 		[Required]
 		public string Nom { get; set; }
 
-		[Required]
+		public SectionListItem Section { get; set; }
+
 		public GradeListItem Grade { get; set; }
 
 		[Required]
@@ -27,14 +28,17 @@ namespace LautoCadetAPI.DTO
 		[Required]
 		public int NbBilletsVendu { get; set; }
 
-		[Required]
-		public SectionListItem Section { get; set; }
-
 		public string DisplayName
 		{
 			get
 			{
-				return Grade.Abreviation + " " + Nom + ", " + Prenom.Substring(0, 1) + ".";
+				string grade = "";
+				if(Grade != null)
+				{
+					grade += Grade.Abreviation + " ";
+				}
+
+				return grade + Nom + ", " + Prenom.Substring(0, 1) + ".";
 			}
 		}
 
@@ -54,10 +58,24 @@ namespace LautoCadetAPI.DTO
 			CadetID = cadet.CadetID;
 			Prenom = cadet.Prenom;
 			Nom = cadet.Nom;
-			Grade = new GradeListItem(cadet.Grade);
 			NbBilletsDistribue = cadet.NbBilletsDistribue;
 			NbBilletsVendu = cadet.NbBilletsVendu;
-			Section = new SectionListItem(cadet.Section);
+			if(cadet.Grade == null)
+			{
+				Grade = new GradeListItem() { GradeID = -1 };
+			}
+			else
+			{
+				Grade = new GradeListItem(cadet.Grade);
+			}
+			if (cadet.Section == null)
+			{
+				Section = new SectionListItem() { SectionID = -1 };
+			}
+			else
+			{
+				Section = new SectionListItem(cadet.Section);
+			}
 		}
 	}
 }

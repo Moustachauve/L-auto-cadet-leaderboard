@@ -12,7 +12,7 @@ namespace LautoCadetAPI.Controllers
 {
 	public class GradeController : ApiController
 	{
-		Service service = Service.Instance;
+		IService service = Service.Instance;
 
 		public IHttpActionResult GetAll()
 		{
@@ -35,16 +35,16 @@ namespace LautoCadetAPI.Controllers
 				return BadRequest(ModelState);
 			}
 
-			GradeListItem grade = new GradeListItem(service.GradeAdd(gradeModel));
+			Grade grade = service.GradeAdd(gradeModel);
+			service.Save();
 
-			return Json(grade);
+			return Json(new GradeListItem(grade));
 		}
 
 		[HttpGet]
 		public IHttpActionResult Edit(int id)
 		{
-			var grade = service.GetGradeByID(id);
-
+			var grade = service.GradeGetByID(id);
 			if (grade == null)
 			{
 				return BadRequest("Aucun grade trouvé avec cet ID");
@@ -54,23 +54,26 @@ namespace LautoCadetAPI.Controllers
 		}
 
 		[HttpPut]
-		public IHttpActionResult Edit(GradeListItem grade)
+		public IHttpActionResult Edit(GradeListItem gradeModel)
 		{
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);
 			}
 
-			return Json(new GradeListItem(service.GradeEdit(grade)));
+			Grade grade = service.GradeEdit(gradeModel);
+			service.Save();
+
+			return Json(new GradeListItem(grade));
 		}
 
 		[HttpDelete]
 		public IHttpActionResult Delete(int id)
 		{
-			if (service.GradeDelete(id))
-				return Json("Done");
+			service.GradeDelete(id);
+			service.Save();
 
-			return BadRequest("Aucun grade avec cet ID");
+			return Ok();
 		}
 	}
 }

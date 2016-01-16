@@ -12,11 +12,11 @@ namespace LautoCadetAPI.Controllers
 {
 	public class CadetController : ApiController
 	{
-		Service service = Service.Instance;
+		IService service = Service.Instance;
 
 		public IHttpActionResult Get(int id)
 		{
-			var cadet = service.GetCadetByID(id);
+			var cadet = service.CadetGetByID(id);
 
 			if (cadet == null)
 			{
@@ -28,7 +28,7 @@ namespace LautoCadetAPI.Controllers
 
 		public IHttpActionResult GetFormInit()
 		{
-			var sections = service.GetAllSections();
+			var sections = service.SectionGetAll();
 			var grades = service.GradeGetAll();
 
 			return Json(new CadetFormInit(sections, grades));
@@ -36,10 +36,8 @@ namespace LautoCadetAPI.Controllers
 
 		public IHttpActionResult GetAll()
 		{
-			var cadets = service.GetAllCadets();
-
-			var result = new CadetList(cadets)
-							.OrderBy(c => c.Nom).ThenBy(c => c.Prenom).ThenBy(c => c.Grade.Abreviation);
+			var cadets = service.CadetGetAll();
+			var result = new CadetList(cadets).OrderBy(c => c.Nom).ThenBy(c => c.Prenom).ThenBy(c => c.Grade.Abreviation);
 
 			return Json(result);
 		}
@@ -52,9 +50,10 @@ namespace LautoCadetAPI.Controllers
 				return BadRequest(ModelState);
 			}
 
-			CadetListItem cadet = new CadetListItem(service.AddCadet(cadetModel));
+			Cadet newCadet = service.CadetAdd(cadetModel);
+			service.Save();
 
-			return Json(cadet);
+			return Json(new CadetListItem(newCadet));
 		}
 
 		[HttpPut]
@@ -65,18 +64,19 @@ namespace LautoCadetAPI.Controllers
 				return BadRequest(ModelState);
 			}
 
-			CadetListItem cadet = new CadetListItem(service.EditCadet(cadetModel));
+			Cadet cadet = service.CadetEdit(cadetModel);
+			service.Save();
 
-			return Json(cadet);
+			return Json(new CadetListItem(cadet));
 		}
 
 		[HttpDelete]
 		public IHttpActionResult Delete(int id)
 		{
-			if (service.DeleteCadet(id))
-				return Json("Done");
+			service.CadetDelete(id);
+			service.Save();
 
-			return BadRequest("Aucun cadet avec cet ID");
+			return Ok();
 		}
 	}
 }

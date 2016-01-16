@@ -1,7 +1,9 @@
 ﻿using CefSharp;
 using CefSharp.WinForms;
 using LautoCadetAPI;
+using System;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace LotoCadetLeaderboard
@@ -20,7 +22,8 @@ namespace LotoCadetLeaderboard
 
 			// Start OWIN host 
 			WebApi.Start();
-			browser = new ChromiumWebBrowser(WebApi.API_URL);
+			Uri startPath = new Uri(AppDomain.CurrentDomain.BaseDirectory + "www\\loading.html");
+			browser = new ChromiumWebBrowser(startPath.AbsoluteUri);
 			browser.Dock = DockStyle.Fill;
 			browser.TitleChanged += browser_TitleChanged;
 			browser.KeyDown += browser_KeyDown;
@@ -68,11 +71,6 @@ namespace LotoCadetLeaderboard
 			{
 				browser.ShowDevTools();
 			}
-		}
-
-		private void ShowSource(string source)
-		{
-			new SourceCodeViewer(source).ShowDialog();
 		}
 
 		private void browser_KeyDown(object sender, KeyEventArgs e)

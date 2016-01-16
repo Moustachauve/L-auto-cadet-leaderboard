@@ -12,18 +12,18 @@ namespace LautoCadetAPI.Controllers
 {
 	public class LeaderboardController : ApiController
 	{
-		Service service = Service.Instance;
+		IService service = Service.Instance;
 
 		public IHttpActionResult GetTopTenSeller()
 		{
-            var list = new CadetList(service.GetTopTenSeller());
+            var list = new CadetList(service.LeaderboardGetTopTenSeller());
 
 			return Json(list);
 		}
 
 		public IHttpActionResult GetSectionLeaderboard()
 		{
-			return Json(service.GetSectionLeaderboard());
+			return Json(service.LeaderboardGetSection());
 		}
 	}
 }

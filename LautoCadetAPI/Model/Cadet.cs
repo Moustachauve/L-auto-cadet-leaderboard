@@ -19,7 +19,8 @@ namespace LautoCadetAPI.Model
         [Required]
 		public string Nom { get; set; }
 
-        [Required]
+		public Section Section { get; set; }
+
 		public Grade Grade { get; set; }
 
 		[Required]
@@ -29,7 +30,5 @@ namespace LautoCadetAPI.Model
 		[Required]
 		[Range(0, Int32.MaxValue)]
 		public int NbBilletsVendu { get; set; }
-
-		public Section Section { get; set; }
 	}
 }

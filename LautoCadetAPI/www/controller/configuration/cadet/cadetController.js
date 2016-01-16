@@ -67,6 +67,12 @@ function cadetController($scope, $rootScope, $location, $route, $routeParams, no
         if (!$scope.cadetEditForm.$valid)
             return;
 
+        if ($scope.cadet.Section.SectionID == null)
+            $scope.cadet.Section = null;
+
+        if ($scope.cadet.Grade.GradeID == null)
+            $scope.cadet.Grade = null;
+
         $rootScope.startLoading();
         $.ajax({
             method: "PUT",

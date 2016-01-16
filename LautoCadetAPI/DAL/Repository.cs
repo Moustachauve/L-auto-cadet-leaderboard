@@ -1,6 +1,4 @@
-﻿using LautoCadetAPI.DTO;
-using LautoCadetAPI.Model;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,238 +8,126 @@ using System.Threading.Tasks;
 
 namespace LautoCadetAPI.DAL
 {
-	internal class Repository
+	internal class Repository<T> : IRepository<T> where T : new()
 	{
+		private T dataObject;
+		private string path;
+		private FileStream fileStream;
 
-		#region Variables & Constructor
+		public string Path { get { return path; } }
 
-		private FichiersRecentsConfiguration fichiersRecentsConfiguration;
-		private EscadronConfiguration escadronConfiguration;
-		private string savePath;
-
-		public EscadronConfiguration EscadronConfiguration { get { return escadronConfiguration; } }
-
-		/// <summary>
-		/// Create a repository using the default file
-		/// </summary>
-		public Repository()
-			: this(WebApi.DEFAULT_FILE_PATH)
-		{ }
-
-
-		/// <summary>
-		/// Create a repository using a custom file path
-		/// </summary>
-		public Repository(string path)
+		public Repository(string filePath)
 		{
-			SetSaveFile(path);
+			ChangePath(filePath);
 		}
 
-		#endregion
-
-		#region IO
-
-		public void Load(bool overrideFile = false)
+		public Repository(string filePath, bool doOverride)
 		{
-			LoadFichiersRecents();
-
-			if (!overrideFile && File.Exists(savePath))
-			{
-				using (StreamReader reader = new StreamReader(savePath))
-				{
-					escadronConfiguration = JsonConvert.DeserializeObject<EscadronConfiguration>(reader.ReadToEnd());
-				}
-			}
-			else
-			{
-				escadronConfiguration = new EscadronConfiguration();
-				CreerGradesDefaut();
-			}
-
-			FichierRecent fichierRecent = new FichierRecent();
-			fichierRecent.CheminFichier = savePath;
-			fichierRecent.NomSauvegarde = escadronConfiguration.Nom;
-
-			fichiersRecentsConfiguration.Add(fichierRecent);
-			SaveFichiersRecents();
+			ChangePath(filePath, doOverride);
 		}
 
-		private void LoadFichiersRecents()
+		public T GetData()
 		{
-			if (File.Exists(WebApi.DEFAULT_RECENT_FILES_PATH))
+			fileStream.Position = 0;
+			StreamReader reader = new StreamReader(fileStream);
+			dataObject = JsonConvert.DeserializeObject<T>(reader.ReadToEnd());
+
+			return dataObject;
+		}
+
+		public bool IsFileContentValid()
+		{
+			bool isValid = false;
+			try
 			{
-				using (StreamReader reader = new StreamReader(WebApi.DEFAULT_RECENT_FILES_PATH))
-				{
-					fichiersRecentsConfiguration = JsonConvert.DeserializeObject<FichiersRecentsConfiguration>(reader.ReadToEnd());
-				}
+				T data = GetData();
+				isValid = data != null;
 			}
-			else
+			catch
 			{
-				fichiersRecentsConfiguration = new FichiersRecentsConfiguration();
+				isValid = false;
 			}
+			return isValid;
 		}
 
 		public void Save()
 		{
-			string saveDirectory = Path.GetDirectoryName(savePath);
-			if (!Directory.Exists(saveDirectory))
-				Directory.CreateDirectory(saveDirectory);
+			fileStream.Position = 0;
+			fileStream.SetLength(0);
+			StreamWriter writer = new StreamWriter(fileStream);
+			writer.Write(JsonConvert.SerializeObject(dataObject, Formatting.Indented));
+			writer.Flush();
+		}
 
-			using (StreamWriter writer = new StreamWriter(savePath))
+		public void Reset()
+		{
+			dataObject = new T();
+			Save();
+		}
+
+		public void ChangePath(string newPath)
+		{
+			ChangePath(newPath, false);
+		}
+
+		public void ChangePath(string newPath, bool doOverride)
+		{
+			path = System.IO.Path.GetFullPath(newPath);
+
+			if(fileStream != null)
 			{
-				writer.Write(JsonConvert.SerializeObject(escadronConfiguration, Formatting.Indented));
-			}
-		}
-
-		private void SaveFichiersRecents()
-		{
-			string saveDirectory = Path.GetDirectoryName(WebApi.DEFAULT_RECENT_FILES_PATH);
-			if (!Directory.Exists(saveDirectory))
-				Directory.CreateDirectory(saveDirectory);
-
-			using (StreamWriter writer = new StreamWriter(WebApi.DEFAULT_RECENT_FILES_PATH))
-			{
-				writer.Write(JsonConvert.SerializeObject(fichiersRecentsConfiguration, Formatting.Indented));
-			}
-		}
-
-		public void SetSaveFile(string path, bool overrideFile = false)
-		{
-			savePath = Path.GetFullPath(path);
-			Load(overrideFile);
-		}
-
-		public List<FichierRecent> GetRecentFiles()
-		{
-			return fichiersRecentsConfiguration.GetRecentFiles();
-		}
-
-		#endregion
-
-		#region Cadet
-
-		public List<Cadet> GetAllCadets()
-		{
-			List<Cadet> list = new List<Cadet>();
-
-			foreach (Section section in escadronConfiguration.Sections)
-			{
-				list.AddRange(section.Cadets);
+				fileStream.Close();
+				fileStream.Dispose();
+				fileStream = null;
 			}
 
-			return list;
-		}
-
-		public bool DeleteCadet(int cadetID)
-		{
-			foreach (Section section in escadronConfiguration.Sections)
+			if (File.Exists(path))
 			{
-				foreach (Cadet cadet in section.Cadets)
+				fileStream = File.Open(path, FileMode.OpenOrCreate);
+				if (!doOverride && !IsFileContentValid())
 				{
-					if (cadet.CadetID == cadetID)
-					{
-						section.Cadets.Remove(cadet);
-						Save();
-						return true;
-					}
+					this.Dispose();
+					throw new FileFormatException();
+				}
+				else if(doOverride && dataObject == null)
+				{
+					dataObject = new T();
+				}
+
+				Save();
+			}
+			else
+			{
+				string saveDirectory = System.IO.Path.GetDirectoryName(path);
+				if (!Directory.Exists(saveDirectory))
+					Directory.CreateDirectory(saveDirectory);
+
+				if (dataObject == null)
+					dataObject = new T();
+
+				fileStream = File.Open(path, FileMode.OpenOrCreate);
+				Save();
+			}
+		}
+
+		private bool disposed = false;
+		protected virtual void Dispose(bool disposing)
+		{
+			if (!this.disposed)
+			{
+				if (disposing)
+				{
+					fileStream.Close();
+					fileStream.Dispose();
 				}
 			}
-
-			return false;
+			this.disposed = true;
 		}
 
-		#endregion
-
-		#region Section
-
-		public List<Section> GetAllSections()
+		public void Dispose()
 		{
-			List<Section> list = new List<Section>();
-
-			list.AddRange(escadronConfiguration.Sections);
-
-			return list;
+			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
-
-		public bool SectionDelete(int sectionID)
-		{
-			foreach (Section section in escadronConfiguration.Sections)
-			{
-				if (section.SectionID == sectionID)
-				{
-					escadronConfiguration.Sections.Remove(section);
-					Save();
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		#endregion
-
-		#region Grade
-
-		public List<Grade> GetAllGrades()
-		{
-			List<Grade> list = new List<Grade>();
-
-			list.AddRange(escadronConfiguration.Grades);
-
-			return list;
-		}
-
-		public Grade GetGradeByID(int gradeID)
-		{
-			return escadronConfiguration.Grades.First(g => g.GradeID == gradeID);
-		}
-
-		public Grade GradeAdd(GradeListItem gradeModel)
-		{
-			Grade grade = new Grade();
-			grade.GradeID = escadronConfiguration.GetNextGradeID();
-			grade.Nom = gradeModel.Nom;
-			grade.Abreviation = gradeModel.Abreviation;
-
-			escadronConfiguration.Grades.Add(grade);
-
-			return grade;
-		}
-
-		public bool GradeDelete(int gradeID)
-		{
-			foreach (Grade grade in escadronConfiguration.Grades)
-			{
-				if (grade.GradeID == gradeID)
-				{
-					escadronConfiguration.Grades.Remove(grade);
-
-					Grade firstGrade = escadronConfiguration.Grades.First();
-					foreach (Cadet cadet in grade.Cadets)
-					{
-						firstGrade.Cadets.Add(cadet);
-						cadet.Grade = firstGrade;
-					}
-
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		private void CreerGradesDefaut()
-		{
-			GradeAdd(new GradeListItem() { Nom = "Cadet",					 Abreviation = "Cdt" });
-			GradeAdd(new GradeListItem() { Nom = "Cadet première classe",	 Abreviation = "LAC" });
-			GradeAdd(new GradeListItem() { Nom = "Caporal",					 Abreviation = "Cpl" });
-			GradeAdd(new GradeListItem() { Nom = "Caporal de section",		 Abreviation = "Cpl/s" });
-			GradeAdd(new GradeListItem() { Nom = "Sergent",					 Abreviation = "Sgt" });
-			GradeAdd(new GradeListItem() { Nom = "Sergent de section",		 Abreviation = "Sgt/s" });
-			GradeAdd(new GradeListItem() { Nom = "Adjudant deuxième classe", Abreviation = "Adj2" });
-			GradeAdd(new GradeListItem() { Nom = "Adjudant première classe", Abreviation = "Adj1" });
-		}
-
-		#endregion
 	}
 }

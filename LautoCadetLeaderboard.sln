@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LautoCadetLeaderboard", "LautoCadetLeaderboard\LautoCadetLeaderboard.csproj", "{6E0490F4-3EBC-4D99-97C5-D6EAABF2B87F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LautoCadetAPI", "LautoCadetAPI\LautoCadetAPI.csproj", "{4FA3F8F3-F686-41C0-8B24-6344CB1E8CC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LautoCadetAPITest", "LautoCadetAPITest\LautoCadetAPITest.csproj", "{8D877A07-82F9-4D00-B91D-81158BAD601D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,14 @@ Global
 		{4FA3F8F3-F686-41C0-8B24-6344CB1E8CC5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4FA3F8F3-F686-41C0-8B24-6344CB1E8CC5}.Release|x86.ActiveCfg = Release|Any CPU
 		{4FA3F8F3-F686-41C0-8B24-6344CB1E8CC5}.Release|x86.Build.0 = Release|Any CPU
+		{8D877A07-82F9-4D00-B91D-81158BAD601D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D877A07-82F9-4D00-B91D-81158BAD601D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D877A07-82F9-4D00-B91D-81158BAD601D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8D877A07-82F9-4D00-B91D-81158BAD601D}.Debug|x86.Build.0 = Debug|Any CPU
+		{8D877A07-82F9-4D00-B91D-81158BAD601D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D877A07-82F9-4D00-B91D-81158BAD601D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D877A07-82F9-4D00-B91D-81158BAD601D}.Release|x86.ActiveCfg = Release|Any CPU
+		{8D877A07-82F9-4D00-B91D-81158BAD601D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
