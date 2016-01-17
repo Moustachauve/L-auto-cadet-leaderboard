@@ -1,0 +1,52 @@
+﻿<div class="row">
+    <div class="col-xs-3" ng-include="'controller/configuration/navigation.html'">
+    </div>
+    <div class="col-xs-9" ng-init="getSettings()">
+        <div class="page-header">
+            <h2>Général</h2>
+        </div>
+
+        <form name="settingsForm" ng-submit="saveSettings()" novalidate>
+            <div class="form-group" show-errors>
+                <label for="txtNom" class="control-label">Nom de la sauvegarde</label>
+                <input type="text" class="form-control" name="txtNom" id="txtNom" ng-model="settings.Nom" required>
+                <p class="help-block" ng-show="settingsForm.txtNom.$error.required">Le nom de la sauvegarde est requis</p>
+            </div>
+
+            <div class="form-group" show-errors>
+                <label for="txtNom" class="control-label">Nombre de billets en circulation</label>
+                <input type="number" class="form-control" name="txtNbBilletsCirculation" id="txtNbBilletsCirculation" ng-model="settings.NbBilletsCirculation" min="0" max="2147483647" required>
+                <p class="help-block" ng-show="settingsForm.txtNbBilletsCirculation.$error.required">Le nombre de billets en circulation est requis</p>
+                <p class="help-block" ng-show="settingsForm.txtNbBilletsCirculation.$error.min">Le nombre de billets en circulation ne peut pas être négatif</p>
+                <p class="help-block" ng-show="settingsForm.txtNbBilletsCirculation.$error.max">Le nombre de billets en circulation doit être plus petit que 2 147 483 647</p>
+                <p class="help-block" ng-show="settingsForm.txtNbBilletsCirculation.$error.number">Le nombre de billets en circulation doit être un nombre</p>
+            </div>
+
+            <div class="clearfix">
+                <div class="pull-left">
+                    <button class="btn btn-success" ng-click="openSelectFile()">
+                        <span class="glyphicon glyphicon-folder-open"></span> Ouvrir
+                    </button>
+                    <a class="btn btn-success" href="configuration/file/new">
+                        <span class="glyphicon glyphicon-plus-sign"></span> Nouveau
+                    </a>
+                </div>
+                <div class="pull-right">
+                    <button class="btn btn-primary" type="submit">
+                        <span class="glyphicon glyphicon-floppy-disk"></span> Enregistrer
+                    </button>
+                </div>
+            </div>
+        </form>
+        <hr />
+
+        <h4>Fichiers récents...</h4>
+        <div class="list-group">
+            <button ng-repeat="recentFile in recentFiles.FichiersRecents" class="list-group-item" ng-click="openFile(recentFile.CheminFichier)">
+                <strong>{{recentFile.NomSauvegarde}}</strong>
+                <div class="file-path">{{recentFile.CheminFichier}}</div>
+            </button>
+        </div>
+    </div>
+
+</div>

@@ -117,6 +117,7 @@
     <Compile Include="DTO\SectionLeaderboard.cs" />
     <Compile Include="DTO\SectionLeaderboardItem.cs" />
     <Compile Include="DTO\SectionListItem.cs" />
+    <Compile Include="DTO\Settings.cs" />
     <Compile Include="Model\Cadet.cs" />
     <Compile Include="Model\EscadronConfiguration.cs" />
     <Compile Include="Model\FichierRecent.cs" />

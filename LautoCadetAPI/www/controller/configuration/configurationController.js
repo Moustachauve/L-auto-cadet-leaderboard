@@ -8,7 +8,7 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
     // Save
     // ===================================================================================
 
-    $scope.getSaveDetails = function () {
+    $scope.getSettings = function () {
         $rootScope.startLoading();
         $.ajax({
             method: "GET",
@@ -16,7 +16,8 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
         })
         .done(function (data) {
             $rootScope.stopLoading();
-            $scope.saveDetails = data;
+            $scope.settings = data.Settings;
+            $scope.recentFiles = data.FichiersRecents;
             $scope.$apply();
         }).fail(function () {
             $rootScope.showError();
@@ -92,12 +93,12 @@ function configurationController($scope, $rootScope, $location, $route, $routePa
         });
     }
 
-    $scope.saveSaveDetails = function () {
+    $scope.saveSettings = function () {
         $rootScope.startLoading();
         $.ajax({
             method: "POST",
             url: "http://localhost:8080/api/Save/Save",
-            data: "="+$scope.saveDetails.Nom
+            data: $scope.settings
         })
         .done(function (data) {
             $rootScope.stopLoading();

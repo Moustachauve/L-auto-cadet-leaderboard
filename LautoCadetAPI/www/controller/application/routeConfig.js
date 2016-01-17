@@ -15,7 +15,7 @@
 
         .when('/configuration/', {
             title: "Configuration",
-            templateUrl: '/controller/configuration/general.html',
+            templateUrl: '/controller/configuration/settings.html',
             controller: 'configurationController'
         })
 

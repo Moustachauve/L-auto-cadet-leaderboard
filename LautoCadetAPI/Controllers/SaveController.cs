@@ -19,7 +19,7 @@ namespace LautoCadetAPI.Controllers
 		{
 			SaveDetails details = new SaveDetails();
 
-			details.Nom = service.FileGetSaveName();
+			details.Settings = service.SettingsGet();
 			details.FichiersRecents = service.FileGetRecentlyOpened();
 
 			return Json(details);
@@ -41,18 +41,20 @@ namespace LautoCadetAPI.Controllers
 		public IHttpActionResult Open(FichierRecent fileInfo)
 		{
 			service.FileOpen(fileInfo.CheminFichier);
-			fileInfo.NomSauvegarde = service.FileGetSaveName();
+			fileInfo.NomSauvegarde = service.SettingsGet().Nom;
 
 			return Json(fileInfo);
 		}
 
 		[HttpPost]
-		public IHttpActionResult Save([FromBody]string nomSauvegarde)
+		public IHttpActionResult Save(Settings setting)
 		{
-			if (string.IsNullOrWhiteSpace(nomSauvegarde))
-				return BadRequest("Le nom ne peut pas être vide");
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 
-			service.FileSetSaveName(nomSauvegarde);
+			service.SettingsUpdate(setting);
 			return Ok();
 		}
 	}

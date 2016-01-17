@@ -63,9 +63,9 @@ namespace LautoCadetAPI.DAL
 
 		#region File
 
-		string FileGetSaveName();
+		Settings SettingsGet();
 
-		void FileSetSaveName(string nom);
+		void SettingsUpdate(Settings settings);
 
 		void FileOpen(string path);
 

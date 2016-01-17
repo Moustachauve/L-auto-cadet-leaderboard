@@ -9,7 +9,7 @@
         <form ng-submit="addSection()" name="sectionAddForm" novalidate>
 
             <div class="form-group" show-errors>
-                <label for="txtNom">Nom de la section</label>
+                <label for="txtNom" class="control-label">Nom de la section</label>
                 <input type="text" class="form-control" id="txtNom" name="txtNom" ng-model="section.Nom" required>
                 <p class="help-block" ng-show="sectionAddForm.txtNom.$error.required">Le nom de la section est requis</p>
             </div>

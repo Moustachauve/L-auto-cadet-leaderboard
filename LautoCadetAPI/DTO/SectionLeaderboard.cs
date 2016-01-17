@@ -27,10 +27,10 @@ namespace LautoCadetAPI.DTO
 				SectionLeaderboardItem sectionLeaderboard = new SectionLeaderboardItem(section);
 				Sections.Add(sectionLeaderboard);
 
-				NbBilletsDistribue += sectionLeaderboard.NbBilletsDistribue;
 				NbBilletsVendu += sectionLeaderboard.NbBilletsVendu;
 			}
 
+			NbBilletsDistribue = escadron.NbBilletsCirculation;
 			Sections = Sections.OrderBy(s => s.Nom).ToList();
 		}
 	}

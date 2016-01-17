@@ -9,7 +9,7 @@ namespace LautoCadetAPI.DTO
 {
 	public class SaveDetails
 	{
-		public string Nom { get; set; }
+		public Settings Settings { get; set; }
 
 		public List<FichierRecent> FichiersRecents { get; set; }
 	}

@@ -242,14 +242,21 @@ namespace LautoCadetAPI.DAL
 
 		#region File
 
-		public string FileGetSaveName()
+		public Settings SettingsGet()
 		{
-			return data.Nom;
+			Settings settings = new Settings()
+			{
+				NbBilletsCirculation = data.NbBilletsCirculation,
+				Nom = data.Nom
+			};
+
+			return settings;
 		}
 
-		public void FileSetSaveName(string nom)
+		public void SettingsUpdate(Settings settings)
 		{
-			data.Nom = nom;
+			data.Nom = settings.Nom;
+			data.NbBilletsCirculation = settings.NbBilletsCirculation;
 			Save();
 
 			AddToRecentFiles();
