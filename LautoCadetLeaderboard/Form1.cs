@@ -28,6 +28,7 @@ namespace LotoCadetLeaderboard
 			browser.TitleChanged += browser_TitleChanged;
 			browser.KeyDown += browser_KeyDown;
 			browser.RegisterJsObject("clientUtils", new JsClientUtils(this));
+			browser.JsDialogHandler = new JsDialog();
 			Controls.Add(this.browser);
 		}
 
