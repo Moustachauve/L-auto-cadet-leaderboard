@@ -13,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -134,8 +136,42 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="www\controller\application\lowerThanDirective.js" />
+    <Content Include="www\controller\application\notification.html" />
+    <Content Include="www\controller\application\notification.js" />
+    <Content Include="www\controller\application\pieChart.js" />
+    <Content Include="www\controller\application\routeConfig.js" />
+    <Content Include="www\controller\configuration\cadet\cadetAdd.html" />
+    <Content Include="www\controller\configuration\cadet\cadetController.js" />
+    <Content Include="www\controller\configuration\cadet\cadetEdit.html" />
+    <Content Include="www\controller\configuration\cadet\cadetList.html" />
+    <Content Include="www\controller\configuration\fileNew.html" />
+    <Content Include="www\controller\configuration\grade\gradeAdd.html" />
+    <Content Include="www\controller\configuration\grade\gradeController.js" />
+    <Content Include="www\controller\configuration\grade\gradeEdit.html" />
+    <Content Include="www\controller\configuration\grade\gradeList.html" />
+    <Content Include="www\controller\configuration\section\sectionAdd.html" />
+    <Content Include="www\controller\configuration\section\sectionController.js" />
+    <Content Include="www\controller\configuration\section\sectionDetails.html" />
+    <Content Include="www\controller\configuration\section\sectionEdit.html" />
+    <Content Include="www\controller\configuration\section\sectionList.html" />
+    <Content Include="www\controller\configuration\settings.html" />
+    <Content Include="www\controller\leaderboard\mainPage.html" />
+    <Content Include="www\controller\leaderboard\sectionLeaderboard.html" />
+    <Content Include="www\img\draghandle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="www\js\angular-animate.min.js" />
+    <Content Include="www\js\bundle-app.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\js\jquery-ui.min.js" />
     <Content Include="www\js\showErrors.min.js" />
+    <Content Include="www\js\sortable.js" />
+    <None Include="www\loading.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="www\bundleconfig.json" />
     <None Include="www\fonts\glyphicons-halflings-regular.eot">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -157,17 +193,12 @@
     <Content Include="www\controller\application\applicationController.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="www\controller\configuration\cadetAdd.html" />
-    <Content Include="www\controller\configuration\cadetEdit.html" />
-    <Content Include="www\controller\configuration\cadetList.html" />
     <Content Include="www\controller\configuration\configurationController.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="www\controller\configuration\navigation.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="www\controller\configuration\sectionAdd.html" />
-    <Content Include="www\controller\configuration\sectionList.html" />
     <Content Include="www\controller\error\404.html" />
     <Content Include="www\controller\error\errorController.js" />
     <Content Include="www\controller\leaderboard\leaderboardController.js">
@@ -205,6 +236,13 @@
 xcopy /Y /E "$(ProjectDir)www" "$(ProjectDir)..\LautoCadetLeaderboard\bin\x86\Debug\www\"
 xcopy /Y /E "$(ProjectDir)www" "$(ProjectDir)..\LautoCadetLeaderboard\bin\x86\Release\www\"</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\BuildBundlerMinifier.1.6.139\build\BuildBundlerMinifier.targets" Condition="Exists('..\packages\BuildBundlerMinifier.1.6.139\build\BuildBundlerMinifier.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\BuildBundlerMinifier.1.6.139\build\BuildBundlerMinifier.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BuildBundlerMinifier.1.6.139\build\BuildBundlerMinifier.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

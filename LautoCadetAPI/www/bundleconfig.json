@@ -1,0 +1,17 @@
+[
+  {
+    "outputFileName": "js/bundle-app.js",
+    "inputFiles": [
+      "controller/application/applicationController.js",
+      "controller/application/routeConfig.js",
+      "controller/application/pieChart.js",
+      "controller/application/notification.js",
+      "controller/application/lowerThanDirective.js",
+      "controller/configuration/*.js",
+      "controller/configuration/**/*.js",
+      "controller/error/*.js",
+      "controller/leaderboard/*.js",
+      "js/sortable.js"
+    ]
+  }
+]
