@@ -25,11 +25,11 @@ namespace LotoCadetLeaderboard
 			switch (dialogType)
 			{
 				case CefJsDialogType.Alert:
-					MessageBox.Show(messageText, "", MessageBoxButtons.OK);
+					MessageBox.Show(messageText, "L'auto-cadet", MessageBoxButtons.OK);
 					callback.Continue(true);
 					return true;
 				case CefJsDialogType.Confirm:
-					var result = MessageBox.Show(messageText, "", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+					var result = MessageBox.Show(messageText, "L'auto-cadet", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 					callback.Continue(result == DialogResult.Yes);
 					return true;
 			}

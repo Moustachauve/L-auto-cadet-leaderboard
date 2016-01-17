@@ -113,7 +113,7 @@ function sectionController($scope, $rootScope, $location, $route, $routeParams, 
             })
 			.done(function (data) {
 			    $rootScope.stopLoading();
-			    notification.showSuccess('La section "' + data.Nom + '" a bien été retirée');
+			    notification.showSuccess('La section "' + section.Nom + '" a bien été retirée');
 			    $scope.getAllSections();
 			}).fail(function () {
 			    $rootScope.showError();

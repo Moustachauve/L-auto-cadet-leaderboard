@@ -16,6 +16,8 @@ namespace LautoCadetAPI.Model
 
 		public string Abreviation { get; set; }
 
+		public int Ordre { get; set; }
+
 		public List<Cadet> Cadets { get; set; }
 
 		public Grade()
