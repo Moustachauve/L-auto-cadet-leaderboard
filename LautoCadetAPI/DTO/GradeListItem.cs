@@ -15,6 +15,8 @@ namespace LautoCadetAPI.DTO
 
 		public string Abreviation { get; set; }
 
+		public int Ordre { get; set; }
+
 		public GradeListItem()
 		{}
 
@@ -23,6 +25,7 @@ namespace LautoCadetAPI.DTO
 			GradeID = grade.GradeID;
 			Nom = grade.Nom;
 			Abreviation = grade.Abreviation;
+			Ordre = grade.Ordre;
 		}
 	}
 }

@@ -21,9 +21,9 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody ui-sortable="sortableOptions" ng-model="grades">
                 <tr ng-repeat="grade in grades">
-                    <td class="text-center"><img src="/img/draghandle.png" alt="Drag" /></td>
+                    <td class="text-center"><img src="/img/draghandle.png" alt="Drag" class="sortable-handle" /></td>
                     <td>{{grade.Abreviation}}</td>
                     <td>{{grade.Nom}}</td>
                     <td class="text-right">

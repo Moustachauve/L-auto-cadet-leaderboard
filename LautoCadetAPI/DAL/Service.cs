@@ -212,6 +212,22 @@ namespace LautoCadetAPI.DAL
 			return grade;
 		}
 
+		public List<Grade> GradeEditOrder(GradeList gradeList)
+		{
+			List<Grade> results = new List<Grade>();
+			foreach (GradeListItem gradeModel in gradeList)
+			{
+				Grade grade = GradeGetByID(gradeModel.GradeID);
+				if (grade == null)
+					continue;
+
+				grade.Ordre = gradeModel.Ordre;
+				results.Add(grade);
+			}
+
+			return results;
+		}
+
 		public void GradeDelete(int id)
 		{
 			Grade grade = GradeGetByID(id);

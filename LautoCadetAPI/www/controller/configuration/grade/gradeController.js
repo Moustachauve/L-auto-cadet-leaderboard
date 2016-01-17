@@ -104,4 +104,35 @@ function gradeController($scope, $rootScope, $location, $route, $routeParams, no
         }
     }
 
+    $scope.sortableOptions = {
+        helper: function (e, tr) {
+            var $originals = tr.children();
+            var $helper = tr.clone();
+            $helper.children().each(function (index) {
+                $(this).width($originals.eq(index).outerWidth());
+            });
+            return $helper;
+        },
+        placeholder: 'sortable-placeholder',
+        axis: 'y',
+        stop: function (e, ui) {
+            for (var index in $scope.grades) {
+                $scope.grades[index].Ordre = index;
+            }
+
+            $.ajax({
+                type: "PUT",
+                url: "http://localhost:8080/api/Grade/EditOrder/",
+                data: { '': $scope.grades }
+            })
+			.done(function (data) {
+			    $scope.grades = data;
+			    $scope.$apply();
+			}).fail(function () {
+			    $rootScope.showError();
+			    $rootScope.stopLoading();
+			    $scope.$apply();
+			});
+        }
+    };
 }

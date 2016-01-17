@@ -276,6 +276,50 @@ option.option-empty {
     font-size: 16px;
 }
 
-    .table-bigger >tbody>tr>td {
+    .table-bigger > tbody > tr > td {
         padding: 10px 8px;
+    }
+
+.ui-sortable-helper {
+    cursor: ns-resize;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.sortable-handle {
+    padding: 10px;
+    cursor: ns-resize;
+}
+
+.sortable-placeholder {
+    border: 1px none #000;
+    min-height: 53px;
+    position: relative;
+    background-color: #fefefe;
+}
+
+    .sortable-placeholder td {
+        position: relative;
+    }
+
+        .sortable-placeholder td:before {
+            position: absolute;
+            content: '';
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            border-top: 1px dotted #999;
+            border-bottom: 1px dotted #999;
+            display: table-row;
+        }
+
+            .sortable-placeholder td:first-child:before {
+                border-left: 1px dotted #999;
+            }
+            .sortable-placeholder td:last-child:before {
+                border-right: 1px dotted #999;
+            }
+
+    .sortable-placeholder td {
+        height: 50px;
     }

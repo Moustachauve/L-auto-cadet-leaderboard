@@ -111,6 +111,7 @@
     <Compile Include="DTO\CadetFormInit.cs" />
     <Compile Include="DTO\CadetList.cs" />
     <Compile Include="DTO\CadetListItem.cs" />
+    <Compile Include="DTO\GradeList.cs" />
     <Compile Include="DTO\GradeListItem.cs" />
     <Compile Include="DTO\SaveDetails.cs" />
     <Compile Include="DTO\SectionDetails.cs" />
@@ -190,9 +191,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="www\js\bootstrap.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\js\serverCom.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

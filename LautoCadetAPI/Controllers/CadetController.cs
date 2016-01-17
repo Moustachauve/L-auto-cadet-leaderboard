@@ -28,8 +28,8 @@ namespace LautoCadetAPI.Controllers
 
 		public IHttpActionResult GetFormInit()
 		{
-			var sections = service.SectionGetAll();
-			var grades = service.GradeGetAll();
+			var sections = service.SectionGetAll().OrderBy(s => s.Nom).ToList();
+			var grades = service.GradeGetAll().OrderBy(g => g.Ordre).ThenBy(g => g.Nom).ToList();
 
 			return Json(new CadetFormInit(sections, grades));
 		}

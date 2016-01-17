@@ -16,15 +16,9 @@ namespace LautoCadetAPI.Controllers
 
 		public IHttpActionResult GetAll()
 		{
-			var gradeModels = service.GradeGetAll();
-			var grades = new List<GradeListItem>();
+			var grades = service.GradeGetAll().OrderBy(g => g.Ordre).ThenBy(g => g.Nom).ToList();
 
-			foreach (Grade grade in gradeModels)
-			{
-				grades.Add(new GradeListItem(grade));
-			}
-
-			return Json(grades);
+			return Json(new GradeList(grades));
 		}
 
 		[HttpPost]
@@ -65,6 +59,20 @@ namespace LautoCadetAPI.Controllers
 			service.Save();
 
 			return Json(new GradeListItem(grade));
+		}
+
+		[HttpPut]
+		public IHttpActionResult EditOrder(IEnumerable<GradeListItem> gradeList)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			List<Grade> grade = service.GradeEditOrder(new GradeList(gradeList));
+			service.Save();
+
+			return Json(new GradeList(grade));
 		}
 
 		[HttpDelete]

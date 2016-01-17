@@ -49,6 +49,8 @@ namespace LautoCadetAPI.DAL
 
 		Grade GradeEdit(GradeListItem gradeModel);
 
+		List<Grade> GradeEditOrder(GradeList gradeList);
+
 		void GradeDelete(int gradeID);
 
 		#endregion
