@@ -106,7 +106,7 @@ function sectionController($scope, $rootScope, $location, $route, $routeParams, 
     }
 
     $scope.sectionDelete = function (section) {
-        if (confirm('Voulez-vous vraiment retirer la section "' + section.Nom + '"? \nTous les cadets qui font partie de cette section seront du même coup retiré!')) {
+        if (confirm('Voulez-vous vraiment retirer la section "' + section.Nom + '"?')) {
             $.ajax({
                 type: "DELETE",
                 url: "http://localhost:8080/api/Section/Delete/" + section.SectionID,
