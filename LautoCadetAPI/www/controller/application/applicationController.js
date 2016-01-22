@@ -1,4 +1,4 @@
-﻿angular.module('LautoCadet', ['ngRoute', 'ngAnimate', 'ui.bootstrap.showErrors', 'ui.sortable'])
+﻿var app = angular.module('LautoCadet', ['ngRoute', 'ngAnimate', 'ui.bootstrap.showErrors', 'ui.sortable'])
 
 
 
@@ -79,6 +79,21 @@ function applicationController($scope, $rootScope, $route, $window) {
         return false;
     }
 }
+
+app.directive('ngEmptyValue', ['$parse', function ($parse) {
+    return {
+        require: ['select', 'ngModel'],
+        link: function (scope, element, attrs, controllers) {
+            var select = controllers[0];
+            var readValue = select.readValue;
+            var emptyValue = $parse(attrs.ngEmptyValue)(scope);
+            select.readValue = function () {
+                if (element.val() == '') return emptyValue;
+                return readValue();
+            };
+        }
+    };
+}]);
 
 // Prevents context menu except in inputs, but will work in regular browser
 if (typeof clientUtils != "undefined") {

@@ -42,7 +42,7 @@
 
         <h4>Fichiers récents...</h4>
         <div class="list-group">
-            <button ng-repeat="recentFile in recentFiles.FichiersRecents" class="list-group-item" ng-click="openFile(recentFile.CheminFichier)">
+            <button ng-repeat="recentFile in recentFiles" class="list-group-item" ng-click="openFile(recentFile.CheminFichier)">
                 <strong>{{recentFile.NomSauvegarde}}</strong>
                 <div class="file-path">{{recentFile.CheminFichier}}</div>
             </button>

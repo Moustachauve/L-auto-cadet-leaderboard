@@ -34,10 +34,13 @@ namespace LautoCadetAPI.Controllers
 			return Json(new CadetFormInit(sections, grades));
 		}
 
-		public IHttpActionResult GetAll()
+		public IHttpActionResult GetList()
 		{
 			var cadets = service.CadetGetAll();
-			var result = new CadetList(cadets).OrderBy(c => c.Nom).ThenBy(c => c.Prenom).ThenBy(c => c.Grade.Abreviation);
+			var grades = service.GradeGetAll();
+			var sections = service.SectionGetAll();
+
+			var result = new CadetListData(cadets, sections, grades);
 
 			return Json(result);
 		}

@@ -31,6 +31,11 @@
                         <a href="" class="btn btn-sm btn-danger" ng-click="gradeDelete(grade)"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>
                 </tr>
+                <tr ng-hide="grades.length">
+                    <td colspan="4" style="text-align:center;">
+                        <i>Aucun grade trouvé</i>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

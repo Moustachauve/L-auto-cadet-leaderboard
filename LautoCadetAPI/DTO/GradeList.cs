@@ -13,7 +13,7 @@ namespace LautoCadetAPI.DTO
 
 		public GradeList(IEnumerable<GradeListItem> grades) : base(grades) { }
 
-		public GradeList(List<Grade> grades) : base()
+		public GradeList(IEnumerable<Grade> grades) : base()
 		{
 			foreach (Grade grade in grades)
 			{

@@ -112,6 +112,7 @@
     <Compile Include="DAL\Service.cs" />
     <Compile Include="DTO\CadetFormInit.cs" />
     <Compile Include="DTO\CadetList.cs" />
+    <Compile Include="DTO\CadetListData.cs" />
     <Compile Include="DTO\CadetListItem.cs" />
     <Compile Include="DTO\GradeList.cs" />
     <Compile Include="DTO\GradeListItem.cs" />

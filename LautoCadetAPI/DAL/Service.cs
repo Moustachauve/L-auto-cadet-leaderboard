@@ -240,6 +240,18 @@ namespace LautoCadetAPI.DAL
 			data.Grades.Remove(grade);
 		}
 
+		private void InitializeGrades()
+		{
+			GradeAdd(new GradeListItem() { Nom = "Cadet", Abreviation = "Cdt" });
+			GradeAdd(new GradeListItem() { Nom = "Cadet première classe", Abreviation = "LAC" });
+			GradeAdd(new GradeListItem() { Nom = "Caporal", Abreviation = "Cpl" });
+			GradeAdd(new GradeListItem() { Nom = "Caporal de section", Abreviation = "Cpl/s" });
+			GradeAdd(new GradeListItem() { Nom = "Sergent", Abreviation = "Sgt" });
+			GradeAdd(new GradeListItem() { Nom = "Sergent de section", Abreviation = "Sgt/s" });
+			GradeAdd(new GradeListItem() { Nom = "Adjudant deuxième classe", Abreviation = "Adj2" });
+			GradeAdd(new GradeListItem() { Nom = "Adjudant première classe", Abreviation = "Adj1" });
+		}
+
 		#endregion
 
 		#region Leaderboard
@@ -292,12 +304,21 @@ namespace LautoCadetAPI.DAL
 
 		public void FileCreate(string path, string saveName = null)
 		{
+			escadronManager.Dispose();
+
 			if (File.Exists(path))
 				File.Delete(path);
 
-			escadronManager.Dispose();
 			escadronManager = new Repository<EscadronConfiguration>(path, true);
 			data = escadronManager.GetData();
+
+			if (saveName != null)
+			{
+				data.Nom = saveName;
+			}
+
+			InitializeGrades();
+			escadronManager.Save();
 
 			AddToRecentFiles();
 		}

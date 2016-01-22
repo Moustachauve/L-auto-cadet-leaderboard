@@ -313,13 +313,24 @@ option.option-empty {
             display: table-row;
         }
 
-            .sortable-placeholder td:first-child:before {
-                border-left: 1px dotted #999;
-            }
-            .sortable-placeholder td:last-child:before {
-                border-right: 1px dotted #999;
-            }
+        .sortable-placeholder td:first-child:before {
+            border-left: 1px dotted #999;
+        }
+
+        .sortable-placeholder td:last-child:before {
+            border-right: 1px dotted #999;
+        }
 
     .sortable-placeholder td {
         height: 50px;
     }
+
+.form-inline .form-control {
+    width: 100%;
+}
+
+.form-inline .form-group.col-sm-4 {
+    padding-left: 7px;
+    padding-right: 7px;
+    margin-bottom: 15px;
+}

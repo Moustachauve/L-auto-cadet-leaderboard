@@ -32,6 +32,11 @@
                         <a href="" class="btn btn-sm btn-danger" ng-click="sectionDelete(section)"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>
                 </tr>
+                <tr ng-hide="sections.length">
+                    <td colspan="4" style="text-align:center;">
+                        <i>Aucune section trouvé</i>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

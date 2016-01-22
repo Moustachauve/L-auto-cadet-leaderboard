@@ -8,11 +8,13 @@ function cadetController($scope, $rootScope, $location, $route, $routeParams, no
         $rootScope.startLoading();
         $.ajax({
             method: "GET",
-            url: "http://localhost:8080/api/Cadet/GetAll",
+            url: "http://localhost:8080/api/Cadet/GetList",
         })
         .done(function (data) {
             $rootScope.stopLoading();
-            $scope.cadets = data;
+            $scope.cadetListData = data;
+            $scope.cadetListData.Sections.push({ Nom: "Sans section", SectionID: -1 });
+            $scope.cadetListData.Grades.push({ Nom: "Sans grade", GradeID: -1 });
             $scope.$apply();
         }).fail(function () {
             $rootScope.showError();
